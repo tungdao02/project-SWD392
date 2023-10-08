@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class IssueServiceImpl implements IssueService {
     @Autowired
@@ -39,6 +41,10 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Issue getIssueById(int id) {
-        return null;
+//        Optional<Issue> issue= issueRepository.findById((long)id);
+//        if(issue!=null){
+//            return  issue;
+//        }
+      return null;
     }
 }
