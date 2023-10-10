@@ -6,17 +6,17 @@ import jakarta.persistence.*;
 @Table(name = "issue")
 public class Issue {
     @Id
-    @Column(name = "id")
+    @Column(name = "issue_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title",nullable = false,length = 45)
     private String title;
     @Column(name = "descripton",length = 45)
     private String descripton;
-    @OneToOne
-    @JoinColumn(name = "assigner_id")
+    @ManyToOne
+    @JoinColumn(name = "assigner_id",nullable = false,referencedColumnName = "user_id")
     private User assigner;
-    @OneToOne
-    @JoinColumn(name = "assignee_id")
+    @ManyToOne
+    @JoinColumn(name = "assignee_id",nullable = false,referencedColumnName = "user_id")
     private User assignee;
 }

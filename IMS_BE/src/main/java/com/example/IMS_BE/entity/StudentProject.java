@@ -8,10 +8,10 @@ public class StudentProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "project_id")
+    @ManyToOne
+    @JoinColumn(name = "project_id",nullable = false,referencedColumnName = "project_id")
     private Project project;
-    @OneToOne
-    @JoinColumn(name = "class_id")
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable=false,referencedColumnName = "user_id")
     private User user;
 }

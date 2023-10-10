@@ -8,11 +8,11 @@ public class StudentClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "student_id")
+    @ManyToOne
+    @JoinColumn(name = "student_id",nullable = false,referencedColumnName = "user_id")
     private User student;
-    @OneToOne
-    @JoinColumn(name = "class_id")
+    @ManyToOne
+    @JoinColumn(name = "class_id",nullable = false,referencedColumnName = "class_id")
     private Classes classes;
 
 }

@@ -11,6 +11,6 @@ public class Subject {
     private Long id;
     @Column(name="description",length = 45)
     private String description;
-    @Column(name="status",length = 45)
+    @Column(name="status",nullable = false,length = 45)
     private String status;
 }

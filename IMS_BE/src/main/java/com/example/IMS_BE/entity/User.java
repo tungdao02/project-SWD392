@@ -21,7 +21,8 @@ public class User extends BaseEntity {
     private String password;
     @Column(name = "status",nullable = false)
     private int status;
-    @Column(name = "role",nullable = false)
-    private int role;
+    @ManyToOne
+    @JoinColumn (name = "role_id",nullable = false,referencedColumnName = "setting_id")
+    private Setting role;
 
 }

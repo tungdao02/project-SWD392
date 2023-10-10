@@ -13,8 +13,8 @@ public class Assignment {
 //    private int subject_id;
     @Column(name = "description",length = 45)
     private String description;
-    @OneToOne
-    @JoinColumn(name = "subject_id")
+    @ManyToOne
+    @JoinColumn(name = "subject_id",nullable = false,referencedColumnName = "subject_id")
     private Subject subject;
 
 

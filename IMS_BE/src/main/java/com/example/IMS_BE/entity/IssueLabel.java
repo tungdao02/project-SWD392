@@ -8,10 +8,10 @@ public class IssueLabel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "label_id")
+    @ManyToOne
+    @JoinColumn(name = "label_id",nullable = false,referencedColumnName = "label_id")
     private Label label;
-    @OneToOne
-    @JoinColumn(name = "issue_id")
+    @ManyToOne
+    @JoinColumn(name = "issue_id",nullable = false,referencedColumnName = "issue_id")
     private Issue issue;
 }

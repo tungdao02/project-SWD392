@@ -15,8 +15,8 @@ public class Milestone {
     private String status;
     @Column(name = "color",nullable = false,length = 45)
     private String color;
-    @OneToOne
-    @JoinColumn(name = "project_id")
+    @ManyToOne
+    @JoinColumn(name = "project_id",nullable = false,referencedColumnName = "project_id")
     private  Project project;
 
 
