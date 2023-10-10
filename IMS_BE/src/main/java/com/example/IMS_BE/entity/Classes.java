@@ -6,22 +6,22 @@ import jakarta.persistence.*;
 @Table(name = "class")
 public class Classes {
     @Id
-    @Column(name = "id")
+    @Column(name = "class_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="name",nullable = false,length = 45)
     private String name;
     @Column(name = "description")
     private String description;
-     @Column(name="status")
+     @Column(name="status",nullable = false)
     private int status;
-     @OneToOne
-    @JoinColumn(name = "semester_id")
-    private Semester semester;
-    @OneToOne
-    @JoinColumn(name = "teacher_id")
+     @ManyToOne
+    @JoinColumn(name = "semester_id",nullable = false,referencedColumnName = "setting_id")
+    private Setting setting;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id",nullable = false,referencedColumnName = "user_id")
     private User teacher;
-    @OneToOne
-    @JoinColumn(name = "subject_id")
+    @ManyToOne
+    @JoinColumn(name = "subject_id",nullable = false,referencedColumnName = "subject_id")
     private Subject subject;
 }

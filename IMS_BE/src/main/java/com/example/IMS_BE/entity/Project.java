@@ -7,14 +7,14 @@ import jakarta.persistence.*;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "project_id")
     private  Long id;
     @Column(name="description",length = 45)
     private String description;
-    @OneToOne
-    @JoinColumn( name="class_id")
+    @ManyToOne
+    @JoinColumn( name="class_id",nullable = false,referencedColumnName = "class_id")
     private Classes classes;
-    @OneToOne
-    @JoinColumn(name = "teamlead")
+    @ManyToOne
+    @JoinColumn(name = "teamlead_id",nullable = false,referencedColumnName = "user_id")
     private User user;
 }

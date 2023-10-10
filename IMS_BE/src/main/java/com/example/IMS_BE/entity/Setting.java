@@ -6,20 +6,20 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Semester")
-public class Semester extends BaseEntity{
+@Table(name="Setting")
+public class Setting extends BaseEntity{
     @Id
-    @Column(name = "id")
+    @Column(name = "setting_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="name",nullable = false,length = 45)
     private String name;
-    @Column(name="description",length = 45)
-    private String description;
-    @Column(name = "start",nullable = false)
+    @Column(name="type",length = 45)
+    private String type;
+    @Column(name = "start")
     private Date startdate;
-    @Column(name = "end",nullable = false)
+    @Column(name = "end")
     private Date startend;
 
     public String getName() {
@@ -30,12 +30,12 @@ public class Semester extends BaseEntity{
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String description) {
+        this.type = description;
     }
 
     public Date getStartdate() {
