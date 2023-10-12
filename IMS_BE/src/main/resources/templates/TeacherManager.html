@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý lớp học</title>
+</head>
+<body>
+<h1>Danh sách lớp học</h1>
+
+<!-- Form để thêm/sửa lớp học -->
+<form th:action="@{/classes/save}" th:object="${classesForm}" method="post">
+    <div>
+        <label>Tên lớp:</label>
+        <input type="text" th:field="*{name}">
+    </div>
+    <div>
+        <label>Mô tả:</label>
+        <textarea th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <label>Trạng thái:</label>
+        <input type="number" th:field="*{status}">
+    </div>
+    <div>
+        <label>Chọn giáo viên:</label>
+        <select th:field="*{teacher.id}">
+            <option th:each="teacher : ${lstTeachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Chọn môn học:</label>
+        <select th:field="*{subject.id}">
+            <option th:each="subject : ${lstSubjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Chọn học kỳ:</label>
+        <select th:field="*{setting.id}">
+            <option th:each="setting : ${lstSettings}" th:value="${setting.id}" th:text="${setting.name}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Lưu</button>
+    </div>
+</form>
+
+<!-- Danh sách lớp học -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên lớp</th>
+        <th>Mô tả</th>
+        <th>Trạng thái</th>
+        <th>Giáo viên</th>
+        <th>Môn học</th>
+        <th>Học kỳ</th>
+        <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="classes : ${lstClasses}">
+        <td th:text="${classes.id}"></td>
+        <td th:text="${classes.name}"></td>
+        <td th:text="${classes.description}"></td>
+        <td th:text="${classes.status}"></td>
+        <td th:text="${classes.teacher.name}"></td>
+        <td th:text="${classes.subject.name}"></td>
+        <td th:text="${classes.setting.name}"></td>
+        <td>
+            <a th:href="@{'/classes/?id=' + ${classes.id}}">Sửa</a>
+            <a th:href="@{'/classes/delete/' + ${classes.id}}">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
