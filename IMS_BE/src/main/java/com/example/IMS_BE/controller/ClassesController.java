@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class ClassesController {
     @Autowired
     private ClassesService classesService;
-
     @RequestMapping("/")
     public String index(@RequestParam(value = "id", required = false, defaultValue = "") Long id, Model model) {
         Classes formModel = new Classes();
