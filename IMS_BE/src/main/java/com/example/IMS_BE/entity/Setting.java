@@ -15,7 +15,7 @@ public class Setting extends BaseEntity{
 
     @Column(name="name",nullable = false,length = 45)
     private String name;
-    @Column(name="type",length = 45)
+    @Column(name="type",nullable = false,length = 45)
     private String type;
     @Column(name = "start")
     private Date startdate;
