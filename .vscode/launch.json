@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ImsBeApplication<IMS_BE>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.IMS_BE.ImsBeApplication",
+            "projectName": "IMS_BE",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
