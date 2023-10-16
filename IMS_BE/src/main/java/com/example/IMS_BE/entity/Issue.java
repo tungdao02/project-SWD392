@@ -25,6 +25,9 @@ public class Issue {
     @ManyToOne
     @JoinColumn(name = "status",nullable = false,referencedColumnName = "status_id")
     private Status status;
+    @ManyToOne
+    @JoinColumn(name = "class_id",nullable = false,referencedColumnName = "class_id")
+    private Classes classes;
     public Issue() {
     }
 
