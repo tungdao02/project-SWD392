@@ -53,4 +53,12 @@ public class Setting extends BaseEntity{
     public void setStartend(Date startend) {
         this.startend = startend;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
