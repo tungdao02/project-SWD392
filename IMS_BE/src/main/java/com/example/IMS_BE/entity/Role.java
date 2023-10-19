@@ -9,18 +9,15 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Long id;
-    @Column(name = "status_name",nullable = false,length = 45)
+    @Column(name = "role_name",nullable = false,length = 45)
     private String name;
-    @Column(name = "status_des",length = 45)
-    private String des;
 
     public Role() {
     }
 
-    public Role(Long id, String name, String des) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.des = des;
     }
 
     public Long getId() {
@@ -39,11 +36,4 @@ public class Role {
         this.name = name;
     }
 
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
 }
