@@ -9,6 +9,8 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private  Long id;
+    @Column(name="name",length = 45)
+    private String name;
     @Column(name="description",length = 45)
     private String description;
     @ManyToOne

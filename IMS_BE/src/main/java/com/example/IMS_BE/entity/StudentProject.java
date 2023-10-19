@@ -14,4 +14,37 @@ public class StudentProject {
     @ManyToOne
     @JoinColumn(name = "student_id", nullable=false,referencedColumnName = "user_id")
     private User user;
+
+    public StudentProject() {
+    }
+
+    public StudentProject(Long id, Project project, User user) {
+        this.id = id;
+        this.project = project;
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
