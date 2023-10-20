@@ -35,7 +35,23 @@
   <div class="popup-content">
     <h2>Create New Project</h2>
     <form th:action="@{/save}" th:object="${projectForm}" method="post">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+      </div>
+      <div>
+        <label for="groupname">Group Name:</label>
+        <input type="text" id="groupname" th:field="*{groupname}" />
+      </div>
+      <div>
+        <label for="projectcode">Project Code:</label>
+        <input type="text" id="projectcode" th:field="*{projectcode}" />
+      </div>
 
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}" />
+      </div>
       <div>
         <label for="class">Class:</label>
         <select id="class" th:field="*{classes.id}">
@@ -53,6 +69,7 @@
         <button type="button" id="closeButton">Close</button>
       </div>
     </form>
+
   </div>
 </div>
 
