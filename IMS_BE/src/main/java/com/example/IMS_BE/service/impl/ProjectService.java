@@ -1,0 +1,37 @@
+package com.example.IMS_BE.service.impl;
+
+import com.example.IMS_BE.entity.Project;
+import com.example.IMS_BE.repository.IProjectRepository;
+import com.example.IMS_BE.service.IProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProjectService implements IProjectService {
+
+    private final IProjectRepository projectRepository;
+
+    @Autowired
+    public ProjectService(IProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
+    // Các phương thức xử lý logic dự án
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
+    }
+
+    public Project getProjectById(Long projectId) {
+        return projectRepository.findById(projectId).orElse(null);
+    }
+
+    public Project saveProject(Project project) {
+      return   projectRepository.save(project);
+    }
+
+    public void deleteProject(Long projectId) {
+        projectRepository.deleteById(projectId);
+    }
+}
