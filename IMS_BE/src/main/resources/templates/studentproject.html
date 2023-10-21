@@ -29,6 +29,7 @@
 
 <!-- Nút "Add" để hiển thị biểu mẫu -->
 <button id="addButton">Add</button>
+<button id="addButton2">Add Student</button>
 
 <!-- Biểu mẫu popup -->
 <div class="popup-form" id="addProjectForm">
@@ -57,14 +58,14 @@
       </div>
 
       <div>
-        <label>Team Leader:</label>
+        <label>Class:</label>
         <select th:field="*{classes.id}">
           <option th:each="classes : ${lstClass}" th:value="${classes.getId()}" th:text="${classes.name}"></option>
         </select>
       </div>
 
       <div>
-        <label>User:</label>
+        <label>Team Leader:</label>
         <select th:field="*{user.id}">
           <option th:each="users : ${lstUser}" th:value="${users.getId()}" th:text="${users.username}"></option>
         </select>
@@ -78,10 +79,42 @@
   </div>
 </div>
 
+<!-- ADD STUDENT -->
+<div class="popup-form" id="addProjectForm2">
+  <div class="popup-content">
+    <h2>Create New Project</h2>
+    <form th:action="@{/studentproject/save2}" th:object="${studentProjectForm}" method="post">
+
+      <div>
+        <input type="hidden" th:field="*{id}" />
+      </div>
+      <div>
+        <label>Project:</label>
+        <select th:field="*{project.id}">
+          <option th:each="project : ${lstProject}" th:value="${project.getId()}" th:text="${project.getName()}"></option>
+        </select>
+      </div>
+
+      <div>
+        <label>User:</label>
+        <select th:field="*{user.id}">
+          <option th:each="users : ${lstUser}" th:value="${users.getId()}" th:text="${users.username}"></option>
+        </select>
+      </div>
+
+      <div>
+        <button type="submit">Save Project</button>
+        <button type="button" id="closeButton2">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <h1>Student Project List</h1>
 <table>
   <tr>
-    <th>ID</th>
+    <th>No</th>
     <th>Project Name</th>
     <th>Group Name</th>
     <th>Student Name</th>
@@ -89,29 +122,18 @@
     <th>Actions</th>
   </tr>
   <tr th:each="studentProject, rowStat : ${studentProjects}">
-    <!-- Check if it's the first row or project.id has changed -->
-    <th:block th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id}">
-      <td th:text="${studentProject.id}"></td>
+      <td th:text="${studentProject.project.id}"></td>
       <td th:text="${studentProject.project.name}"></td>
       <td th:text="${studentProject.project.groupname}"></td>
       <td th:text="${studentProject.user.username}"></td>
       <td th:text="${studentProject.project.user.username}"></td>
       <td>
-        <a  th:href="@{'/studentproject/'(id= ${studentProject.project.getId()})}" class="edit-button">Edit</a>
-
+        <a th:href="@{'/studentproject/'(id= ${studentProject.project.getId()})}" class="edit-button">Edit</a>
         <a th:href="@{'/delete/' + ${studentProject.id}}">Delete</a>
       </td>
-    </th:block>
-    <!-- Check if it's not the first row and project.id has not changed -->
-    <th:block th:if="${!rowStat.first and studentProject.project.id == studentProjects[rowStat.index - 1].project.id}">
-      <td></td>
-      <td></td>
-      <td></td>
-      <td th:text="${studentProject.user.username}"></td>
-      <td></td>
-    </th:block>
   </tr>
 </table>
+
 
 <!-- Biểu mẫu popup -->
 <div id="projectPopup" class="popup-form">
@@ -172,6 +194,17 @@
 
   document.getElementById('closeButton').addEventListener('click', function() {
     document.getElementById('addProjectForm').style.display = 'none';
+  });
+</script>
+
+<!-- JavaScript để hiển thị và ẩn biểu mẫu popup -->
+<script>
+  document.getElementById('addButton2').addEventListener('click', function() {
+    document.getElementById('addProjectForm2').style.display = 'block';
+  });
+
+  document.getElementById('closeButton2').addEventListener('click', function() {
+    document.getElementById('addProjectForm2').style.display = 'none';
   });
 </script>
 </body>

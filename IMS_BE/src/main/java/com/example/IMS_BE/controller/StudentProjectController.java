@@ -41,13 +41,24 @@ public class StudentProjectController {
             formModel = projectService.getProjectById(projectId);
         }
 
+         StudentProject formModel2 = StudentProject.builder().build();
+
+        if (!id.isEmpty()) {
+            Long projectId = Long.valueOf(id);
+            formModel2 = studentProjectService.getStudentProjectById(projectId);
+        }
+
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
+        List<Project> projects = projectService.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
         model.addAttribute("studentProjects", studentProjects);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
+        model.addAttribute("lstProject", projects);
+
         model.addAttribute("projectForm", formModel);
+        model.addAttribute("studentProjectForm", formModel2);
 
         return "studentproject";
     }
@@ -58,6 +69,14 @@ public class StudentProjectController {
         projectService.saveProject(project);
         return "redirect:/studentproject/";
     }
+
+    @PostMapping("/save2")
+    public String save2(@ModelAttribute("studentProjectForm") StudentProject project2) {
+
+        studentProjectService.saveStudentProject(project2);
+        return "redirect:/studentproject/";
+    }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
