@@ -1,7 +1,11 @@
 package com.example.IMS_BE.controller;
 
+import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.StudentProject;
+import com.example.IMS_BE.entity.User;
+import com.example.IMS_BE.service.UserService;
+import com.example.IMS_BE.service.impl.ClassesService;
 import com.example.IMS_BE.service.impl.ProjectService;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,13 @@ public class StudentProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ClassesService classService;
+
+
+    @Autowired
     private StudentProjectService studentProjectService;
 
     @GetMapping("/")
@@ -30,25 +41,22 @@ public class StudentProjectController {
             formModel = projectService.getProjectById(projectId);
         }
 
-       // List<Project> projects = projectService.getAllProjects();
+        List<Classes> classes = classService.GetAllClasses();
+        List<User> users = userService.getAllUsers();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
         model.addAttribute("studentProjects", studentProjects);
-      //  model.addAttribute("userlist", userlist);
+        model.addAttribute("lstClass", classes);
+        model.addAttribute("lstUser", users);
         model.addAttribute("projectForm", formModel);
 
         return "studentproject";
     }
 
-
-
     @PostMapping("/save")
     public String save(@ModelAttribute("projectForm") Project project) {
 
-    //    Integer studentprojectId = Math.toIntExact(project);
-     //   StudentProjectService studenproject = studentProjectService.getStudentProjectById(studentprojectId);
-
         projectService.saveProject(project);
-        return "redirect:/projects/";
+        return "redirect:/studentproject/";
     }
 
     @GetMapping("/delete/{id}")

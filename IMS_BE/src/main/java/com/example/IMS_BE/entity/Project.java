@@ -20,10 +20,10 @@ public class Project {
     @Column(name="description",length = 45)
     private String description;
     @ManyToOne
-    @JoinColumn( name="class_id",nullable = false,referencedColumnName = "class_id")
+    @JoinColumn( name="class_id",nullable = true,referencedColumnName = "class_id")
     private Classes classes;
     @ManyToOne
-    @JoinColumn(name = "teamlead_id",nullable = false,referencedColumnName = "user_id")
+    @JoinColumn(name = "teamlead_id",nullable = true,referencedColumnName = "user_id")
     private User user;
 
     public Project() {

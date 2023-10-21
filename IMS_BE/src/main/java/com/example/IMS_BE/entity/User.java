@@ -25,6 +25,20 @@ public class User extends BaseEntity {
     @JoinColumn (name = "role_id",nullable = false,referencedColumnName = "setting_id")
     private Setting role;
 
+
+    public User() {
+    }
+
+    public User(Long id, String username, String phone, String email, String password, int status, Setting role) {
+        this.id = id;
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }

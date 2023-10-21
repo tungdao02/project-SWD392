@@ -34,42 +34,47 @@
 <div class="popup-form" id="addProjectForm">
   <div class="popup-content">
     <h2>Create New Project</h2>
-    <form th:action="@{/save}" th:object="${projectForm}" method="post">
+    <form th:action="@{/studentproject/save}" th:object="${projectForm}" method="post">
+
+
+      <div>
+        <input type="hidden" id="id" th:field="*{id}" />
+      </div>
+
       <div>
         <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" />
-      </div>
-      <div>
-        <label for="groupname">Group Name:</label>
-        <input type="text" id="groupname" th:field="*{groupname}" />
-      </div>
-      <div>
-        <label for="projectcode">Project Code:</label>
-        <input type="text" id="projectcode" th:field="*{projectcode}" />
       </div>
 
       <div>
         <label for="description">Description:</label>
         <input type="text" id="description" th:field="*{description}" />
       </div>
+
       <div>
-        <label for="class">Class:</label>
-        <select id="class" th:field="*{classes.id}">
-          <!-- Add options for classes here -->
+        <label for="groupname">Group Name:</label>
+        <input type="text" id="groupname" th:field="*{groupname}" />
+      </div>
+
+      <div>
+        <label>Team Leader:</label>
+        <select th:field="*{classes.id}">
+          <option th:each="classes : ${lstClass}" th:value="${classes.getId()}" th:text="${classes.name}"></option>
         </select>
       </div>
+
       <div>
-        <label for="teamlead">Team Lead:</label>
-        <select id="teamlead" th:field="*{user.id}">
-          <!-- Add options for team leads here -->
+        <label>User:</label>
+        <select th:field="*{user.id}">
+          <option th:each="users : ${lstUser}" th:value="${users.getId()}" th:text="${users.username}"></option>
         </select>
       </div>
+
       <div>
         <button type="submit">Save Project</button>
         <button type="button" id="closeButton">Close</button>
       </div>
     </form>
-
   </div>
 </div>
 
@@ -78,21 +83,85 @@
   <tr>
     <th>ID</th>
     <th>Project Name</th>
+    <th>Group Name</th>
     <th>Student Name</th>
+    <th>Team Lead</th>
     <th>Actions</th>
   </tr>
-  <tr th:each="studentProject : ${studentProjects}">
-    <td th:text="${studentProject.id}"></td>
-    <td th:text="${studentProject.project.description}"></td>
-    <td th:text="${studentProject.user.name}"></td>
-    <td>
-      <a th:href="@{'/edit/' + ${studentProject.id}}">Edit</a>
-      <a th:href="@{'/delete/' + ${studentProject.id}}">Delete</a>
-    </td>
+  <tr th:each="studentProject, rowStat : ${studentProjects}">
+    <!-- Check if it's the first row or project.id has changed -->
+    <th:block th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id}">
+      <td th:text="${studentProject.id}"></td>
+      <td th:text="${studentProject.project.name}"></td>
+      <td th:text="${studentProject.project.groupname}"></td>
+      <td th:text="${studentProject.user.username}"></td>
+      <td th:text="${studentProject.project.user.username}"></td>
+      <td>
+        <a  th:href="@{'/studentproject/'(id= ${studentProject.project.getId()})}" class="edit-button">Edit</a>
+
+        <a th:href="@{'/delete/' + ${studentProject.id}}">Delete</a>
+      </td>
+    </th:block>
+    <!-- Check if it's not the first row and project.id has not changed -->
+    <th:block th:if="${!rowStat.first and studentProject.project.id == studentProjects[rowStat.index - 1].project.id}">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td th:text="${studentProject.user.username}"></td>
+      <td></td>
+    </th:block>
   </tr>
 </table>
 
+<!-- Biểu mẫu popup -->
+<div id="projectPopup" class="popup-form">
+  <div class="popup-content">
+    <h2>Edit Project</h2>
+    <form th:action="@{/studentproject/save}" th:object="${projectForm}" method="post">
 
+      <!-- Các trường chỉnh sửa -->
+      <div>
+        <label>Project Name</label><br/>
+        <input type="text" th:field="*{name}">
+      </div>
+
+      <!-- ... -->
+      <div>
+        <button type="submit">Save Student Project</button>
+        <button type="button" class="close-button" data-id="${studentProject.id}">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // Hiển thị cửa sổ popup khi nhấn vào dự án
+  $(document).on("click", ".edit-button", function() {
+    // Lấy ID của dự án từ thuộc tính data-id
+    var projectId = $(this).data("id");
+
+    // Gửi yêu cầu lấy thông tin dự án từ máy chủ (có thể sử dụng Ajax)
+    // Sau khi lấy thông tin dự án, điền nó vào cửa sổ popup
+    // Ví dụ:
+    // $.ajax({
+    //   url: '/getProjectInfo/' + projectId,
+    //   success: function(data) {
+    //     $('#projectPopup .popup-content').html(data);
+    //     $('#projectPopup').show();
+    //   }
+    // });
+
+    // Hiển thị cửa sổ popup (giả định rằng bạn đã lấy thông tin dự án)
+    $('#projectPopup').show();
+  });
+
+  // Đóng cửa sổ popup khi nhấn nút "Close"
+  $(document).on("click", ".close-button", function() {
+    $('#projectPopup').hide();
+  });
+</script>
 
 
 <!-- JavaScript để hiển thị và ẩn biểu mẫu popup -->
