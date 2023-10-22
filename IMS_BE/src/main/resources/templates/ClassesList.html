@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th ="www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Classes Manage</h1>
+    <table border="1">
+        <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th></th>
+        </tr>
+        <!-- Dùng Thymeleaf để lặp qua danh sách các lớp học -->
+        <tr th:each="class, status : ${classList}">
+            <td th:text="${status.index + 1}">1</td>
+            <td th:text="${class.name}">Item 1</td>
+            <td th:text="${class.description}">Description 1</td>
+            <td th:text="${class.status}">Active</td>
+            <td th:text="${#dates.format(class.startDate, 'dd-MM-yyyy')}">Start Date</td>
+            <td th:text="${#dates.format(class.endDate, 'dd-MM-yyyy')}">End Date</td>
+            <td>
+                <input type="checkbox" th:checked="${not class.isDeleted}">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

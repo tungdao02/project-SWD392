@@ -22,10 +22,18 @@ public class User extends BaseEntity {
     @Column(name = "status",nullable = false)
     private int status;
     @ManyToOne
-    @JoinColumn (name = "role_id",nullable = false,referencedColumnName = "setting_id")
-    private Setting role;
+    @JoinColumn (name = "role_id",nullable = false,referencedColumnName = "role_id")
+    private Role role;
 
-
+    public User(Long id, String name, String phone, String email, String password, int status, Role role) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.role = role;
+    }
 
     public User() {
     }
@@ -78,7 +86,13 @@ public class User extends BaseEntity {
         this.status = status;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public String toString() {
