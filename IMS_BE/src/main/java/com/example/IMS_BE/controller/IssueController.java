@@ -21,7 +21,7 @@ import java.util.List;
 public class IssueController {
     @Autowired
     private IssueService issueService;
-    @GetMapping("/")
+    @GetMapping("/student")
     public String getListIssue(Model model){
         List<Issue> list = issueService.getAllIssue();
         model.addAttribute("list",list);

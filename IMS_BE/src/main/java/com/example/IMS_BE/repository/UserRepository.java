@@ -27,12 +27,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findById(int id);
 
+    User findByPhoneAndAndEmail(String phone,String email);
     User findByUsername(String username);
 
 
     User findByPhone(String phone);
 
     User findByEmail(String email);
-
 }
 
