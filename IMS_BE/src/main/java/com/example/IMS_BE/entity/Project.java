@@ -1,8 +1,10 @@
 package com.example.IMS_BE.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "project")
 public class Project {
     @Id
@@ -23,9 +25,12 @@ public class Project {
     public Project() {
     }
 
+
     public Project(Long id, String name, String description, Classes classes, User user) {
         this.id = id;
         this.name = name;
+
+
         this.description = description;
         this.classes = classes;
         this.user = user;
@@ -46,6 +51,7 @@ public class Project {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getDescription() {
         return description;
@@ -70,4 +76,5 @@ public class Project {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
