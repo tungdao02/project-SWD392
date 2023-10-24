@@ -117,4 +117,19 @@ public class Classes {
     public void setStartend(Date startend) {
         this.startend = startend;
     }
+
+    @Override
+    public String toString() {
+        return "Classes{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", setting=" + setting +
+                ", teacher=" + teacher +
+                ", subject=" + subject +
+                ", startdate=" + startdate +
+                ", startend=" + startend +
+                '}';
+    }
 }
