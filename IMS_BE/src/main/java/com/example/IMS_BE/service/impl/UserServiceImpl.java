@@ -1,5 +1,6 @@
 package com.example.IMS_BE.service.impl;
 
+import com.example.IMS_BE.entity.Issue;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.UserService;
@@ -8,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,7 +25,6 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
-
 
 
     @Override
@@ -48,6 +49,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findById(int id) {
+        return Optional.ofNullable(userRepository.findById(id));
+    }
+
+    @Override
+    public List<User> findUserList() {
+        return (List<User>)userRepository.findAll();
     }
 
 

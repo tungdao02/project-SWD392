@@ -25,6 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "            where email = ?1 " , nativeQuery = true)
     String findRolesByEmail(String email);
 
+    User findById(int id);
 
     User findByUsername(String username);
 
@@ -32,5 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByPhone(String phone);
 
     User findByEmail(String email);
+
 }
 

@@ -30,6 +30,13 @@ public class Subject {
         this.manager = manager;
     }
 
+    public Subject(String name, String description, String status, User manager) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.manager = manager;
+    }
+
     public Long getId() {
         return id;
     }
