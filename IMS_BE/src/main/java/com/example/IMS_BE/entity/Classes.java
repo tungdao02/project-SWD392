@@ -119,4 +119,19 @@ public class Classes {
     public void setStartEnd(Date startEnd) {
         this.startEnd = startEnd;
     }
+
+    @Override
+    public String toString() {
+        return "Classes{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", setting=" + setting +
+                ", teacher=" + teacher +
+                ", subject=" + subject +
+                ", startdate=" + startdate +
+                ", startend=" + startend +
+                '}';
+    }
 }

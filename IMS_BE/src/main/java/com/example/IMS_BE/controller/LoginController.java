@@ -46,7 +46,7 @@ public class LoginController {
                 model.addAttribute("settings", settings);
                 return "admin_home";
             }else{
-                return "home";
+                return "redirect:/issue/student";
             }
         }else{
             System.out.println("Login that bai");
