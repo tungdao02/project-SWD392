@@ -3,6 +3,7 @@ package com.example.IMS_BE.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.IMS_BE.Enum.ClassStatusEnum;
 import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.service.IClassesService;
 
@@ -31,8 +32,8 @@ public class ClassesService implements IClassesService {
     }
 
     @Override
-    public void DeleteClass(Classes classes) {
-        _classesRepository.delete(classes);
+    public void DeleteClass(long id) {
+        _classesRepository.deleteById(id);
     }
 
     @Override
@@ -49,6 +50,8 @@ public class ClassesService implements IClassesService {
     @Override
     public void CancelClass(long id) {
         Classes currentClass = GetClassById(id);
+        currentClass.setStatus(ClassStatusEnum.Deactivate);
+        UpdateClass(currentClass);
     }
 
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+import com.example.IMS_BE.Enum.ClassStatusEnum;
+
 @Entity
 @Table(name = "class")
 public class Classes {
@@ -16,7 +18,7 @@ public class Classes {
     @Column(name = "description")
     private String description;
     @Column(name="status",nullable = false)
-    private int status;
+    private ClassStatusEnum status;
     @ManyToOne
     @JoinColumn(name = "semester_id",nullable = false,referencedColumnName = "setting_id")
     private Setting setting;
@@ -27,14 +29,14 @@ public class Classes {
     @JoinColumn(name = "subject_id",nullable = false,referencedColumnName = "subject_id")
     private Subject subject;
     @Column(name = "start")
-    private Date startdate;
+    private Date startDate;
     @Column(name = "end")
-    private Date startend;
+    private Date startEnd;
 
     public Classes() {
     }
 
-    public Classes(Long id, String name, String description, int status, Setting setting, User teacher, Subject subject, Date startdate, Date startend) {
+    public Classes(Long id, String name, String description, ClassStatusEnum status, Setting setting, User teacher, Subject subject, Date startdate, Date startend) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,8 +44,8 @@ public class Classes {
         this.setting = setting;
         this.teacher = teacher;
         this.subject = subject;
-        this.startdate = startdate;
-        this.startend = startend;
+        this.startDate = startdate;
+        this.startEnd = startend;
     }
 
     public Long getId() {
@@ -70,11 +72,11 @@ public class Classes {
         this.description = description;
     }
 
-    public int getStatus() {
+    public ClassStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(ClassStatusEnum status) {
         this.status = status;
     }
 
@@ -102,19 +104,19 @@ public class Classes {
         this.subject = subject;
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getStartend() {
-        return startend;
+    public Date getStartEnd() {
+        return startEnd;
     }
 
-    public void setStartend(Date startend) {
-        this.startend = startend;
+    public void setStartEnd(Date startEnd) {
+        this.startEnd = startEnd;
     }
 }

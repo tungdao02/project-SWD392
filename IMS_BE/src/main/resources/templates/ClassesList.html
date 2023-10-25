@@ -1,34 +1,104 @@
 <!DOCTYPE html>
-<html lang="en" xmlns: th ="www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Classes Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <style>
+        body{
+            padding: auto;
+            margin: auto;
+            box-sizing: border-box;
+            width: 90%;
+        }
+
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+        }
+
+        .confirm-button,
+        .cancel-button {
+            margin: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Classes Manage</h1>
-    <table border="1">
-        <tr>
-            <th>STT</th>
+    <h1>Classes Management</h1>
+    <div>
+        <input type="text" id="searchInput" placeholder="Search..."> <!-- Ô tìm kiếm -->
+        <button onclick="searchClasses()">Search</button>
+        <a href="/classes/create"><button>Add New Class</button></a>
+    </div>
+    <table border="1" class="table" style="margin:10px 0 10px 0;">
+        <tr class="table-primary">
+            <th>Index</th>
             <th>Name</th>
             <th>Description</th>
             <th>Status</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th></th>
+            <th>Delete</th>
         </tr>
         <!-- Dùng Thymeleaf để lặp qua danh sách các lớp học -->
-        <tr th:each="class, status : ${classList}">
-            <td th:text="${status.index + 1}">1</td>
-            <td th:text="${class.name}">Item 1</td>
-            <td th:text="${class.description}">Description 1</td>
-            <td th:text="${class.status}">Active</td>
-            <td th:text="${#dates.format(class.startDate, 'dd-MM-yyyy')}">Start Date</td>
-            <td th:text="${#dates.format(class.endDate, 'dd-MM-yyyy')}">End Date</td>
+        <tr th:each="classes,status : ${list}">
+            <td th:text="${status.index + 1}"></td>
+            <td ><a th:href="@{'/classes/edit/' + ${classes.id}}" th:text="${classes.name}"></a></td>
+            <td th:text="${classes.description}"></td>
+            <td th:text="${classes.status}"></td>
+            <td th:text="${#dates.format(classes.getStartdate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#dates.format(classes.getStartend, 'dd-MM-yyyy')}"></td>
             <td>
-                <input type="checkbox" th:checked="${not class.isDeleted}">
+                <button th:if="${classes.status == 0}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-danger">Delete</button>
+                <button th:if="${classes.status == 1}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-warning">Cancel</button>
             </td>
         </tr>
     </table>
+
+    <div id="confirmationPopup" class="confirmation-dialog">
+        <div class="popup-content">
+            <p>Are you sure you want to delete <span id="classNameToDelete"></span>?</p>
+            <button id="confirmDelete" class="confirm-button btn btn-danger">Yes, Delete</button>
+            <button id="cancelDelete" class="cancel-button btn btn-light">Cancel</button>
+        </div>
+    </div>
+    <script>
+        function showDeleteConfirmation(className, classId) {
+            var confirmationPopup = document.getElementById('confirmationPopup');
+            var classNameToDelete = document.getElementById('classNameToDelete');
+            var confirmDeleteButton = document.getElementById('confirmDelete');
+            var cancelDeleteButton = document.getElementById('cancelDelete');
+
+            classNameToDelete.innerText = className;
+
+            confirmationPopup.style.display = 'block';
+
+            confirmDeleteButton.addEventListener('click', function () {
+                confirmationPopup.style.display = 'none';
+            });
+
+            cancelDeleteButton.addEventListener('click', function () {
+                confirmationPopup.style.display = 'none';
+            });
+        }
+        
+    </script>
 </body>
+
+
 </html>

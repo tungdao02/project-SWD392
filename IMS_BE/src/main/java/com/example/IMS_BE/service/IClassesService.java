@@ -10,7 +10,7 @@ public interface IClassesService {
     public List<Classes> GetAllClasses();
     public List<Classes> GetClassesById(long id);
     public void AddClass(Classes classes);
-    public void DeleteClass(Classes classes);
+    public void DeleteClass(long id);
     public void UpdateClass(Classes classes);
     public Classes GetClassById(long id);
     public void CancelClass(long id);
