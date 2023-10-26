@@ -16,36 +16,36 @@
                         <h3 class="text-center text-primary">Add New Subject</h3>
                         <div></div>
 
-                        <form th:action="@{/save_subject}" method="post">
+                        <form th:action="@{/subject/add}" method="post" th:object="${subject}">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingName" name="subject_name">
+                                <input type="text" class="form-control" id="floatingName" th:field="*{name}">
                                 <label for="floatingName">Name Subject</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingDescription" name="description">
+                                <input type="text" class="form-control" id="floatingDescription" th:field="*{description}">
                                 <label for="floatingDescription">Description</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingStatus" name="status">
+                                <input type="text" class="form-control" id="floatingStatus" th:field="*{status}">
                                 <label for="floatingStatus">Status</label>
                             </div>
 
-                           <div class="form-floating mb-3">
-                               <div>
-                                   <label>Manager</label>
-                               </div>
-                               <div>
-                                   <select class="form-select" name="manager_id">
-                                       <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
-                                   </select>
-                               </div>
-                           </div>
+                            <div class="form-floating mb-3">
+                                <div>
+                                    <label>Manager</label>
+                                </div>
+                                <div>
+                                    <select class="form-select" th:field="*{manager}">
+                                        <option th:each="user : ${managerList}" th:value="${user.id}" th:text="${user.username}"></option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div style="padding-top: 10px">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-primary">Cancel</button>
+                                <a href="/subject/list" class="btn btn-primary" >Cancel</a>
                             </div>
                         </form>
                     </div>

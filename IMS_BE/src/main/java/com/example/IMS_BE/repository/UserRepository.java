@@ -1,5 +1,6 @@
 package com.example.IMS_BE.repository;
 
+import com.example.IMS_BE.entity.Setting;
 import com.example.IMS_BE.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,9 +31,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByPhoneAndAndEmail(String phone,String email);
     User findByUsername(String username);
 
-
     User findByPhone(String phone);
 
     User findByEmail(String email);
+
+    List<User> findAllByRole(Setting setting);
 }
 
