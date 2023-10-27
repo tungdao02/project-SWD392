@@ -53,19 +53,18 @@
             <th>Status</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Delete</th>
+            <th></th>
         </tr>
-        <!-- Dùng Thymeleaf để lặp qua danh sách các lớp học -->
         <tr th:each="classes,status : ${list}">
             <td th:text="${status.index + 1}"></td>
             <td ><a th:href="@{'/classes/edit/' + ${classes.id}}" th:text="${classes.name}"></a></td>
             <td th:text="${classes.description}"></td>
             <td th:text="${classes.status}"></td>
-            <td th:text="${#dates.format(classes.getStartdate, 'dd-MM-yyyy')}"></td>
-            <td th:text="${#dates.format(classes.getStartend, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#dates.format(classes.getStartDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#dates.format(classes.getStartEnd, 'dd-MM-yyyy')}"></td>
             <td>
-                <button th:if="${classes.status == 0}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-danger">Delete</button>
-                <button th:if="${classes.status == 1}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-warning">Cancel</button>
+                <button th:if="${classes.getStatus == 0}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-danger">Delete</button>
+                <button th:if="${classes.getStatus == 1}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-warning">Cancel</button>
             </td>
         </tr>
     </table>

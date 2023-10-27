@@ -50,8 +50,33 @@ public class ClassesService implements IClassesService {
     @Override
     public void CancelClass(long id) {
         Classes currentClass = GetClassById(id);
-        currentClass.setStatus(ClassStatusEnum.Deactivate);
+        currentClass.setStatus(0);
         UpdateClass(currentClass);
+    }
+
+    @Override
+    public Classes getClassById(Long id) {
+        return _classesRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateGeneral(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateStudent(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateMilestone(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateSetting(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
     }
 
 }

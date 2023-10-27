@@ -18,7 +18,7 @@ public class Classes {
     @Column(name = "description")
     private String description;
     @Column(name="status",nullable = false)
-    private ClassStatusEnum status;
+    private int status;
     @ManyToOne
     @JoinColumn(name = "semester_id",nullable = false,referencedColumnName = "setting_id")
     private Setting setting;
@@ -36,7 +36,7 @@ public class Classes {
     public Classes() {
     }
 
-    public Classes(Long id, String name, String description, ClassStatusEnum status, Setting setting, User teacher, Subject subject, Date startdate, Date startend) {
+    public Classes(Long id, String name, String description, int status, Setting setting, User teacher, Subject subject, Date startdate, Date startend) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -72,11 +72,11 @@ public class Classes {
         this.description = description;
     }
 
-    public ClassStatusEnum getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(ClassStatusEnum status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -130,8 +130,8 @@ public class Classes {
                 ", setting=" + setting +
                 ", teacher=" + teacher +
                 ", subject=" + subject +
-                ", startdate=" + startdate +
-                ", startend=" + startend +
+                ", startdate=" + startDate +
+                ", startend=" + startEnd +
                 '}';
     }
 }

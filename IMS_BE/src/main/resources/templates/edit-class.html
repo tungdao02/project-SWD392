@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Setting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Edit Setting</h1>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id "milestone-tab" data-toggle="tab" href="#milestone" role="tab" aria-controls="milestone" aria-selected="false">Milestone</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">Setting</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <form th:object="${classToEdit}" th:action="@{/updateGeneral}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <label for="name">Class Name:</label>
+                <input type="text" id="name" th:field="*{name}" required><br><br>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" th:field="*{description}"></textarea><br><br>
+
+                <label for="startDate">Start Date:</label>
+                <input type="text" id="startDate" th:field="*{startDate}" required><br><br>
+
+                <label for="endDate">End Date:</label>
+                <input type="text" id="endDate" th:field="*{startEnd}" required><br><br>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+            <!-- Nội dung tab Student -->
+            <form th:object="${classToEdit}" th:action="@{/updateStudent}" method="post">
+                <!-- Thêm các trường chỉnh sửa cho tab Student -->
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="milestone" role="tabpanel" aria-labelledby="milestone-tab">
+            <!-- Nội dung tab Milestone -->
+            <form th:object="${classToEdit}" th:action="@{/updateMilestone}" method="post">
+                <!-- Thêm các trường chỉnh sửa cho tab Milestone -->
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
+            <!-- Nội dung tab Setting -->
+            <form th:object="${classToEdit}" th:action="@{/updateSetting}" method="post">
+                <!-- Thêm các trường chỉnh sửa cho tab Setting -->
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#startDate').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false
+            });
+
+            $('#endDate').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false
+            });
+        });
+    </script>
+</body>
+</html>

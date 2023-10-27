@@ -14,4 +14,9 @@ public interface IClassesService {
     public void UpdateClass(Classes classes);
     public Classes GetClassById(long id);
     public void CancelClass(long id);
+    public Classes getClassById(Long id);
+    public void updateGeneral(Classes classToEdit);
+    public void updateStudent(Classes classToEdit);
+    public void updateMilestone(Classes classToEdit);
+    public void updateSetting(Classes classToEdit);
 }
