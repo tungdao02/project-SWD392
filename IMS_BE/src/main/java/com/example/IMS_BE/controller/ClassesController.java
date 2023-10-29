@@ -2,13 +2,17 @@ package com.example.IMS_BE.controller;
 
 import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.entity.Setting;
+import com.example.IMS_BE.entity.Subject;
+import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
-import com.example.IMS_BE.service.UserService;
+import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/classes")
@@ -25,67 +30,72 @@ public class ClassesController {
     @Autowired
     private SettingService _settingService;
     @Autowired
-    private UserService _userService;
+    private UserServiceImpl _userService;
+    @Autowired
+    private com.example.IMS_BE.service.impl.SubjectService subjectService;
 
-    @GetMapping("/")
-    public String GetClassesList(Model model) {
-        List<Classes> list = _classesService.GetAllClasses();
-        model.addAttribute("list", list);
+    @GetMapping("/classes-list")
+    public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
+        int pageSize = 14;
+        Page<Classes> classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", classPage.getTotalPages());
+        model.addAttribute("list", classPage.getContent());
         return "ClassesList";
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         List<Setting> setting = _settingService.findAllByType("semester");
-
+        List<User> users = _userService.findAllByRole(4);
+        List<Subject> subject = subjectService.getAllSubject();
         model.addAttribute("newClass", new Classes());
+        model.addAttribute("newSetting", setting);
+        model.addAttribute("classSubject", subject);
+        model.addAttribute("teachers", users);
         return "CreateClass";
     }
 
     @PostMapping("/create")
     public String createClass(@ModelAttribute Classes classes) {
         _classesService.AddClass(classes);
-        return "redirect:/classes/";
+        return "redirect:classes-list";
     }
 
     @GetMapping("/edit/{id}")
     public String editClass(@PathVariable Long id, Model model) {
-        // Lấy thông tin lớp học dựa trên ID và gửi đến view
+        List<Setting> setting = _settingService.findAllByType("semester");
+        List<User> users = _userService.findAllByRole(4);
+        List<Subject> subject = subjectService.getAllSubject();
         Classes classToEdit = _classesService.getClassById(id);
         model.addAttribute("classToEdit", classToEdit);
-        return "edit-class"; // Trả về view để chỉnh sửa
+        model.addAttribute("classSubject", subject);
+        model.addAttribute("teachers", users);
+        model.addAttribute("newSetting", setting);
+        return "edit-class";
     }
 
-    @PostMapping("/updateGeneral")
-    public String updateGeneral(@ModelAttribute Classes classToEdit) {
-        _classesService.updateGeneral(classToEdit);
-        return "redirect:/class/edit/" + classToEdit.getId();
+    @PostMapping("/update")
+    public String updateClass(@ModelAttribute Classes classToEdit) {
+        _classesService.UpdateClass(classToEdit);
+        return "redirect:edit/" + classToEdit.getId();
     }
 
-    @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute Classes classToEdit) {
-        // Xử lý cập nhật thông tin học sinh
-        _classesService.updateStudent(classToEdit);
-        return "redirect:/class/edit/" + classToEdit.getId();
+    @GetMapping("/delete-cancel/{id}")
+    public String deleteOrCancel(@PathVariable Long id, Model model) {
+        Classes classes = _classesService.getClassById(id);
+        Classes classToEdit = _classesService.getClassById(id);
+        model.addAttribute("classDetails", classes);
+        model.addAttribute("classModel", classToEdit);
+        return "DeleteOrCancelClass";
     }
 
-    @PostMapping("/updateMilestone")
-    public String updateMilestone(@ModelAttribute Classes classToEdit) {
-        // Xử lý cập nhật thông tin Milestone
-        _classesService.updateMilestone(classToEdit);
-        return "redirect:/class/edit/" + classToEdit.getId();
-    }
-
-    @PostMapping("/updateSetting")
-    public String updateSetting(@ModelAttribute Classes classToEdit) {
-        // Xử lý cập nhật thông tin Setting
-        _classesService.updateSetting(classToEdit);
-        return "redirect:/class/edit/" + classToEdit.getId();
-    }
-
-    @PostMapping("/delete/{id}")
-    public String deleteClass(@PathVariable Long id) {
-        _classesService.DeleteClass(id);
-        return "redirect:/classes/";
+    @PostMapping("/delete-cancel")
+    public String deleteClass(@ModelAttribute Classes classModel) {
+        if (classModel.getStatus() == 0)
+            _classesService.DeleteClass(classModel.getId());
+        else
+            _classesService.CancelClass(classModel.getId());
+        return "redirect:classes-list";
     }
 }

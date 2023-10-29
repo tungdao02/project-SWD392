@@ -11,7 +11,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <style>
-        body{
+        body {
             padding: auto;
             margin: auto;
             box-sizing: border-box;
@@ -56,23 +56,39 @@
             <th></th>
         </tr>
         <tr th:each="classes,status : ${list}">
-            <td th:text="${status.index + 1}"></td>
-            <td ><a th:href="@{'/classes/edit/' + ${classes.id}}" th:text="${classes.name}"></a></td>
+            <td th:text="${status.index + 1 + (currentPage-1)*14}"></td>
+            <td><a th:href="@{'/classes/edit/' + ${classes.id}}" th:text="${classes.name}"></a></td>
             <td th:text="${classes.description}"></td>
-            <td th:text="${classes.status}"></td>
+            <td th:text="${classes.status} == 1 ? active : Deactivate"></td>
             <td th:text="${#dates.format(classes.getStartDate, 'dd-MM-yyyy')}"></td>
             <td th:text="${#dates.format(classes.getStartEnd, 'dd-MM-yyyy')}"></td>
             <td>
-                <button th:if="${classes.getStatus == 0}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-danger">Delete</button>
-                <button th:if="${classes.getStatus == 1}" th:attr="onclick=|showDeleteConfirmation('${classes.name}', '${classes.Id}')|" class="btn btn-warning">Cancel</button>
+                <a th:href="@{'/classes/delete-cancel/' + ${classes.id}}" th:if="${classes.getStatus == 0}"
+                    class="btn btn-danger">Delete</a>
+                <a th:href="@{'/classes/delete-cancel/' + ${classes.id}}" th:if="${classes.getStatus == 1}"
+                    class="btn btn-warning">Cancel</a>
             </td>
         </tr>
     </table>
-
+    <div th:if="${totalPages > 1}">
+        <ul class="pagination">
+            <li th:if="${currentPage > 1}">
+                <a class="page-link" th:href="@{'/classes/classes-list?page=' + (currentPage)}">Previous</a>
+            </li>
+            <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:class="${pageNum} == ${currentPage} ? 'page-item active'">
+                <a class="page-link" th:href="@{'/classes/classes-list?page=' + ${pageNum}}" th:text="${pageNum}"></a>
+            </li>
+            <li th:if="${currentPage < totalPages}">
+                <a class="page-link" th:href="@{'/classes/classes-list?page=' + (currentPage)}">Next</a>
+            </li>
+        </ul>
+    </div>
+    
+    
     <div id="confirmationPopup" class="confirmation-dialog">
         <div class="popup-content">
-            <p>Are you sure you want to delete <span id="classNameToDelete"></span>?</p>
-            <button id="confirmDelete" class="confirm-button btn btn-danger">Yes, Delete</button>
+            <p>Are you sure you want execute action on <span id="classNameToDelete"></span>?</p>
+            <button id="confirmDelete" class="confirm-button btn btn-danger">Yes</button>
             <button id="cancelDelete" class="cancel-button btn btn-light">Cancel</button>
         </div>
     </div>
@@ -95,7 +111,7 @@
                 confirmationPopup.style.display = 'none';
             });
         }
-        
+
     </script>
 </body>
 

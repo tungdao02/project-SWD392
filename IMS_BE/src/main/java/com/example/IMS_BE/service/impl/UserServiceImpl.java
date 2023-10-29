@@ -3,6 +3,8 @@ package com.example.IMS_BE.service.impl;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.UserService;
+
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,7 +26,10 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
+    public java.util.List<User> findAllByRole(long roles){ 
+        return userRepository.findByRoleId(roles);
 
+    }
 
     @Override
     public boolean isAdmin(String username) {

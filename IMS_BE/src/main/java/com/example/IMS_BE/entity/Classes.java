@@ -2,8 +2,10 @@ package com.example.IMS_BE.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.*;
 
+import org.hibernate.mapping.List;
+import org.springframework.format.annotation.DateTimeFormat;
 import com.example.IMS_BE.Enum.ClassStatusEnum;
 
 @Entity
@@ -13,25 +15,50 @@ public class Classes {
     @Column(name = "class_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="name",nullable = false,length = 45)
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Column(name="status",nullable = false)
     private int status;
+
     @ManyToOne
     @JoinColumn(name = "semester_id",nullable = false,referencedColumnName = "setting_id")
     private Setting setting;
+
     @ManyToOne
     @JoinColumn(name = "teacher_id",nullable = false,referencedColumnName = "user_id")
     private User teacher;
+
     @ManyToOne
     @JoinColumn(name = "subject_id",nullable = false,referencedColumnName = "subject_id")
     private Subject subject;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "start")
     private Date startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "end")
     private Date startEnd;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<StudentClass> studentClasses;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Project> projects;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Issue> issue;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Milestone> Milestone;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<IssueSetting> issueSetting;
 
     public Classes() {
     }

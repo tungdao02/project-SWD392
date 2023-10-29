@@ -8,9 +8,12 @@ import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.service.IClassesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.IMS_BE.repository.IClassesRepository;
+
 @Service
 public class ClassesService implements IClassesService {
     @Autowired
@@ -44,7 +47,7 @@ public class ClassesService implements IClassesService {
     @Override
     public Classes GetClassById(long id) {
         Optional<Classes> optionalClass = _classesRepository.findById(id);
-        return optionalClass.orElse(null); 
+        return optionalClass.orElse(null);
     }
 
     @Override
@@ -79,4 +82,7 @@ public class ClassesService implements IClassesService {
         _classesRepository.save(classToEdit);
     }
 
+    public Page<Classes> findAllClasses(Pageable pageable) {
+        return _classesRepository.findAll(pageable);
+    }
 }

@@ -4,6 +4,8 @@ import com.example.IMS_BE.entity.Classes;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 @Service
 public interface IClassesService {
@@ -19,4 +21,5 @@ public interface IClassesService {
     public void updateStudent(Classes classToEdit);
     public void updateMilestone(Classes classToEdit);
     public void updateSetting(Classes classToEdit);
+    public Page<Classes> findAllClasses(Pageable pageable);
 }
