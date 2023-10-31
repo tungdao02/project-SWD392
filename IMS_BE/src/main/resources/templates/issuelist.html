@@ -1,24 +1,176 @@
+<!--<table border="1" class="table table-active">-->
+<!--    <tr>-->
+<!--        <th>Name</th>-->
+<!--        <th>Email</th>-->
+<!--        <th>Phone</th>-->
+<!--        <th>Actions</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="issue : ${list}">-->
+<!--        <td th:text="${issue.id}"></td>-->
+<!--        <td th:text="${issue.title}"></td>-->
+
+<!--        <td th:text="${issue.assigner.id}"></td>-->
+
+<!--    </tr>-->
+<!--</table>-->
+
 <!DOCTYPE html>
-<html lang="en" xmlns: th ="www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Thêm FontAwesome -->
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Lớp CSS tùy chỉnh cho thanh menu */
+        .sidebar {
+            background-color: #444; /* Màu xám tùy chỉnh */
+            color: #fff; /* Màu chữ trắng */
+            padding-top: 20px;
+            padding-bottom: 20px;
+            height: 100vh; /* Đặt chiều cao bằng chiều cao của màn hình (100% viewport height) */
+            overflow-y: auto; /* Thêm thanh cuộn nếu nội dung vượt quá chiều cao của thanh menu */
+        }
+
+        /* Lớp CSS tùy chỉnh cho tiêu đề tên học sinh */
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Lớp CSS tùy chỉnh cho danh sách các vấn đề */
+        .issue-container {
+            margin-top: 20px;
+        }
+
+        /* Lớp CSS tùy chỉnh cho mỗi vấn đề */
+        .issue {
+            background-color: #f5f5f5; /* Màu nền xám nhạt */
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Lớp CSS tùy chỉnh cho tiêu đề vấn đề */
+        .issue-title {
+            font-weight: bold;
+        }
+
+        /* Lớp CSS tùy chỉnh cho trạng thái đã hoàn thành */
+        .completed {
+            color: green; /* Màu xanh cho biểu tượng */
+        }
+
+        /* Lớp CSS tùy chỉnh cho thanh phân trang */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Lớp CSS tùy chỉnh cho mục trong menu */
+        .nav-item {
+            transition: background-color 0.3s;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Màu trong suốt */
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+    </style>
+
+
 </head>
 <body>
-<table border="1" class="table table-active">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="issue : ${list}">
-        <td th:text="${issue.id}"></td>
-        <td th:text="${issue.title}"></td>
 
-        <td th:text="${issue.assigner.id}"></td>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Thanh menu bên trái (3 cột) -->
+        <nav class="col-md-2 sidebar">
+            <div class="sidebar-header">
+                <h3 th:text="${test_name}"></h3>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Mục 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mục 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log out</a>
+                </li>
+            </ul>
+        </nav>
 
-    </tr>
-</table>
+        <!-- Phần chính (9 cột) -->
+        <main class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Thanh tìm kiếm -->
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút "Thêm" và "Cập nhật" -->
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="float-right">
+                        <button class="btn btn-primary" type="button">Thêm</button>
+                        <button class="btn btn-secondary" type="button">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danh sách các vấn đề trong một thẻ div -->
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h2>Danh sách các vấn đề</h2>
+                    <div class="container">
+                        <div th:each="issue : ${list}" class="issue-container"> <!-- Thêm thẻ div bao quanh danh sách các vấn đề -->
+
+                            <!-- Vấn đề 1 -->
+                            <div class="issue">
+                                <div class="issue-title" th:text="${issue.title}"></div>
+                                <!--                            <div >Người chỉ định: Người A</div>-->
+                                <!--                            <div>Người thực hiện: Người B</div>-->
+                                <!--                            <div>Trạng thái: Đang xử lý</div>-->
+                                <!--                            <div>Thể loại: Loại X</div>-->
+                            </div>
+
+
+                            <!-- Thêm các vấn đề khác ở đây -->
+
+                            <!-- Thanh phân trang -->
+
+                        </div>
+                    </div>
+
+                    <nav class="pagination-container">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Trang trước</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><span class="page-link">2</span></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Trang sau</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
