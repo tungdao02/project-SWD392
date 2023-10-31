@@ -26,13 +26,9 @@ public class Setting extends BaseEntity{
         this.type = type;
     }
 
-    public Setting() {
-    }
 
-    public Setting(Long id, String name, String type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
+    public long getId(){
+        return id;
     }
 
     public String getName() {

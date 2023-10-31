@@ -40,6 +40,11 @@ public class SettingServiceImpl implements SettingService {
     }
 
     @Override
+    public List<Setting> findAllByType (String type){
+        return (List<Setting>)settingRepository.findByType(type);
+    }
+
+    @Override
     public List<Setting> findAllById(List<Long> longs) {
         return (List<Setting>)settingRepository.findAllById(longs);
     }

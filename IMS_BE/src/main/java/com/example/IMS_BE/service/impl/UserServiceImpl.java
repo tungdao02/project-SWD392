@@ -3,6 +3,8 @@ package com.example.IMS_BE.service.impl;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.UserService;
+
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
+
+    public java.util.List<User> findAllByRole(long roles){ 
+        return userRepository.findByRoleId(roles);
 
 
     @Override
