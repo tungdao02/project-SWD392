@@ -1,11 +1,13 @@
 package com.example.IMS_BE.controller;
 
 import com.example.IMS_BE.entity.Classes;
+import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.Setting;
 import com.example.IMS_BE.entity.Subject;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
+import com.example.IMS_BE.service.impl.ProjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
@@ -33,8 +35,10 @@ public class ClassesController {
     private UserServiceImpl _userService;
     @Autowired
     private com.example.IMS_BE.service.impl.SubjectService subjectService;
+    @Autowired
+    private IClassesService _projectService;
 
-    @GetMapping("/classes-list")
+    @GetMapping("/")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 14;
         Page<Classes> classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
@@ -72,7 +76,7 @@ public class ClassesController {
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
         model.addAttribute("newSetting", setting);
-        return "edit-class";
+        return "EditClass";
     }
 
     @PostMapping("/update")
