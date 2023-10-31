@@ -13,27 +13,21 @@ public class Project {
     private  Long id;
     @Column(name="name",length = 45)
     private String name;
-    @Column(name="groupname",length = 45)
-    private String groupname;
-    @Column(name="projectcode",length = 45)
-    private String projectcode;
     @Column(name="description",length = 45)
     private String description;
     @ManyToOne
-    @JoinColumn( name="class_id",nullable = true,referencedColumnName = "class_id")
+    @JoinColumn( name="class_id",nullable = false,referencedColumnName = "class_id")
     private Classes classes;
     @ManyToOne
-    @JoinColumn(name = "teamlead_id",nullable = true,referencedColumnName = "user_id")
+    @JoinColumn(name = "teamlead_id",nullable = false,referencedColumnName = "user_id")
     private User user;
 
     public Project() {
     }
 
-    public Project(Long id, String name, String groupname,String projectcode, String description, Classes classes, User user) {
+    public Project(Long id, String name, String description, Classes classes, User user) {
         this.id = id;
         this.name = name;
-        this.projectcode = projectcode;
-        this.groupname = groupname;
         this.description = description;
         this.classes = classes;
         this.user = user;
@@ -53,14 +47,6 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getGroupname() {
-        return groupname;
-    }
-
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
     }
 
     public String getDescription() {
@@ -87,11 +73,4 @@ public class Project {
         this.user = user;
     }
 
-    public String getProjectcode() {
-        return projectcode;
-    }
-
-    public void setProjectcode(String projectcode) {
-        this.projectcode = projectcode;
-    }
 }

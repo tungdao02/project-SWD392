@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/studentproject")
+@RequestMapping("/projectmember")
 public class StudentProjectController {
 
     @Autowired
-    private ProjectService projectService;
+        private ProjectService projectService;
 
     @Autowired
     private UserService userService;
@@ -60,27 +60,27 @@ public class StudentProjectController {
         model.addAttribute("projectForm", formModel);
         model.addAttribute("studentProjectForm", formModel2);
 
-        return "studentproject";
+        return "projectmember";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/saveProject")
     public String save(@ModelAttribute("projectForm") Project project) {
-
         projectService.saveProject(project);
-        return "redirect:/studentproject/";
+        return "redirect:/projectmember/";
     }
 
-    @PostMapping("/save2")
-    public String save2(@ModelAttribute("studentProjectForm") StudentProject project2) {
 
+    @PostMapping("/saveStudentProject")
+    public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
         studentProjectService.saveStudentProject(project2);
-        return "redirect:/studentproject/";
+        return "redirect:/projectmember/";
     }
+
 
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        projectService.deleteProject(id);
-        return "redirect:/projects/";
+        studentProjectService.deleteStudentProject(id);
+        return "redirect:/projectmember/";
     }
 }
