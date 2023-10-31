@@ -6,16 +6,16 @@ import com.example.IMS_BE.service.UserService;
 
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
 
 
     public Optional<User> findByPhone(String phone) {
@@ -29,6 +29,10 @@ public class UserServiceImpl implements UserService {
     public java.util.List<User> findAllByRole(long roles){ 
         return userRepository.findByRoleId(roles);
 
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
