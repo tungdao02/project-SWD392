@@ -17,7 +17,6 @@ public class Setting extends BaseEntity{
     @Column(name="type",nullable = false,length = 45)
     private String type;
 
-
     public Setting() {
     }
 
@@ -25,6 +24,11 @@ public class Setting extends BaseEntity{
         this.id = id;
         this.name = name;
         this.type = type;
+    }
+
+
+    public long getId(){
+        return id;
     }
 
     public String getName() {
@@ -43,4 +47,12 @@ public class Setting extends BaseEntity{
         this.type = description;
     }
 
+    @Override
+    public String toString() {
+        return "Setting{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

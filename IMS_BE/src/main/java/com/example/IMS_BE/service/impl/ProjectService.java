@@ -34,4 +34,8 @@ public class ProjectService implements IProjectService {
     public void deleteProject(Long projectId) {
         projectRepository.deleteById(projectId);
     }
+
+    public List<Project> getProjectByClassId(Long id){
+        return null;
+    }
 }

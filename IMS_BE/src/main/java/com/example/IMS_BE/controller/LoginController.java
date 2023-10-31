@@ -6,6 +6,7 @@ import com.example.IMS_BE.repository.SettingRepository;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,8 @@ public class LoginController {
     }
     @PostMapping("checklogin")
     public String checkLogin(ModelMap model, @RequestParam("username")String username, @RequestParam("password")String password,
-                             HttpSession session   ){
+                             HttpServletRequest request   ){
+        HttpSession session= request.getSession();
         if(userService.checkLogin(username,password)){
             System.out.println("Login thanh cong");
             if(userService.isAdmin(username)) {
@@ -46,9 +48,11 @@ public class LoginController {
                 model.addAttribute("settings", settings);
                 return "admin_home";
             }else{
-                return "home";
+                session.setAttribute("USERNAME", username);
+                return "redirect:/issue/student";
             }
         }else{
+
             System.out.println("Login that bai");
             model.addAttribute("ERROR","Username or password not exist!!");
         }

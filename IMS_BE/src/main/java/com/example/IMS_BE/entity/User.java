@@ -13,7 +13,7 @@ public class User extends BaseEntity {
     private Long id;
     @Column(name = "username",nullable = false, length = 12)
     private String username;
-    @Column(name = "phone",nullable = false, length = 12)
+    @Column(name = "phone", length = 12)
     private String phone;
     @Column(name = "email",nullable = false)
     private String email;

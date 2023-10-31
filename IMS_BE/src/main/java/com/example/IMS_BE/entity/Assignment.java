@@ -1,5 +1,4 @@
 package com.example.IMS_BE.entity;
-
 import jakarta.persistence.*;
 
 @Entity

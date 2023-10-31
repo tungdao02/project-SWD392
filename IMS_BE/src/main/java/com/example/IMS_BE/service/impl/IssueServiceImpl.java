@@ -1,7 +1,11 @@
 package com.example.IMS_BE.service.impl;
 
 import com.example.IMS_BE.entity.Issue;
+import com.example.IMS_BE.entity.User;
+import com.example.IMS_BE.repository.IClassesRepository;
+import com.example.IMS_BE.repository.IProjectRepository;
 import com.example.IMS_BE.repository.IssueRepository;
+import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +17,19 @@ public class IssueServiceImpl implements IssueService {
     @Autowired
     private IssueRepository issueRepository;
 
+
+
     @Override
     public List<Issue> getAllIssue() {
-        return (List<Issue>)issueRepository.findAll() ;
+        return issueRepository.findAll() ;
     }
 
     @Override
-    public List<Issue> getAllIssueById(int id) {
-        return (null);
+    public List<Issue> getAllIssueByAssignee(User assignee) {
+
+        return issueRepository.findIssuesByAssignee(assignee);
     }
+
 
     @Override
     public void addIssue(Issue issue) {

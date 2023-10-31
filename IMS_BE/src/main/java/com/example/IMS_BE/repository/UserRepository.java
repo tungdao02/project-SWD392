@@ -25,12 +25,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "            where email = ?1 " , nativeQuery = true)
     String findRolesByEmail(String email);
 
-
+    User findByPhoneAndAndEmail(String phone,String email);
     User findByUsername(String username);
 
 
     User findByPhone(String phone);
 
     User findByEmail(String email);
+
+    List<User> findByRoleId(@Param("role_id")Long role_id);
 }
 

@@ -2,7 +2,11 @@ package com.example.IMS_BE.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.*;
+
+import org.hibernate.mapping.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.example.IMS_BE.Enum.ClassStatusEnum;
 
 @Entity
 @Table(name = "class")
@@ -11,25 +15,50 @@ public class Classes {
     @Column(name = "class_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="name",nullable = false,length = 45)
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Column(name="status",nullable = false)
     private int status;
+
     @ManyToOne
     @JoinColumn(name = "semester_id",nullable = false,referencedColumnName = "setting_id")
     private Setting setting;
+
     @ManyToOne
     @JoinColumn(name = "teacher_id",nullable = false,referencedColumnName = "user_id")
     private User teacher;
+
     @ManyToOne
     @JoinColumn(name = "subject_id",nullable = false,referencedColumnName = "subject_id")
     private Subject subject;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "start")
-    private Date startdate;
+    private Date startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "end")
-    private Date startend;
+    private Date startEnd;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<StudentClass> studentClasses;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Project> projects;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Issue> issue;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<Milestone> Milestone;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private java.util.List<IssueSetting> issueSetting;
 
     public Classes() {
     }
@@ -42,8 +71,8 @@ public class Classes {
         this.setting = setting;
         this.teacher = teacher;
         this.subject = subject;
-        this.startdate = startdate;
-        this.startend = startend;
+        this.startDate = startdate;
+        this.startEnd = startend;
     }
 
     public Long getId() {
@@ -102,19 +131,34 @@ public class Classes {
         this.subject = subject;
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getStartend() {
-        return startend;
+    public Date getStartEnd() {
+        return startEnd;
     }
 
-    public void setStartend(Date startend) {
-        this.startend = startend;
+    public void setStartEnd(Date startEnd) {
+        this.startEnd = startEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "Classes{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", setting=" + setting +
+                ", teacher=" + teacher +
+                ", subject=" + subject +
+                ", startdate=" + startDate +
+                ", startend=" + startEnd +
+                '}';
     }
 }
