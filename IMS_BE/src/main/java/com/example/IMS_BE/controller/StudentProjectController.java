@@ -77,6 +77,16 @@ public class StudentProjectController {
     }
 
 
+    @PostMapping("/editproject/")
+    public String editproject(@ModelAttribute("studentProjects") StudentProject project) {
+        // Lấy thông tin dự án dựa trên ID
+        Long projectId = project.getProject().getId();
+        StudentProject existingProject = studentProjectService.getStudentProjectById(projectId);
+
+        studentProjectService.saveStudentProject(existingProject);
+        return "redirect:/projectmember/";
+    }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
