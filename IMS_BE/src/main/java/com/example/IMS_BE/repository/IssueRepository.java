@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface IssueRepository extends JpaRepository<Issue,Long> {
-List<Issue> findIssuesByAssignee(User user);
+List<Issue> findAllByAssignee(User user);
 
 }

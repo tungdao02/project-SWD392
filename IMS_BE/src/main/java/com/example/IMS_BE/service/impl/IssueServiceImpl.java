@@ -27,7 +27,7 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public List<Issue> getAllIssueByAssignee(User assignee) {
 
-        return issueRepository.findIssuesByAssignee(assignee);
+        return issueRepository.findAllByAssignee(assignee);
     }
 
 

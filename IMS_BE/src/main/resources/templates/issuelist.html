@@ -91,7 +91,7 @@
         <!-- Thanh menu bên trái (3 cột) -->
         <nav class="col-md-2 sidebar">
             <div class="sidebar-header">
-                <h3 th:text="${test_name}"></h3>
+                <h3 th:text="${user.username}"></h3>
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -138,27 +138,23 @@
                         <div th:each="issue : ${list}" class="issue-container"> <!-- Thêm thẻ div bao quanh danh sách các vấn đề -->
 
                             <!-- Vấn đề 1 -->
-                            <div class="issue">
-                                <div class="issue-title" th:text="${issue.title}"></div>
-                                <!--                            <div >Người chỉ định: Người A</div>-->
-                                <!--                            <div>Người thực hiện: Người B</div>-->
-                                <!--                            <div>Trạng thái: Đang xử lý</div>-->
-                                <!--                            <div>Thể loại: Loại X</div>-->
+                            <div class="issue" style="display: flex">
+                                <input type="checkbox" th:id="'checkbox-' + ${issue.id}" class="checkbox">
+                                <div style="margin-left: 20px">
+                                    <div class="issue-title" ><a th:text="${issue.title}" href="#"></a></div>
+                                    <div class="issue-assignee" th:text="'Project: ' + ${issue.project.name}"></div>
+                                    <div class="issue-status" th:text="'Trạng thái: ' + ${issue.status.name}"></div>
+                                    <div class="issue-category" th:text="'Thể loại: ' + ${issue.type.name}"></div>
+                                </div>
                             </div>
-
-
-                            <!-- Thêm các vấn đề khác ở đây -->
-
-                            <!-- Thanh phân trang -->
-
                         </div>
                     </div>
 
                     <nav class="pagination-container">
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link" href="#">Trang trước</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><span class="page-link">2</span></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item "><span class="page-link">2</span></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
                             <li class="page-item"><a class="page-link" href="#">Trang sau</a></li>
                         </ul>

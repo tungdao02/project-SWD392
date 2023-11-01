@@ -32,16 +32,23 @@ public class IssueController {
     private IClassesService classesService;
 
     @GetMapping("/student")
-    public String getListIssue(Model model, HttpServletRequest request){
-        HttpSession session=request.getSession();
-        String username= (String) session.getAttribute("USERNAME");
-        User user= userService.getUserByUsername(username);
-        model.addAttribute("test_name",username);
-//        List<Issue> list = issueService.getAllIssueByAssignee(user);
-        List<Issue> list = issueService.getAllIssue();
+    public String getListIssue(Model model, HttpSession session, HttpServletRequest request){
+        session=request.getSession();
+        String email=session.getAttribute("USERNAME").toString();
+        User user = userService.getUserByEmail(email);
+        model.addAttribute("user",user);
+
+        List<Issue> list = issueService.getAllIssueByAssignee(user);
+        System.out.println(list);
+       // List<Issue> list = issueService.getAllIssue();
         model.addAttribute("list",list);
 
         return "issuelist";
+    }
+    @GetMapping("/add")
+    public String addIssue(Model model){
+
+        return "newissue";
     }
     @GetMapping("/{id}")
     public String getIssue(Model model, @PathVariable int id){
