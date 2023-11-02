@@ -1,6 +1,8 @@
 package com.example.IMS_BE.service;
 
 import com.example.IMS_BE.entity.Classes;
+import com.example.IMS_BE.entity.Project;
+import com.example.IMS_BE.entity.User;
 
 import java.util.List;
 
@@ -22,4 +24,6 @@ public interface IClassesService {
     public void updateMilestone(Classes classToEdit);
     public void updateSetting(Classes classToEdit);
     public Page<Classes> findAllClasses(Pageable pageable);
+    public List<Project> findProjectByClassId(long id);
+    List<User> findUsersByClassId(long id);
 }
