@@ -16,7 +16,6 @@ public class StudentProjectService implements IStudentProjectService {
         this.studentProjectRepository = studentProjectRepository;
     }
 
-
     public List<StudentProject> getAllStudentProjects() {
         return studentProjectRepository.findAll();
     }

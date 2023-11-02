@@ -20,8 +20,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     SettingRepository settingRepository;
 
-
-
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
     }
@@ -30,7 +28,7 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
-    public java.util.List<User> findAllByRole(long roles){ 
+    public java.util.List<User> findAllByRole(long roles) {
         return userRepository.findByRoleId(roles);
     }
 
