@@ -28,7 +28,7 @@
                     <input th:if="${classDetails.status == 0}" type="hidden" name="status" th:field="*{status}" />
                     <button th:if="${classDetails.status == 0}" type="submit" name="action" value="delete" class="btn btn-danger">Yes, Delete</button>
                     <button th:if="${classDetails.status == 1}" type="submit" name="action" value="cancel" class="btn btn-warning">Yes, Cancel</button>
-                    <a href="/classes/classes-list" class="btn btn-success">Back to Class List</a>
+                    <a href="/classes/classList" class="btn btn-success">Back to Class List</a>
                 </form>
             </div>
         </div>
