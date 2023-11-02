@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface IStudentProjectRepository extends JpaRepository<StudentProject, Long> {
+    List<StudentProject> findByProjectId(Long projectId);
 }

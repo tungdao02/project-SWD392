@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Management System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .project-list {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .table {
+            width: 100%;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Project Management System</h1>
+    <div class="project-list">
+        <h2>Project List</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Group Name</th>
+                <th>Student Name</th>
+                <th>Team Lead</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dự án có project_id đã chọn -->
+            <tr th:each="studentProject : ${studentsInProject}">
+                <td th:text="${studentProject.project.name}"></td>
+                <td th:text="${studentProject.project.description}"></td>
+
+                <td th:text="${studentProject.user.username}"></td>
+                <td th:text="${studentProject.project.user.userName}"></td>
+                <td>
+                <a th:href="@{/projectmember/removeMember/deletemember/{id}(id=${studentProject.project.user.getId()})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

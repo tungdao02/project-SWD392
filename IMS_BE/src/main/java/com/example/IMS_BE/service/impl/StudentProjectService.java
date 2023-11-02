@@ -23,6 +23,10 @@ public class StudentProjectService implements IStudentProjectService {
     public StudentProject getStudentProjectById(Long id) {
         return studentProjectRepository.findById(id).orElse(null);
     }
+    public List<StudentProject> getStudentsByProjectId(Long projectId) {
+        return studentProjectRepository.findByProjectId(projectId);
+    }
+
 
     public StudentProject saveStudentProject(StudentProject studentProject) {
         return studentProjectRepository.save(studentProject);
@@ -31,4 +35,5 @@ public class StudentProjectService implements IStudentProjectService {
     public void deleteStudentProject(Long id) {
         studentProjectRepository.deleteById(id);
     }
+
 }

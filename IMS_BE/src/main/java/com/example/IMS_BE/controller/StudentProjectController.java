@@ -100,17 +100,23 @@ public class StudentProjectController {
     }
 
 
-    @PostMapping("/removeStudentFromProject")
-    public String removeStudentFromProject(@ModelAttribute("studentProjectForm") StudentProject studentProject) {
-        Long projectId = studentProject.getProject().getId();
-        Long studentId = studentProject.getUser().getId();
-
-       // studentProjectService.removeStudentProject(studentId);
-        return "redirect:/projectmember/";
+    @RequestMapping("/removeMember/{projectId}")
+    public String viewStudentsInProject(@PathVariable Long projectId, Model model) {
+         List<StudentProject> studentsInProject = studentProjectService.getStudentsByProjectId(projectId);
+       // StudentProject studentsInProject = studentProjectService.getStudentProjectById(projectId);
+        model.addAttribute("studentsInProject", studentsInProject);
+        return "updatemember";
     }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
+        studentProjectService.deleteStudentProject(id);
+        return "redirect:/projectmember/";
+    }
+
+    @GetMapping("/deletemember/{id}")
+    public String deletemember(@PathVariable Long id) {
         studentProjectService.deleteStudentProject(id);
         return "redirect:/projectmember/";
     }
