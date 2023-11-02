@@ -46,7 +46,6 @@ public class ClassesController {
         model.addAttribute("list", classPage.getContent());
         return "Class/ClassesList";
     }
-
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         List<Setting> setting = _settingService.findAllByType("semester");

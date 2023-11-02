@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 
@@ -26,12 +27,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String findRolesByEmail(String email);
 
     User findByPhoneAndAndEmail(String phone,String email);
-    User findByUsername(String username);
+
+    Optional<User> findUserByUsername(String username);
 
 
     User findByPhone(String phone);
 
     User findByEmail(String email);
+
+    User findByUsername(String username);
 
     List<User> findByRoleId(@Param("role_id")Long role_id);
 }

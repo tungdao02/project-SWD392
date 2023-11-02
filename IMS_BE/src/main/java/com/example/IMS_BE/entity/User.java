@@ -3,15 +3,17 @@ package com.example.IMS_BE.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "User")
 
-public class User extends BaseEntity {
+public class User extends BaseEntity   {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username",nullable = false, length = 12)
+    @Column(name = "username",unique = true,nullable = false, length = 12)
     private String username;
     @Column(name = "phone", length = 12)
     private String phone;

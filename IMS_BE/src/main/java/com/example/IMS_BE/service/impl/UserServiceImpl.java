@@ -1,6 +1,8 @@
 package com.example.IMS_BE.service.impl;
 
+import com.example.IMS_BE.entity.Setting;
 import com.example.IMS_BE.entity.User;
+import com.example.IMS_BE.repository.SettingRepository;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.UserService;
 
@@ -15,7 +17,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-
+    @Autowired
+    SettingRepository settingRepository;
 
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
@@ -25,13 +28,18 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
-    public java.util.List<User> findAllByRole(long roles){ 
+    public java.util.List<User> findAllByRole(long roles) {
         return userRepository.findByRoleId(roles);
     }
 
     @Override
+
+    public User getUserByEmail(String username) {
+        return userRepository.findByEmail(username);
+    }
     public List<User> getAllUsers() {
         return userRepository.findAll();
+
     }
 
     @Override
@@ -57,4 +65,35 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-}
+
+
+    @Override
+    public User registerUser(String username, String email, String phone, String password) {
+        return null;
+    }
+
+
+//    public User registerUser(String username, String email, String phone, String password) {
+//        if (userRepository.findByUsername(username) != null || userRepository.findByEmail(email) != null || userRepository.findByEmail(phone) != null) {
+//            throw new RuntimeException("Người dùng đã tồn tại");
+//        }
+//        try {
+//          //  Setting defaultRole = settingRepository.findBySettingId(2L);
+//            User newUser = new User();
+//            newUser.setUsername(username);
+//            newUser.setEmail(email);
+//            newUser.setPhone(phone);
+//            newUser.setPassword(password);
+//            newUser.setRole(defaultRole);
+//
+//            return userRepository.save(newUser);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Lỗi khi đăng ký người dùng: " + e.getMessage());
+//        }
+    }
+
+
+
+
+
+
