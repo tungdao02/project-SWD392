@@ -20,7 +20,7 @@ import java.util.List;
 public class StudentProjectController {
 
     @Autowired
-        private ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     private UserService userService;
@@ -48,10 +48,13 @@ public class StudentProjectController {
             formModel2 = studentProjectService.getStudentProjectById(projectId);
         }
 
+
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
+
+
         model.addAttribute("studentProjects", studentProjects);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
@@ -70,6 +73,8 @@ public class StudentProjectController {
     }
 
 
+
+
     @PostMapping("/saveStudentProject")
     public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
         studentProjectService.saveStudentProject(project2);
@@ -78,12 +83,18 @@ public class StudentProjectController {
 
 
     @PostMapping("/editproject/")
-    public String editproject(@ModelAttribute("studentProjects") StudentProject project) {
-        // Lấy thông tin dự án dựa trên ID
-        Long projectId = project.getProject().getId();
+    public String editproject(@RequestParam("id") Long projectId, @ModelAttribute("studentProjects") StudentProject project) {
         StudentProject existingProject = studentProjectService.getStudentProjectById(projectId);
 
-        studentProjectService.saveStudentProject(existingProject);
+        if (existingProject != null) {
+            // Cập nhật thông tin của dự án với dữ liệu từ biểu mẫu chỉnh sửa
+            existingProject.setProject(project.getProject());
+            // Cập nhật các trường dự án khác ở đây
+
+            // Lưu thông tin đã cập nhật
+            studentProjectService.saveStudentProject(existingProject);
+        }
+
         return "redirect:/projectmember/";
     }
 

@@ -227,9 +227,10 @@
   </thead>
   <tbody>
 
-  <tr th:each="studentProject, rowStat : ${studentProjects}">
+  <tr th:each="studentProject, rowStat : ${studentProjects}" th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id and studentProject.project.id != studentProjects[rowStat.index - 2].project.id
+      and studentProject.project.id != studentProjects[rowStat.index - 3].project.id and studentProject.project.id != studentProjects[rowStat.index - 4].project.id}">
 
-    <td th:text="${studentProject.project.id}"></td>
+    <td  th:text="${studentProject.project.id}"></td>
 
     <td th:text="${studentProject.project.name}"></td>
     <td th:text="${studentProject.project.description}"></td>
@@ -241,14 +242,14 @@
             </span>
         </span>
     </td>
-    <td th:text="${studentProject.project.user.username}"></td>
+    <td th:text="${studentProject.user.username}"></td>
     <td>
+      <!--
       <a th:href="@{/projectmember/(id=${studentProject.project.getId()})}" id="addButton3">Edit</a>
-
+    -->
       <a th:href="@{/projectmember/delete/{id}(id=${studentProject.getId()})}">Delete</a>
     </td>
   </tr>
-
   </tbody>
 </table>
 
@@ -258,13 +259,12 @@
     <h2>Edit Project</h2>
     <form th:action="@{/projectmember/editproject}" th:object="${studentProjects}" method="post">
 
-      <!-- Các trường chỉnh sửa -->
       <div>
-        <label>Project Name</label><br/>
-        <input type="text" />
+        <label>Project Name:</label><br/>
+        <input type="text"  />
       </div>
 
-      <!-- ... -->
+
       <div>
         <button type="submit">Save Student Project</button>
         <button type="button" id="closeButton3">Close</button>
@@ -272,6 +272,10 @@
     </form>
   </div>
 </div>
+
+
+
+
 
 
 

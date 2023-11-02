@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface IProjectRepository extends JpaRepository<Project, Long> {
-    public java.util.List<Project> getProjectByClassId(Long id);
+//    public java.util.List<Project> getProjectByClassId(Long id);
 }
