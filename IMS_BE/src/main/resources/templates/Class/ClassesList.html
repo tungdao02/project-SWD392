@@ -63,9 +63,9 @@
             <td th:text="${#dates.format(classes.getStartDate, 'dd-MM-yyyy')}"></td>
             <td th:text="${#dates.format(classes.getStartEnd, 'dd-MM-yyyy')}"></td>
             <td>
-                <a th:href="@{'/classes/delete-cancel/' + ${classes.id}}" th:if="${classes.getStatus == 0}"
+                <a th:href="@{'/classes/deleteCancel/' + ${classes.id}}" th:if="${classes.getStatus == 0}"
                     class="btn btn-danger">Delete</a>
-                <a th:href="@{'/classes/delete-cancel/' + ${classes.id}}" th:if="${classes.getStatus == 1}"
+                <a th:href="@{'/classes/deleteCancel/' + ${classes.id}}" th:if="${classes.getStatus == 1}"
                     class="btn btn-warning">Cancel</a>
             </td>
         </tr>
@@ -73,13 +73,13 @@
     <div th:if="${totalPages > 1}">
         <ul class="pagination">
             <li th:if="${currentPage > 1}">
-                <a class="page-link" th:href="@{'/classes/classes-list?page=' + (currentPage)}">Previous</a>
+                <a class="page-link" th:href="@{'/classes/classList?page=' + (currentPage)}">Previous</a>
             </li>
             <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:class="${pageNum} == ${currentPage} ? 'page-item active'">
-                <a class="page-link" th:href="@{'/classes/classes-list?page=' + ${pageNum}}" th:text="${pageNum}"></a>
+                <a class="page-link" th:href="@{'/classes/classList?page=' + ${pageNum}}" th:text="${pageNum}"></a>
             </li>
             <li th:if="${currentPage < totalPages}">
-                <a class="page-link" th:href="@{'/classes/classes-list?page=' + (currentPage)}">Next</a>
+                <a class="page-link" th:href="@{'/classes/classList?page=' + (currentPage)}">Next</a>
             </li>
         </ul>
     </div>

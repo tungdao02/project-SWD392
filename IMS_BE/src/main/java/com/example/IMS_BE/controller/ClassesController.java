@@ -38,16 +38,15 @@ public class ClassesController {
     @Autowired
     private IClassesService _projectService;
 
-    @GetMapping("/")
+    @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 14;
         Page<Classes> classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", classPage.getTotalPages());
         model.addAttribute("list", classPage.getContent());
-        return "ClassesList";
+        return "Class/ClassesList";
     }
-
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         List<Setting> setting = _settingService.findAllByType("semester");
@@ -57,13 +56,13 @@ public class ClassesController {
         model.addAttribute("newSetting", setting);
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
-        return "CreateClass";
+        return "Class/CreateClass";
     }
 
     @PostMapping("/create")
     public String createClass(@ModelAttribute Classes classes) {
         _classesService.AddClass(classes);
-        return "redirect:classes-list";
+        return "redirect:classList";
     }
 
     @GetMapping("/edit/{id}")
@@ -76,7 +75,7 @@ public class ClassesController {
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
         model.addAttribute("newSetting", setting);
-        return "EditClass";
+        return "Class/editClass";
     }
 
     @PostMapping("/update")
@@ -85,13 +84,13 @@ public class ClassesController {
         return "redirect:edit/" + classToEdit.getId();
     }
 
-    @GetMapping("/delete-cancel/{id}")
+    @GetMapping("/deleteCancel/{id}")
     public String deleteOrCancel(@PathVariable Long id, Model model) {
         Classes classes = _classesService.getClassById(id);
         Classes classToEdit = _classesService.getClassById(id);
         model.addAttribute("classDetails", classes);
         model.addAttribute("classModel", classToEdit);
-        return "DeleteOrCancelClass";
+        return "Class/DeleteOrCancelClass";
     }
 
     @PostMapping("/delete-cancel")
@@ -100,6 +99,6 @@ public class ClassesController {
             _classesService.DeleteClass(classModel.getId());
         else
             _classesService.CancelClass(classModel.getId());
-        return "redirect:classes-list";
+        return "redirect:classList";
     }
 }
