@@ -6,4 +6,5 @@ import com.example.IMS_BE.entity.Milestone;
 
 public interface IMilestoneRepository extends JpaRepository<Milestone,Long>{
     
+
 }

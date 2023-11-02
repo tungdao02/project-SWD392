@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-@Service
+
 public interface IClassesService {
     public List<Classes> GetAllClasses();
     public List<Classes> GetClassesById(long id);
