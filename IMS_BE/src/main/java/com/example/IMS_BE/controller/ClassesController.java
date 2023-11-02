@@ -36,7 +36,6 @@ public class ClassesController {
     @Autowired
     private com.example.IMS_BE.service.impl.SubjectService subjectService;
     @Autowired
-    private IClassesService _projectService;
 
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
