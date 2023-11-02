@@ -265,7 +265,9 @@
   </thead>
   <tbody>
 
-  <tr th:each="studentProject, rowStat : ${studentProjects}" th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id and studentProject.project.id != studentProjects[rowStat.index - 2].project.id}">
+  <tr th:each="studentProject, rowStat : ${studentProjects}" th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id and studentProject.project.id != studentProjects[rowStat.index - 2].project.id
+  and studentProject.project.id != studentProjects[rowStat.index - 3].project.id
+  }">
     <td th:text="${studentProject.project.id}"></td>
 
     <td th:text="${studentProject.project.name}"></td>
@@ -281,7 +283,7 @@
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
       <a th:href="@{'/projectmember/editProject/' + ${studentProject.project.id}}" >Edit</a>
-      <a th:href="@{/studentproject/delete/{id}(id=${studentProject.getId()})}">Delete</a>
+      <a th:href="@{/studentproject/delete/{id}(id=${studentProject.project.getId()})}">Delete</a>
     </td>
   </tr>
 
