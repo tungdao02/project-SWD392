@@ -38,10 +38,7 @@ public class IssueController {
         String email=session.getAttribute("USERNAME").toString();
         User user = userService.getUserByEmail(email);
         model.addAttribute("user",user);
-
         List<Issue> list = issueService.getAllIssueByAssignee(user);
-        System.out.println(list);
-       // List<Issue> list = issueService.getAllIssue();
         model.addAttribute("list",list);
 
         return "issuelist";

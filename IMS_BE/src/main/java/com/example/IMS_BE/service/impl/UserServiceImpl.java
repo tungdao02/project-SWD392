@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     public User getUserByEmail(String username) {
         return userRepository.findByEmail(username);
-
+    }
     public List<User> getAllUsers() {
         return userRepository.findAll();
 
@@ -97,5 +97,5 @@ public class UserServiceImpl implements UserService {
 
 
 
-=======
-}
+
+
