@@ -1,8 +1,10 @@
 package com.example.IMS_BE.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "Student_Project")
 public class StudentProject {
     @Id

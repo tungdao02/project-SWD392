@@ -25,12 +25,9 @@ public class Project {
     public Project() {
     }
 
-
     public Project(Long id, String name, String description, Classes classes, User user) {
         this.id = id;
         this.name = name;
-
-
         this.description = description;
         this.classes = classes;
         this.user = user;
@@ -51,8 +48,6 @@ public class Project {
     public void setName(String name) {
         this.name = name;
     }
-
-
     public String getDescription() {
         return description;
     }

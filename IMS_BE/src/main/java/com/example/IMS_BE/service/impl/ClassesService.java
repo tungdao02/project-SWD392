@@ -3,13 +3,17 @@ package com.example.IMS_BE.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.IMS_BE.Enum.ClassStatusEnum;
 import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.service.IClassesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.IMS_BE.repository.IClassesRepository;
+
 @Service
 public class ClassesService implements IClassesService {
     @Autowired
@@ -31,8 +35,8 @@ public class ClassesService implements IClassesService {
     }
 
     @Override
-    public void DeleteClass(Classes classes) {
-        _classesRepository.delete(classes);
+    public void DeleteClass(long id) {
+        _classesRepository.deleteById(id);
     }
 
     @Override
@@ -43,12 +47,42 @@ public class ClassesService implements IClassesService {
     @Override
     public Classes GetClassById(long id) {
         Optional<Classes> optionalClass = _classesRepository.findById(id);
-        return optionalClass.orElse(null); 
+        return optionalClass.orElse(null);
     }
 
     @Override
     public void CancelClass(long id) {
         Classes currentClass = GetClassById(id);
+        currentClass.setStatus(0);
+        UpdateClass(currentClass);
     }
 
+    @Override
+    public Classes getClassById(Long id) {
+        return _classesRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateGeneral(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateStudent(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateMilestone(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    @Override
+    public void updateSetting(Classes classToEdit) {
+        _classesRepository.save(classToEdit);
+    }
+
+    public Page<Classes> findAllClasses(Pageable pageable) {
+        return _classesRepository.findAll(pageable);
+    }
 }

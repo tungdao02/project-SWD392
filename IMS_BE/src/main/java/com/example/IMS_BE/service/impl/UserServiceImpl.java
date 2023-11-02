@@ -5,11 +5,11 @@ import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.SettingRepository;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     SettingRepository settingRepository;
 
 
+
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
     }
@@ -29,10 +30,18 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
+    public java.util.List<User> findAllByRole(long roles){ 
+        return userRepository.findByRoleId(roles);
+    }
 
     @Override
+
     public User getUserByEmail(String username) {
         return userRepository.findByEmail(username);
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+
     }
 
     @Override
@@ -58,6 +67,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 
     @Override
     public User registerUser(String username, String email, String phone, String password) {
@@ -87,3 +97,5 @@ public class UserServiceImpl implements UserService {
 
 
 
+=======
+}
