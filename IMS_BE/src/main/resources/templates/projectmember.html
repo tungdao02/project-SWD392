@@ -131,22 +131,22 @@
 <div class="table-wrapper">
   <div class="table-title">
     <div class="row">
-      <div class="col-sm-6"><h1>Project Management System</h1></div>
+      <div class="col-sm"><h1>Project Management System</h1></div>
     </div>
   </div>
 </div>
 
 <!-- Nút "Add" để hiển thị biểu mẫu -->
-<button id="addButton">Add</button>
+<button id="addButton">Add New Project</button>
 <button id="addButton2">Add Student</button>
 
 <!-- Biểu mẫu popup -->
 <div class="popup-form" id="addProjectForm">
   <div class="popup-content">
     <h2>Create New Project</h2>
-    <form th:action="@{/studentproject/saveProject}" th:object="${projectForm}" method="post">
+    <form th:action="@{/projectmember/saveProject}" th:object="${projectForm}" method="post">
 
-    <div>
+      <div>
         <input type="hidden" id="id" th:field="*{id}" />
       </div>
 
@@ -185,8 +185,8 @@
 <div class="popup-form" id="addProjectForm2">
   <div class="popup-content">
     <h2>Add new student to project</h2>
-    <form th:action="@{/studentproject/saveStudentProject}" th:object="${studentProjectForm}" method="post">
-    <div>
+    <form th:action="@{/projectmember/saveStudentProject}" th:object="${studentProjectForm}" method="post">
+      <div>
         <input type="hidden" th:field="*{id}" />
       </div>
       <div>
@@ -206,8 +206,8 @@
       <div>
         <button type="submit">Save Student Project</button>
         <button type="button" id="closeButton2">Close</button>
-
       </div>
+
     </form>
   </div>
 </div>
@@ -228,7 +228,8 @@
   <tbody>
 
   <tr th:each="studentProject, rowStat : ${studentProjects}" th:if="${rowStat.first or studentProject.project.id != studentProjects[rowStat.index - 1].project.id and studentProject.project.id != studentProjects[rowStat.index - 2].project.id}">
-    <td th:text="${studentProject.project.id}"></td>
+
+    <td  th:text="${studentProject.project.id}"></td>
 
     <td th:text="${studentProject.project.name}"></td>
     <td th:text="${studentProject.project.description}"></td>
@@ -242,35 +243,34 @@
     </td>
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
-      <a th:href="@{/studentproject/save/{id}(id=${studentProject.project.getId()})}" class="edit-button">Edit</a>
-      <a th:href="@{/studentproject/delete/{id}(id=${studentProject.getId()})}">Delete</a>
+
+      <a th:href="@{'/projectmember/editProject/' + ${studentProject.project.id}}" >Edit</a>
+
+      <a th:href="@{/projectmember/delete/{id}(id=${studentProject.getId()})}">Delete</a>
     </td>
   </tr>
-
   </tbody>
 </table>
 
 <!-- Biểu mẫu popup -->
-<div id="projectPopup" class="popup-form">
+<div class="popup-form" id="EditProject">
   <div class="popup-content">
     <h2>Edit Project</h2>
-    <form th:action="@{/studentproject/save}" th:object="${projectForm}" method="post">
+    <form th:action="@{/projectmember/editproject}" th:object="${studentProjects}" method="post">
 
-      <!-- Các trường chỉnh sửa -->
       <div>
-        <label>Project Name</label><br/>
-        <input type="text" th:field="*{name}">
+        <label>Project Name:</label><br/>
+        <input type="text"  />
       </div>
 
-      <!-- ... -->
+      .. -->
       <div>
         <button type="submit">Save Student Project</button>
-        <button type="button" class="close-button" data-id="${studentProject.id}">Close</button>
+        <button type="button" id="closeButton3">Close</button>
       </div>
     </form>
   </div>
 </div>
-
 
 
 
@@ -299,11 +299,11 @@
 <!-- JavaScript để hiển thị và ẩn biểu mẫu popup -->
 <script>
   document.getElementById('addButton3').addEventListener('click', function() {
-    document.getElementById('addProjectForm3').style.display = 'block';
+    document.getElementById('EditProject').style.display = 'block';
   });
 
   document.getElementById('closeButton3').addEventListener('click', function() {
-    document.getElementById('addProjectForm3').style.display = 'none';
+    document.getElementById('EditProject').style.display = 'none';
   });
 </script>
 

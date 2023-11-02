@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Project</title>
+</head>
+<body>
+<h1>Edit Project</h1>
+<form th:action="@{/projectmember/saveProject}" th:object="${project}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}" />
+    </div>
+    <div>
+        <label >Class:</label>
+        <select th:field="*{classes.id}">
+            <option th:each="class : ${lstClass}" th:value="${class.getId()}" th:text="${class.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label >Team Lead:</label>
+        <select th:field="*{user.id}">
+            <option th:each="user : ${lstUser}" th:value="${user.getId()}" th:text="${user.username}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Save Project</button>
+    </div>
+</form>
+</body>
+</html>

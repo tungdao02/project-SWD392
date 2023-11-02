@@ -73,30 +73,41 @@ public class StudentProjectController {
     }
 
 
-
-
     @PostMapping("/saveStudentProject")
     public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
         studentProjectService.saveStudentProject(project2);
         return "redirect:/projectmember/";
     }
 
+    @GetMapping("/editProject/{id}")
+    public String editProject(@PathVariable Long id, Model model) {
+        Project project = projectService.getProjectById(id);
+        List<Classes> classes = classService.GetAllClasses();
+        List<User> users = userService.getAllUsers();
 
-    @PostMapping("/editproject/")
-    public String editproject(@RequestParam("id") Long projectId, @ModelAttribute("studentProjects") StudentProject project) {
-        StudentProject existingProject = studentProjectService.getStudentProjectById(projectId);
+        model.addAttribute("project", project);
+        model.addAttribute("lstClass", classes);
+        model.addAttribute("lstUser", users);
 
-        if (existingProject != null) {
-            // Cập nhật thông tin của dự án với dữ liệu từ biểu mẫu chỉnh sửa
-            existingProject.setProject(project.getProject());
-            // Cập nhật các trường dự án khác ở đây
-
-            // Lưu thông tin đã cập nhật
-            studentProjectService.saveStudentProject(existingProject);
-        }
-
-        return "redirect:/projectmember/";
+        return "editproject";
     }
+
+
+//    @PostMapping("/editproject/")
+//    public String editproject(@RequestParam("id") Long projectId, @ModelAttribute("studentProjects") StudentProject project) {
+//        StudentProject existingProject = studentProjectService.getStudentProjectById(projectId);
+//
+//        if (existingProject != null) {
+//            // Cập nhật thông tin của dự án với dữ liệu từ biểu mẫu chỉnh sửa
+//            existingProject.setProject(project.getProject());
+//            // Cập nhật các trường dự án khác ở đây
+//
+//            // Lưu thông tin đã cập nhật
+//            studentProjectService.saveStudentProject(existingProject);
+//        }
+//
+//        return "redirect:/projectmember/";
+//    }
 
 
     @GetMapping("/delete/{id}")
