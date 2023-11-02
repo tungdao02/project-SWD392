@@ -32,7 +32,7 @@ public class LoginController {
     private SettingService settingService;
 
 
-    @RequestMapping("/login")
+    @RequestMapping("")
     public String login(){
         return "login";
     }
