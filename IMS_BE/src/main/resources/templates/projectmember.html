@@ -131,20 +131,21 @@
 <div class="table-wrapper">
   <div class="table-title">
     <div class="row">
-      <div class="col-sm-6"><h1>Project Management System</h1></div>
+      <div class="col-sm"><h1>Project Management System</h1></div>
     </div>
   </div>
 </div>
 
 <!-- Nút "Add" để hiển thị biểu mẫu -->
-<button id="addButton">Add</button>
+<button id="addButton">Add New Project</button>
 <button id="addButton2">Add Student</button>
+<button id="addButton4">Remove Student</button>
 
 <!-- Biểu mẫu popup -->
 <div class="popup-form" id="addProjectForm">
   <div class="popup-content">
     <h2>Create New Project</h2>
-    <form th:action="@{/studentproject/saveProject}" th:object="${projectForm}" method="post">
+    <form th:action="@{/projectmember/saveProject}" th:object="${projectForm}" method="post">
 
     <div>
         <input type="hidden" id="id" th:field="*{id}" />
@@ -185,7 +186,7 @@
 <div class="popup-form" id="addProjectForm2">
   <div class="popup-content">
     <h2>Add new student to project</h2>
-    <form th:action="@{/studentproject/saveStudentProject}" th:object="${studentProjectForm}" method="post">
+    <form th:action="@{/projectmember/saveStudentProject}" th:object="${studentProjectForm}" method="post">
     <div>
         <input type="hidden" th:field="*{id}" />
       </div>
@@ -211,6 +212,43 @@
     </form>
   </div>
 </div>
+<!-- Remove STUDENT
+<div class="popup-form" id="addProjectForm4">
+  <div class="popup-content">
+    <h2>Remove student from project</h2>
+    <form th:action="@{/projectmember/removeStudentFromProject}" th:object="${studentProjectForm}" method="post">
+      <div>
+
+      </div>
+      <div>
+        <label>Project:</label>
+        <select th:field="*{project.id}">
+          <option th:each="project : ${lstProject}" th:value="${project.getId()}" th:text="${project.getName()}"></option>
+        </select>
+      </div>
+
+      <div>
+        <label>User:</label>
+        <select th:field="*{user.id}">
+          <option th:each="studentProject : ${studentProjects}" th:value="${studentProject.user.getId()}" th:text="${studentProject.user.username}"></option>
+        </select>
+      </div>
+      <div>
+        <input type="hidden" th:field="*{project.id}" />
+      </div>
+      <div>
+        <input type="hidden" th:field="*{user.id}" />
+      </div>
+
+      <div>
+        <button type="submit">Delete Student Project</button>
+        <button type="button" id="closeButton4">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+-->
+
 
 
 <h1>Student Project List</h1>
@@ -242,7 +280,7 @@
     </td>
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
-      <a th:href="@{/studentproject/save/{id}(id=${studentProject.project.getId()})}" class="edit-button">Edit</a>
+      <a th:href="@{'/projectmember/editProject/' + ${studentProject.project.id}}" >Edit</a>
       <a th:href="@{/studentproject/delete/{id}(id=${studentProject.getId()})}">Delete</a>
     </td>
   </tr>
@@ -306,7 +344,16 @@
     document.getElementById('addProjectForm3').style.display = 'none';
   });
 </script>
+<!-- JavaScript để hiển thị và ẩn biểu mẫu popup -->
+<script>
+  document.getElementById('addButton4').addEventListener('click', function() {
+    document.getElementById('addProjectForm4').style.display = 'block';
+  });
 
+  document.getElementById('closeButton4').addEventListener('click', function() {
+    document.getElementById('addProjectForm4').style.display = 'none';
+  });
+</script>
 
 
 

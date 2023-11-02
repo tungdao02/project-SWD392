@@ -82,22 +82,32 @@ public class StudentProjectController {
     }
 
 
-    @PostMapping("/editproject/")
-    public String editproject(@RequestParam("id") Long projectId, @ModelAttribute("studentProjects") StudentProject project) {
-        StudentProject existingProject = studentProjectService.getStudentProjectById(projectId);
+    @GetMapping("/editProject/{id}")
+    public String editProject(@PathVariable Long id, Model model) {
+        Project project = projectService.getProjectById(id);
+        List<Classes> classes = classService.GetAllClasses();
+        List<User> users = userService.getAllUsers();
+        List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
 
-        if (existingProject != null) {
-            // Cập nhật thông tin của dự án với dữ liệu từ biểu mẫu chỉnh sửa
-            existingProject.setProject(project.getProject());
-            // Cập nhật các trường dự án khác ở đây
 
-            // Lưu thông tin đã cập nhật
-            studentProjectService.saveStudentProject(existingProject);
-        }
+        model.addAttribute("member", studentProjects);
 
-        return "redirect:/projectmember/";
+        model.addAttribute("project", project);
+        model.addAttribute("lstClass", classes);
+        model.addAttribute("lstUser", users);
+
+        return "editproject";
     }
 
+
+    @PostMapping("/removeStudentFromProject")
+    public String removeStudentFromProject(@ModelAttribute("studentProjectForm") StudentProject studentProject) {
+        Long projectId = studentProject.getProject().getId();
+        Long studentId = studentProject.getUser().getId();
+
+       // studentProjectService.removeStudentProject(studentId);
+        return "redirect:/projectmember/";
+    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
