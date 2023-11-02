@@ -14,7 +14,7 @@ public class Issue {
     private String title;
 
     @Column(name = "descripton",length = 45)
-    private String descripton;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "project_id",nullable = false,referencedColumnName = "project_id")
@@ -49,10 +49,10 @@ public class Issue {
     public Issue() {
     }
 
-    public Issue(Long id, String title, String descripton, Project project, User assigner, User assignee, Classes classes, Milestone milestone, IssueSetting issueSetting, IssueSetting type, IssueSetting status) {
+    public Issue(Long id, String title, String description, Project project, User assigner, User assignee, Classes classes, Milestone milestone, IssueSetting issueSetting, IssueSetting type, IssueSetting status) {
         this.id = id;
         this.title = title;
-        this.descripton = descripton;
+        this.description = description;
         this.project = project;
         this.assigner = assigner;
         this.assignee = assignee;
@@ -79,12 +79,12 @@ public class Issue {
         this.title = title;
     }
 
-    public String getDescripton() {
-        return descripton;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripton(String descripton) {
-        this.descripton = descripton;
+    public void setDescription(String descripton) {
+        this.description = descripton;
     }
 
     public Project getProject() {

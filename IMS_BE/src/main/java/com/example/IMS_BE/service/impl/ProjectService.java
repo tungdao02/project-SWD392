@@ -1,5 +1,6 @@
 package com.example.IMS_BE.service.impl;
 
+import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.repository.IProjectRepository;
 import com.example.IMS_BE.service.IProjectService;
@@ -34,4 +35,10 @@ public class ProjectService implements IProjectService {
     public void deleteProject(Long projectId) {
         projectRepository.deleteById(projectId);
     }
+
+    @Override
+    public List<Project> getProjectByClassess(Classes classes) {
+        return projectRepository.findAllByClasses(classes);
+    }
+
 }
