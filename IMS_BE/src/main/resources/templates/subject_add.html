@@ -28,8 +28,15 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingStatus" th:field="*{status}">
-                                <label for="floatingStatus">Status</label>
+                               <div>
+                                   <label>Status</label>
+                               </div>
+                                <div>
+                                    <select class="form-select" th:field="*{status}" id="floatingStatus">
+                                        <option value="Open">Open</option>
+                                        <option value="Close">Close</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-floating mb-3">
@@ -53,5 +60,55 @@
             </div>
         </div>
     </div>
+
+<script th:inline="javascript">
+    const form = document.querySelector('form');
+    const nameInput = document.getElementById('floatingName');
+    const descriptionInput = document.getElementById('floatingDescription');
+
+    form.addEventListener('submit', function (event) {
+        let hasError = false;
+        if (nameInput.value.trim() === '') {
+            event.preventDefault();
+            showError(nameInput, 'Name cannot be empty');
+            hasError = true;
+        }
+        if (descriptionInput.value.trim() === '') {
+            event.preventDefault();
+            showError(descriptionInput, 'Description cannot be empty');
+            hasError = true;
+        }
+        if (!hasError) {
+            clearError(nameInput);
+            clearError(descriptionInput);
+        }
+    });
+
+    function showError(input, message) {
+        if (!input.classList.contains('is-invalid')) {
+            input.classList.add('is-invalid');
+            input.insertAdjacentHTML('afterend', '<div class="invalid-feedback">' + message + '</div>');
+        }
+    }
+
+    function clearError(input) {
+        if (input.classList.contains('is-invalid')) {
+            input.classList.remove('is-invalid');
+            const error = input.parentNode.querySelector('.invalid-feedback');
+            if (error) {
+                error.remove();
+            }
+        }
+    }
+
+    nameInput.addEventListener('input', function () {
+        clearError(nameInput);
+    });
+
+    descriptionInput.addEventListener('input', function () {
+        clearError(descriptionInput);
+    });
+</script>
+
 </body>
 </html>

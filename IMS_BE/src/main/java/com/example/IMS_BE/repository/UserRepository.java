@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
 public interface UserRepository extends JpaRepository<User, Long> {
 
 
@@ -27,6 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String findRolesByEmail(String email);
 
     User findById(int id);
+//    User fineUserById(long id);
 
     User findByPhoneAndAndEmail(String phone,String email);
     User findByUsername(String username);

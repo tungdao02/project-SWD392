@@ -3,11 +3,8 @@ package com.example.IMS_BE.controller;
 
 import com.example.IMS_BE.entity.Subject;
 import com.example.IMS_BE.entity.User;
-import com.example.IMS_BE.repository.SubjectRepository;
-import com.example.IMS_BE.service.SubjectService;
+import com.example.IMS_BE.repository.ISubjectRepository;
 import com.example.IMS_BE.service.UserService;
-import jakarta.jws.WebParam;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,23 +20,27 @@ import java.util.Optional;
 @RequestMapping("/subject")
 public class SubjectController {
     @Autowired
-    private SubjectRepository subjectRepository;
+    private ISubjectRepository ISubjectRepository;
     @Autowired
     private UserService userService;
 
     @GetMapping("/list")
     public String showPaginatedSubjects(Pageable pageable, @RequestParam(required = false) String keyword, @RequestParam(required = false) String searchBy, Model model) {
+        List<User> managerList = userService.findManagerList();
+        model.addAttribute("managerList",managerList);
+        Subject subject = new Subject();
+        model.addAttribute("subject", subject);
         Page<Subject> page;
         if (keyword != null && searchBy != null) {
             if (searchBy.equals("name")) {
-                page = subjectRepository.findByNameContaining(keyword, pageable);
+                page = ISubjectRepository.findByNameContaining(keyword, pageable);
             } else if (searchBy.equals("manager")) {
-                page = subjectRepository.findByManager_UsernameContaining(keyword, pageable);
+                page = ISubjectRepository.findByManager_UsernameContaining(keyword, pageable);
             } else {
-                page = subjectRepository.findAll(pageable);
+                page = ISubjectRepository.findAll(pageable);
             }
         } else {
-            page = subjectRepository.findAll(pageable);
+            page = ISubjectRepository.findAll(pageable);
         }
         model.addAttribute("page", page);
         return "subject";
@@ -62,30 +63,24 @@ public class SubjectController {
 
 
     @PostMapping("/add")
-//    public String saveSubjects(@ModelAttribute Subject subjects, HttpSession session){
-//
-//        subjectRepository.save(subjects);
-//        session.setAttribute("msg","Subject Add Sucessfully!");
-//        return "redirect:/subject/list";
-//    }
-
     public String saveSubjects(Subject subject, RedirectAttributes redirectAttributes){
-        subjectRepository.save(subject);
+        ISubjectRepository.save(subject);
         redirectAttributes.addFlashAttribute("message", "The Subject has been saved successfully!");
         return "redirect:/subject/list";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteSubject(@RequestParam("id") Long subjectId, Model model) {
-        subjectRepository.deleteById(subjectId);
+        ISubjectRepository.deleteById(subjectId);
         return "redirect:/subject/list";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editSubject(@RequestParam("id") Long subjectId, Model model) {
-        Optional<Subject> subjectEdit = subjectRepository.findById(subjectId);
-        subjectEdit.ifPresent(subject -> model.addAttribute("subject", subject));
+    @PostMapping("/update")
+    public String updateSubject(@RequestBody Subject subject, RedirectAttributes redirectAttributes) {
+        ISubjectRepository.save(subject);
+        redirectAttributes.addFlashAttribute("message", "The Subject has been updated successfully!");
         return "redirect:/subject/list";
     }
+
 
 }
