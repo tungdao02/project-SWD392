@@ -1,5 +1,6 @@
 package com.example.IMS_BE.repository;
 
+import com.example.IMS_BE.entity.Setting;
 import com.example.IMS_BE.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-
 public interface UserRepository extends JpaRepository<User, Long> {
 
 
@@ -26,17 +26,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "            where email = ?1 " , nativeQuery = true)
     String findRolesByEmail(String email);
 
+    User findById(int id);
+//    User fineUserById(long id);
+
     User findByPhoneAndAndEmail(String phone,String email);
 
     Optional<User> findUserByUsername(String username);
-
 
     User findByPhone(String phone);
 
     User findByEmail(String email);
 
-    User findByUsername(String username);
 
+    List<User> findAllByRole(Setting setting);
+    User findByUsername(String username);
     List<User> findByRoleId(@Param("role_id")Long role_id);
 }
 

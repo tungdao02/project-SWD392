@@ -36,6 +36,15 @@ public class IssueSetting {
         this.classes = classes;
     }
 
+    public IssueSetting(String name, String type, Project project, Subject subject, Classes classes) {
+
+        this.name = name;
+        this.type = type;
+        this.project = project;
+        this.subject = subject;
+        this.classes = classes;
+    }
+
     public Long getId() {
         return id;
     }

@@ -9,6 +9,9 @@ import com.example.IMS_BE.service.impl.ClassesService;
 import com.example.IMS_BE.service.impl.ProjectService;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +82,11 @@ public class StudentProjectController {
         return "redirect:/projectmember/";
     }
 
+    @ResponseBody
+    @GetMapping("/api/getproject/{id}")
+    public ResponseEntity<StudentProject> get(@PathVariable Long id){
+        return new ResponseEntity<StudentProject> (studentProjectService.getStudentProjectById(id), HttpStatus.OK);
+    }
 
     @GetMapping("/editProject/{id}")
     public String editProject(@PathVariable Long id, Model model) {
