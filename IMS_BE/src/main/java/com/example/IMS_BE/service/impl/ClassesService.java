@@ -88,9 +88,9 @@ public class ClassesService implements IClassesService {
         return _classesRepository.findAll(pageable);
     }
 
-    public List<Project> findProjectByClassId(long id){
-        return _classesRepository.findProjectsByClassId(id);
-    }
+//    public List<Project> findProjectByClassId(long id){
+//        return _classesRepository.findProjectsByClassId(id);
+//    }
 
     public List<User> findUsersByClassId(long id){
         return _classesRepository.findUsersByClassId(id);

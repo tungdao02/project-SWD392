@@ -56,10 +56,8 @@ public class StudentProjectController {
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
-// List<StudentProject> studentProjects2 = studentProjectService.searchAll();
 
         model.addAttribute("studentProjects", studentProjects);
-     //   model.addAttribute("studentProjects2", studentProjects2);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
         model.addAttribute("lstProject", projects);
@@ -110,7 +108,18 @@ public class StudentProjectController {
     public String viewStudentsInProject(@PathVariable Long projectId, Model model) {
          List<StudentProject> studentsInProject = studentProjectService.getStudentsByProjectId(projectId);
        // StudentProject studentsInProject = studentProjectService.getStudentProjectById(projectId);
+
+
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("lstProject", projects);
+
+
         model.addAttribute("studentsInProject", studentsInProject);
+        List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
+
+        model.addAttribute("project", studentProjects);
+
+
         return "updatemember";
     }
 
@@ -132,6 +141,31 @@ public class StudentProjectController {
         studentProjectService.removeStudentFromProject(projectId, studentId);
         return "redirect:/projectmember/";
     }
+
+    @RequestMapping("/moveMember/{memberId}")
+    public String moveMember(@PathVariable Long memberId, Model model) {
+
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("lstProject", projects);
+
+        StudentProject studentsInProject = studentProjectService.getStudentProjectById(memberId);
+
+        model.addAttribute("member", studentsInProject);
+
+        return "movemember";
+    }
+
+
+    @PostMapping("/moveStudentFromProject")
+    public String moveStudentFromProject(
+            @RequestParam("currentProjectId") Long currentProjectId,
+            @RequestParam("movetoProjectId") Long movetoProjectId,
+            @RequestParam("studentId") Long studentId) {
+
+        studentProjectService.moveStudentBetweenProjects(currentProjectId, movetoProjectId, studentId);
+        return "redirect:/projectmember/";
+    }
+
 
 
 

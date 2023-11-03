@@ -15,8 +15,5 @@ public interface IStudentProjectRepository extends JpaRepository<StudentProject,
 
     StudentProject findByProjectIdAndUserId(Long projectId, Long studentId);
 
-    @Query(value = "SELECT project_id, GROUP_CONCAT(student_id ORDER BY student_id ASC) AS student_ids " +
-            "FROM student_project " +
-            "GROUP BY project_id", nativeQuery = true)
-    List<StudentProject> searchAllProject();
+    StudentProject getStudentProjectById(Long currentProjectId);
 }

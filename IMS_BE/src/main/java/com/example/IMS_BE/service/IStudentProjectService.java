@@ -13,7 +13,5 @@ public interface IStudentProjectService {
     StudentProject saveStudentProject(StudentProject studentProject);
 
     void deleteStudentProject(Long id);
-
-    List<StudentProject> searchAll();
 }
 
