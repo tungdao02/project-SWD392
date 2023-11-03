@@ -45,21 +45,6 @@ public class Classes {
     @Column(name = "end")
     private Date startEnd;
 
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
-    private java.util.List<StudentClass> studentClasses;
-
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
-    private java.util.List<Project> projects;
-
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
-    private java.util.List<Issue> issue;
-
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
-    private java.util.List<Milestone> Milestone;
-
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
-    private java.util.List<IssueSetting> issueSetting;
-
     public Classes() {
     }
 
