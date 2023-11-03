@@ -36,7 +36,6 @@ public class ClassesController {
     @Autowired
     private com.example.IMS_BE.service.impl.SubjectService subjectService;
     @Autowired
-    private IClassesService _projectService;
 
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
@@ -71,11 +70,15 @@ public class ClassesController {
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
         Classes classToEdit = _classesService.getClassById(id);
+        List<Project> classProject = _classesService.findProjectByClassId(id);
+        List<User> students = _classesService.findUsersByClassId(id);
         model.addAttribute("classToEdit", classToEdit);
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
         model.addAttribute("newSetting", setting);
-        return "Class/editClass";
+        model.addAttribute("classProject", classProject);
+        model.addAttribute("classStudent", students);
+        return "Class/EditClass";
     }
 
     @PostMapping("/update")

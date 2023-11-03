@@ -47,13 +47,13 @@ public class SubjectController {
     }
 
     @GetMapping("/add")
-    public String subjectAdd(Model model){
+        public String subjectAdd(Model model){
         List<User> managerList = userService.findManagerList();
         model.addAttribute("managerList",managerList);
         Subject subject = new Subject();
         model.addAttribute("subject", subject);
         return "subject_add";
-    }
+        }
 
     @GetMapping("/details")
     public String subjectDetails(){
