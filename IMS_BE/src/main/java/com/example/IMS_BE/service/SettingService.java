@@ -5,6 +5,8 @@ import com.example.IMS_BE.entity.Setting;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 public interface SettingService {
     List<Setting> getAllSettings();
 
@@ -29,4 +31,6 @@ public interface SettingService {
     void deleteAll(List<Setting> entities);
 
     void deleteAll();
+
+    List<Setting> findAllByType (String type);
 }

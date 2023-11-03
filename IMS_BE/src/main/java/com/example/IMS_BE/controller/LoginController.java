@@ -6,6 +6,7 @@ import com.example.IMS_BE.repository.SettingRepository;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,17 +32,18 @@ public class LoginController {
     private SettingService settingService;
 
 
-    @RequestMapping("/login")
+    @RequestMapping("")
     public String login(){
         return "login";
     }
     @PostMapping("checklogin")
     public String checkLogin(ModelMap model, @RequestParam("username")String username, @RequestParam("password")String password,
-                             HttpSession session   ){
+                             HttpSession session, HttpServletRequest request ){
+        session = request.getSession();
         if(userService.checkLogin(username,password)){
             System.out.println("Login thanh cong");
+            session.setAttribute("USERNAME", username);
             if(userService.isAdmin(username)) {
-                session.setAttribute("USERNAME", username);
                 List<Setting> settings = settingService.getAllSettings();
                 model.addAttribute("settings", settings);
                 return "admin_home";
@@ -49,6 +51,7 @@ public class LoginController {
                 return "redirect:/issue/student";
             }
         }else{
+
             System.out.println("Login that bai");
             model.addAttribute("ERROR","Username or password not exist!!");
         }
@@ -85,6 +88,27 @@ public class LoginController {
         model.addAttribute("user", new User());
         return "register";
     }
+
+
+    @PostMapping("checkregister")
+    public String checkregister(ModelMap model, @RequestParam("username") String username,
+                                @RequestParam("email") String email, @RequestParam("phone") String phone,
+                                @RequestParam("password") String password, @RequestParam("re_password") String re_password) {
+
+        if (!password.equals(re_password)) {
+            model.addAttribute("ERROR", "Re_password incorrect");
+            return "register";
+        }
+        try {
+            userService.registerUser(username, email, phone, password);
+            model.addAttribute("SUCCESS", "Đăng ký thành công, quay lại đăng nhập !!");
+            return "register";
+        } catch (Exception e) {
+            model.addAttribute("ERROR", "The user exist!!");
+            return "register";
+        }
+    }
+
 
 
 }

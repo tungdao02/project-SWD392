@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Setting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .nav-link {
+            cursor: pointer;
+            padding: 10px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .modal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<h1>Edit Class</h1>
+<form th:object="${classToEdit}" th:action="@{/classes/update}" method="post" class="mx-auto" id="updateForm">
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{status}" id="status" />
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
+                aria-controls="general" aria-selected="true">General</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student"
+                aria-selected="false">Student</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id "project-tab" data-toggle="tab" href="#project" role="tab" aria-controls="project"
+                aria-selected="false">Project</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting"
+                aria-selected="false">Setting</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent" style="margin-bottom: 10px;margin-top: 10px;">
+        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <div class="container">
+                <label for="name">Class Name:</label>
+                <input type="text" id="name" th:field="*{name}" required class="form-control"><br>
+
+                <label for="description">Description:</label>
+                <textarea id="description" th:field="*{description}" class="form-control"></textarea>
+
+                <div class="form-group">
+                    <label for="teacher">Teacher:</label>
+                    <select id="teacher" class="form-control" th:field="*{teacher}">
+                        <option value="" th:each="teacher : ${teachers}" th:value="${teacher.getId}"
+                            th:text="${teacher.getUserName}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" class="form-control" th:field="*{subject}">
+                        <option value="" th:each="subject : ${classSubject}" th:value="${subject.getId}"
+                            th:text="${subject.getName}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade container" id="student" role="tabpanel" aria-labelledby="student-tab"
+            style="height: 500px;overflow: scroll;">
+            <button type="button" class="btn btn-primary" id="openAddStudentModal">Add new student to</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user ,stat : ${classStudent}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.status} == 0 ? Active : Deactivate"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+            
+        </div>
+
+        <div class="tab-pane fade container" id="project" role="tabpanel" aria-labelledby="project-tab"
+            style="height: 500px;overflow: scroll;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Team Lead</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="project, stat : ${classProject}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td th:text="${project.name}"></td>
+                        <td th:text="${project.description}"></td>
+                        <td th:text="${project.user.username}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
+            <div class="container">
+                <div class="form-group">
+                    <label for="settingd">Semester:</label>
+                    <select id="settingd" class="form-control" th:field="*{setting}">
+                        <option value="" th:each="setting : ${newSetting}" th:value="${setting.getId}"
+                            th:text="${setting.getName}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for "startDate">Start Date:</label>
+                    <input type="datetime-local" id="startDate" class="form-control" th:field="*{startDate}" required>
+                </div>
+                <div class="form-group">
+                    <label for "startEnd">End Date:</label>
+                    <input type="datetime-local" id="startEnd" class="form-control" th:field="*{startEnd}" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-left: 16%;">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button th:if="${classToEdit.status} == 0" type="button" class="btn btn-primary"
+            id="activateButton">Active</button>
+        <a href="/classes/classList" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
+<div class="modal" tabindex="-1" role="dialog" id="studentModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Student to Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addStudentForm">
+                    <div class="form-group">
+                        <label for="studentName">Student Name:</label>
+                        <input type="text" class="form-control" id="studentName" name="studentName">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentEmail">Student Email:</label>
+                        <input type="text" class="form-control" id="studentEmail" name="studentEmail">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addStudentButton">Add Student</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var currentTab = "general";
+
+        $(".nav-link").click(function () {
+            var tabId = $(this).attr("data-tab");
+
+            $("#" + currentTab).removeClass("show active");
+            $("#" + tabId).addClass("show active");
+
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");
+
+            currentTab = tabId;
+        });
+
+        $('.nav-link').click(function (e) {
+            e.preventDefault();
+        });
+
+        $('.nav-link').on('click', function () {
+            var currentTab = $(this).attr('href');
+
+            $('.tab-pane').removeClass('show active');
+
+            $(currentTab).addClass('show active');
+        });
+
+        $('#activateButton').click(function () {
+            var statusField = document.getElementById('status');
+            statusField.value = '1';
+
+            alert('Successfully activated.');
+
+            var form = document.getElementById('updateForm');
+            form.submit();
+        });
+
+        $("#openAddStudentModal").click(function() {
+            $("#studentModal").modal("show");
+        });
+
+        $("#addStudentButton").click(function() {
+            $("#studentModal").modal("hide"); 
+        });
+    });
+
+
+</script>
+</body>
+
+</html>

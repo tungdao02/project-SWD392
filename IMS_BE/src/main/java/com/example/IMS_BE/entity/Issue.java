@@ -14,7 +14,7 @@ public class Issue {
     private String title;
 
     @Column(name = "descripton",length = 45)
-    private String descripton;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "project_id",nullable = false,referencedColumnName = "project_id")
@@ -27,10 +27,6 @@ public class Issue {
     @ManyToOne
     @JoinColumn(name = "assignee_id",nullable = false,referencedColumnName = "user_id")
     private User assignee;
-
-    @ManyToOne
-    @JoinColumn(name = "class_id",nullable = false,referencedColumnName = "class_id")
-    private Classes classes;
 
     @ManyToOne
     @JoinColumn(name = "milestone_id",nullable = false,referencedColumnName = "milestone_id")
@@ -49,14 +45,14 @@ public class Issue {
     public Issue() {
     }
 
-    public Issue(Long id, String title, String descripton, Project project, User assigner, User assignee, Classes classes, Milestone milestone, IssueSetting issueSetting, IssueSetting type, IssueSetting status) {
+    public Issue(Long id, String title, String description, Project project, User assigner, User assignee, Milestone milestone, IssueSetting issueSetting, IssueSetting type, IssueSetting status) {
         this.id = id;
         this.title = title;
-        this.descripton = descripton;
+        this.description = description;
         this.project = project;
         this.assigner = assigner;
         this.assignee = assignee;
-        this.classes = classes;
+
         this.milestone = milestone;
         this.issueSetting = issueSetting;
         this.type = type;
@@ -79,12 +75,12 @@ public class Issue {
         this.title = title;
     }
 
-    public String getDescripton() {
-        return descripton;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripton(String descripton) {
-        this.descripton = descripton;
+    public void setDescription(String descripton) {
+        this.description = descripton;
     }
 
     public Project getProject() {
@@ -111,13 +107,6 @@ public class Issue {
         this.assignee = assignee;
     }
 
-    public Classes getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Classes classes) {
-        this.classes = classes;
-    }
 
     public Milestone getMilestone() {
         return milestone;

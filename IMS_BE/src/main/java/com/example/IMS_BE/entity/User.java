@@ -3,15 +3,17 @@ package com.example.IMS_BE.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "User")
 
-public class User extends BaseEntity {
+public class User extends BaseEntity   {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username",nullable = false, length = 12)
+    @Column(name = "username",unique = true,nullable = false, length = 12)
     private String username;
     @Column(name = "phone", length = 12)
     private String phone;
@@ -24,6 +26,20 @@ public class User extends BaseEntity {
     @ManyToOne
     @JoinColumn (name = "role_id",nullable = false,referencedColumnName = "setting_id")
     private Setting role;
+
+
+    public User() {
+    }
+
+    public User(Long id, String username, String phone, String email, String password, int status, Setting role) {
+        this.id = id;
+        this.username = username;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
