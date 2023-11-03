@@ -96,6 +96,7 @@ public class ClassesController {
         return "Class/DeleteOrCancelClass";
     }
 
+
     @PostMapping("/delete-cancel")
     public String deleteClass(@ModelAttribute Classes classModel) {
         if (classModel.getStatus() == 0)
