@@ -25,8 +25,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     SettingRepository settingRepository;
 
-    @Autowired
-    SettingRepository settingRepository;
 
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
@@ -106,6 +104,8 @@ public class UserServiceImpl implements UserService {
     public User registerUser(String username, String email, String phone, String password) {
         return null;
     }
+
+
 
 
 //    public User registerUser(String username, String email, String phone, String password) {

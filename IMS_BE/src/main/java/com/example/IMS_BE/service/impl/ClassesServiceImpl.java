@@ -3,7 +3,6 @@ package com.example.IMS_BE.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.IMS_BE.Enum.ClassStatusEnum;
 import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.User;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.example.IMS_BE.repository.IClassesRepository;
 
 @Service
-public class ClassesService implements IClassesService {
+public class ClassesServiceImpl implements IClassesService {
     @Autowired
     private IClassesRepository _classesRepository;
 
