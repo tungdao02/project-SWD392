@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.example.IMS_BE.Enum.ClassStatusEnum;
 import com.example.IMS_BE.entity.Classes;
+import com.example.IMS_BE.entity.Project;
+import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +86,13 @@ public class ClassesService implements IClassesService {
 
     public Page<Classes> findAllClasses(Pageable pageable) {
         return _classesRepository.findAll(pageable);
+    }
+
+    public List<Project> findProjectByClassId(long id){
+        return _classesRepository.findProjectsByClassId(id);
+    }
+
+    public List<User> findUsersByClassId(long id){
+        return _classesRepository.findUsersByClassId(id);
     }
 }

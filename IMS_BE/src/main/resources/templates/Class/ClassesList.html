@@ -84,34 +84,6 @@
         </ul>
     </div>
     
-    
-    <div id="confirmationPopup" class="confirmation-dialog">
-        <div class="popup-content">
-            <p>Are you sure you want execute action on <span id="classNameToDelete"></span>?</p>
-            <button id="confirmDelete" class="confirm-button btn btn-danger">Yes</button>
-            <button id="cancelDelete" class="cancel-button btn btn-light">Cancel</button>
-        </div>
-    </div>
-    <script>
-        function showDeleteConfirmation(className, classId) {
-            var confirmationPopup = document.getElementById('confirmationPopup');
-            var classNameToDelete = document.getElementById('classNameToDelete');
-            var confirmDeleteButton = document.getElementById('confirmDelete');
-            var cancelDeleteButton = document.getElementById('cancelDelete');
-
-            classNameToDelete.innerText = className;
-
-            confirmationPopup.style.display = 'block';
-
-            confirmDeleteButton.addEventListener('click', function () {
-                confirmationPopup.style.display = 'none';
-            });
-
-            cancelDeleteButton.addEventListener('click', function () {
-                confirmationPopup.style.display = 'none';
-            });
-        }
-
     </script>
 </body>
 

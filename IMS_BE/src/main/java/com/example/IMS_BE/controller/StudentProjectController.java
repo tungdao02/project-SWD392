@@ -23,7 +23,7 @@ import java.util.List;
 public class StudentProjectController {
 
     @Autowired
-        private ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     private UserService userService;
@@ -51,10 +51,13 @@ public class StudentProjectController {
             formModel2 = studentProjectService.getStudentProjectById(projectId);
         }
 
+
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
+
+
         model.addAttribute("studentProjects", studentProjects);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
@@ -73,16 +76,47 @@ public class StudentProjectController {
     }
 
 
+
+
     @PostMapping("/saveStudentProject")
     public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
         studentProjectService.saveStudentProject(project2);
         return "redirect:/projectmember/";
     }
+
     @ResponseBody
     @GetMapping("/api/getproject/{id}")
     public ResponseEntity<StudentProject> get(@PathVariable Long id){
         return new ResponseEntity<StudentProject> (studentProjectService.getStudentProjectById(id), HttpStatus.OK);
     }
+
+    @GetMapping("/editProject/{id}")
+    public String editProject(@PathVariable Long id, Model model) {
+        Project project = projectService.getProjectById(id);
+        List<Classes> classes = classService.GetAllClasses();
+        List<User> users = userService.getAllUsers();
+        List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
+
+
+        model.addAttribute("member", studentProjects);
+
+        model.addAttribute("project", project);
+        model.addAttribute("lstClass", classes);
+        model.addAttribute("lstUser", users);
+
+        return "editproject";
+    }
+
+
+    @PostMapping("/removeStudentFromProject")
+    public String removeStudentFromProject(@ModelAttribute("studentProjectForm") StudentProject studentProject) {
+        Long projectId = studentProject.getProject().getId();
+        Long studentId = studentProject.getUser().getId();
+
+       // studentProjectService.removeStudentProject(studentId);
+        return "redirect:/projectmember/";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         studentProjectService.deleteStudentProject(id);
