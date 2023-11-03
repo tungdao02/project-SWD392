@@ -74,6 +74,17 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public List<User> findManagerList() {
+        Optional<Setting> optionalSetting= settingRepository.findById((long) 5);
+        if(optionalSetting.isPresent()){
+            return userRepository.findAllByRole(optionalSetting.get());
+        }
+        else{
+            return null;
+        }
+    }
+
 
 //    public User registerUser(String username, String email, String phone, String password) {
 //        if (userRepository.findByUsername(username) != null || userRepository.findByEmail(email) != null || userRepository.findByEmail(phone) != null) {

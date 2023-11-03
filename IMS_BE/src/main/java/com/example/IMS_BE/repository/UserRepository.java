@@ -1,5 +1,6 @@
 package com.example.IMS_BE.repository;
 
+import com.example.IMS_BE.entity.Setting;
 import com.example.IMS_BE.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-
+    List<User> findAllByRole(Setting setting);
     @Query( value = "SELECT setting.name \n" +
             "FROM user\n" +
             "JOIN setting ON user.role_id = setting_id\n" +

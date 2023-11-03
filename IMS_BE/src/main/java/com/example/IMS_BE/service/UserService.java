@@ -21,5 +21,6 @@ public interface UserService {
 
     public User registerUser(String username, String email, String phone, String password);
 
+    List<User> findManagerList();
 }
 
