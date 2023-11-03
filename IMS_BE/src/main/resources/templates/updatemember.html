@@ -53,11 +53,14 @@
             <tr th:each="studentProject : ${studentsInProject}">
                 <td th:text="${studentProject.project.name}"></td>
                 <td th:text="${studentProject.project.description}"></td>
-
                 <td th:text="${studentProject.user.username}"></td>
                 <td th:text="${studentProject.project.user.userName}"></td>
                 <td>
-                <a th:href="@{/projectmember/removeMember/deletemember/{id}(id=${studentProject.project.user.getId()})}">Delete</a>
+                    <form th:action="@{/projectmember/removeStudentFromProject}" method="post">
+                        <input type="hidden" name="projectId" th:value="${studentProject.project.id}" />
+                        <input type="hidden" name="studentId" th:value="${studentProject.user.id}" />
+                        <button type="submit">Remove student</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

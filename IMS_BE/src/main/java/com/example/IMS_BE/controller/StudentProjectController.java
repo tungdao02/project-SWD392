@@ -53,9 +53,10 @@ public class StudentProjectController {
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
-
+// List<StudentProject> studentProjects2 = studentProjectService.searchAll();
 
         model.addAttribute("studentProjects", studentProjects);
+     //   model.addAttribute("studentProjects2", studentProjects2);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
         model.addAttribute("lstProject", projects);
@@ -71,9 +72,6 @@ public class StudentProjectController {
         projectService.saveProject(project);
         return "redirect:/projectmember/";
     }
-
-
-
 
     @PostMapping("/saveStudentProject")
     public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
@@ -115,9 +113,19 @@ public class StudentProjectController {
         return "redirect:/projectmember/";
     }
 
-    @GetMapping("/deletemember/{id}")
-    public String deletemember(@PathVariable Long id) {
-        studentProjectService.deleteStudentProject(id);
+    @GetMapping("/deleteStudent/{projectId}")
+    public String deleteStudent(@PathVariable Long projectId, @RequestParam Long userId) {
+        studentProjectService.deleteStudentByProjectAndUser(projectId, userId);
         return "redirect:/projectmember/";
     }
+
+    @PostMapping("/removeStudentFromProject")
+    public String removeStudentFromProject(@RequestParam("projectId") Long projectId, @RequestParam("studentId") Long studentId) {
+        studentProjectService.removeStudentFromProject(projectId, studentId);
+        return "redirect:/projectmember/";
+    }
+
+
+
+
 }

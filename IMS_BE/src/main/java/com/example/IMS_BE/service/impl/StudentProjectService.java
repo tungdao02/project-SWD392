@@ -6,6 +6,8 @@ import com.example.IMS_BE.service.IStudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class StudentProjectService implements IStudentProjectService {
@@ -17,8 +19,11 @@ public class StudentProjectService implements IStudentProjectService {
     }
 
     public List<StudentProject> getAllStudentProjects() {
-        return studentProjectRepository.findAll();
+        List<StudentProject> studentProjects = studentProjectRepository.findAll();
+        Collections.sort(studentProjects, Comparator.comparing(sp -> sp.getProject().getId()));
+        return studentProjects;
     }
+
 
     public StudentProject getStudentProjectById(Long id) {
         return studentProjectRepository.findById(id).orElse(null);
@@ -35,5 +40,29 @@ public class StudentProjectService implements IStudentProjectService {
     public void deleteStudentProject(Long id) {
         studentProjectRepository.deleteById(id);
     }
+
+    @Override
+    public List<StudentProject> searchAll() {
+        return studentProjectRepository.searchAllProject();
+    }
+
+    public void deleteStudentByProjectAndUser(Long projectId, Long userId) {
+        studentProjectRepository.deleteByProjectIdAndUserId(projectId, userId);
+    }
+
+
+    public void removeStudentFromProject(Long projectId, Long studentId) {
+        // Tìm StudentProject dựa trên project_id và student_id
+        StudentProject studentProject = studentProjectRepository.findByProjectIdAndUserId(projectId, studentId);
+
+        if (studentProject != null) {
+            // Xóa StudentProject
+            studentProjectRepository.delete(studentProject);
+        }
+    }
+
+
+
+
 
 }
