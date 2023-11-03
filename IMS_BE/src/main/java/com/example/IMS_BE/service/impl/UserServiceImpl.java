@@ -25,8 +25,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     SettingRepository settingRepository;
 
-    @Autowired
-    SettingRepository settingRepository;
 
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
@@ -107,16 +105,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public List<User> findManagerList() {
-        Optional<Setting> optionalSetting= settingRepository.findById((long) 5);
-        if(optionalSetting.isPresent()){
-            return userRepository.findAllByRole(optionalSetting.get());
-        }
-        else{
-            return null;
-        }
-    }
+
 
 
 //    public User registerUser(String username, String email, String phone, String password) {

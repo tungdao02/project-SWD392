@@ -7,7 +7,7 @@ import com.example.IMS_BE.entity.Subject;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
-import com.example.IMS_BE.service.impl.ProjectService;
+import com.example.IMS_BE.service.SubjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
@@ -34,8 +34,8 @@ public class ClassesController {
     @Autowired
     private UserServiceImpl _userService;
     @Autowired
-    private com.example.IMS_BE.service.impl.SubjectService subjectService;
-    @Autowired
+    private SubjectService subjectService;
+
 
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {

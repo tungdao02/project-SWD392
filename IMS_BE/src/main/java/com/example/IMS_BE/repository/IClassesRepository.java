@@ -18,4 +18,5 @@ public interface IClassesRepository extends JpaRepository<Classes,Long> {
 
     @Query("SELECT sc.student FROM StudentClass sc WHERE sc.classes.id = :classId")
     List<User> findUsersByClassId(@Param("classId") Long classId);
+
 }

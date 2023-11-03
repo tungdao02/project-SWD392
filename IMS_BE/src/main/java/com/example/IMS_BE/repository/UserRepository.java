@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findAllByRole(Setting setting);
     @Query( value = "SELECT setting.name \n" +
             "FROM user\n" +
             "JOIN setting ON user.role_id = setting_id\n" +

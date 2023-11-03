@@ -40,7 +40,6 @@ public class IssueController {
         model.addAttribute("user",user);
         List<Issue> list = issueService.getAllIssueByAssignee(user);
         model.addAttribute("list",list);
-
         return "issuelist";
     }
     @GetMapping("/student/add")

@@ -5,12 +5,11 @@ import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.StudentProject;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.UserService;
-import com.example.IMS_BE.service.impl.ClassesService;
-import com.example.IMS_BE.service.impl.ProjectService;
+import com.example.IMS_BE.service.impl.ClassesServiceImpl;
+import com.example.IMS_BE.service.impl.ProjectServiceImpl;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +22,13 @@ import java.util.List;
 public class StudentProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    private ProjectServiceImpl projectServiceImpl;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private ClassesService classService;
+    private ClassesServiceImpl classService;
 
 
     @Autowired
@@ -41,7 +40,7 @@ public class StudentProjectController {
 
         if (!id.isEmpty()) {
             Long projectId = Long.valueOf(id);
-            formModel = projectService.getProjectById(projectId);
+            formModel = projectServiceImpl.getProjectById(projectId);
         }
 
          StudentProject formModel2 = StudentProject.builder().build();
@@ -54,7 +53,7 @@ public class StudentProjectController {
 
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
-        List<Project> projects = projectService.getAllProjects();
+        List<Project> projects = projectServiceImpl.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
 
 
@@ -71,7 +70,7 @@ public class StudentProjectController {
 
     @PostMapping("/saveProject")
     public String save(@ModelAttribute("projectForm") Project project) {
-        projectService.saveProject(project);
+        projectServiceImpl.saveProject(project);
         return "redirect:/projectmember/";
     }
 
@@ -92,7 +91,7 @@ public class StudentProjectController {
 
     @GetMapping("/editProject/{id}")
     public String editProject(@PathVariable Long id, Model model) {
-        Project project = projectService.getProjectById(id);
+        Project project = projectServiceImpl.getProjectById(id);
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
