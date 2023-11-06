@@ -2,6 +2,7 @@ package com.example.IMS_BE.service.impl;
 
 
 import com.example.IMS_BE.entity.IssueSetting;
+import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.repository.IIssueSettingRepository;
 import com.example.IMS_BE.service.IssueSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,17 @@ public class IssueSettingImpl implements IssueSettingService {
     public Optional<IssueSetting> findIssueSettingById(Long id) {
         return issueSettingRepository.findById(id);
     }
+
+//    @Override
+//    public List<IssueSetting> getIsssueSettingByTypeAndProject( Project project,String type) {
+//       // return issueSettingRepository.findAllByProjectAndType(project,type);
+//       return null;
+//    }
+
+    @Override
+    public List<IssueSetting> getIsssueSettingByTypeAndProject(Long projectid, String type) {
+        return issueSettingRepository.findAllByProjectAndType(projectid,type);
+    }
+
+
 }
