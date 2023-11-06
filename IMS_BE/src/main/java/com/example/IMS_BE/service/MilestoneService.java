@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface MilestoneService {
     List<Milestone> getMilestoneByProject(Project project);
-    List<Milestone> getAllMilestone();
 }

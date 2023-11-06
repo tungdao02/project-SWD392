@@ -64,29 +64,6 @@ public class Milestone {
         this.status = status;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getStartdate() {
-        return startdate;
-    }
-
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
-
-    public Date getStartend() {
-        return startend;
-    }
-
-    public void setStartend(Date startend) {
-        this.startend = startend;
-    }
 
     public Project getProject() {
         return project;

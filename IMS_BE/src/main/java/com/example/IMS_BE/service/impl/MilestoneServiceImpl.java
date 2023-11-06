@@ -16,9 +16,4 @@ public class MilestoneServiceImpl implements MilestoneService {
     public List<Milestone> getMilestoneByProject(Project project) {
         return milestoneRepository.findAllByProject(project);
     }
-
-    @Override
-    public List<Milestone> getAllMilestone() {
-        return milestoneRepository.findAll();
-    }
 }
