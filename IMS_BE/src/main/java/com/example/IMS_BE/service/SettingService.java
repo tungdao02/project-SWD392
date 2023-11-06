@@ -32,5 +32,23 @@ public interface SettingService {
 
     void deleteAll();
 
+
     List<Setting> findAllByType (String type);
+
+    Setting updateSetting(Long id, Setting updatedSetting);
+
+    Setting getSettingById(Long id);
+
+    Setting saveSetting(Setting setting);
+
+    void deleteSetting(Long id);
+
+    List<String> getAllTypeOptions();
+
+    void deleteSettingById(Long id);
+
+    public List<String> getAllTypes();
+
+    public void deleteSelectedSettings(List<Long> ids);
+
 }

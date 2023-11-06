@@ -117,4 +117,6 @@ public class User extends BaseEntity   {
                 ", role=" + role +
                 '}';
     }
+
 }
+

@@ -8,15 +8,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.*;
 import java.util.Optional;
+    public interface UserService {
+        public User getUserByEmail(String username);
 
-public interface UserService {
-    public User getUserByEmail(String username);
+        boolean isAdmin(String username);
 
-    List<User> getAllUsers();
+        boolean checkLogin(String username, String password);
 
-    boolean isAdmin(String username);
+        public User getUserByUsername(String username);
 
-    boolean checkLogin(String username, String password);
+        public User registerUser(String username, String email, String phone, String password);
+
 
     public User getUserByUsername(String username);
     Optional<User> findUserById(Long id);
@@ -24,6 +26,9 @@ public interface UserService {
     List<User> findUserList();
     List<User> findManagerList();
     public User registerUser(String username, String email, String phone, String password);
+
+        public String getRolesByUserName(String userName);
+
 
 }
 

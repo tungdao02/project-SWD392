@@ -11,7 +11,7 @@ public class Setting extends BaseEntity{
     @Id
     @Column(name = "setting_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long settingId;
     @Column(name="name",nullable = false,length = 45)
     private String name;
     @Column(name="type",nullable = false,length = 45)
@@ -26,33 +26,12 @@ public class Setting extends BaseEntity{
         this.type = type;
     }
 
-
-    public long getId(){
-        return id;
+    public Long getId() {
+        return settingId;
     }
 
-    public String getName() {
-        return name;
-    }
+    public void setId(Long id) {
+        this.settingId = id;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String description) {
-        this.type = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Setting{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                '}';
     }
 }
