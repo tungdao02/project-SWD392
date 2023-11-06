@@ -1,7 +1,7 @@
 package com.example.IMS_BE.service;
 
+import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.User;
-
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public interface UserService {
     Optional<User> findById(int id);
     List<User> findUserList();
     List<User> findManagerList();
-
     public User registerUser(String username, String email, String phone, String password);
+
 }
 

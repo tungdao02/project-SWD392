@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProjectService implements IProjectService {
+public class ProjectServiceImpl implements IProjectService {
 
     private final IProjectRepository projectRepository;
 
     @Autowired
-    public ProjectService(IProjectRepository projectRepository) {
+    public ProjectServiceImpl(IProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 
@@ -25,7 +25,7 @@ public class ProjectService implements IProjectService {
     }
 
     public Project getProjectById(Long projectId) {
-        return projectRepository.findById(projectId).orElse(null);
+        return projectRepository.findById(projectId).get();
     }
 
     public Project saveProject(Project project) {

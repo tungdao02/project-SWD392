@@ -36,29 +36,33 @@
             <div class="form-group col-md-6">
                 <label for="assigneeId">Assignee</label>
                 <select class="form-control" id="assigneeId" th:field="*{assignee}" name="assigneeId" required>
-                    <option th:value="${user.id}" >assign to me</option>
+                    <option th:value="${assignerissue.id}" >assign to me</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="milestoneId">Milestone</label>
                 <select class="form-control" id="milestoneId" th:field="*{milestone}" name="milestoneId" required>
-                    <option value="1">Milestone 1</option>
-                    <option value="2">Milestone 2</option>
+                    <option th:each="milestone : ${milestoneList}" th:text="${milestone.name}" th:value="${milestone.id}"></option>
                 </select>
             </div>
         </div>
-        <div class="row">
+        <select class="form-control" id="processId" th:field="*{assigner}" name="processId" >
+            <option th:text="${assignerissue.username}" th:value="${assignerissue.id}"></option>
+
+        </select>
+
+        <div class="row" >
             <div class="form-group col-md-6">
                 <label for="processId">Process</label>
                 <select class="form-control" id="processId" th:field="*{issueSetting}" name="processId" required>
-                    <option value="1">Process 1</option>
-                    <option value="2">Process 2</option>
+                    <option th:each="process : ${processList}" th:text="${process.name}" th:value="${process.id}"></option>
+
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="statusId">Status</label>
                 <select class="form-control" id="statusId" th:field="*{status}" name="statusId" required>
-                    <option value="1">Status 1</option>
+                    <option th:each="status : ${statusList}" th:text="${status.name}" th:value="${status.id}"></option>
                 </select>
             </div>
 
@@ -67,8 +71,8 @@
             <div class="form-group col-md-6">
                 <label for="typeId">Type</label>
                 <select class="form-control" id="typeId" th:field="*{type}" name="typeId" required>
-                    <option value="1">Type 1</option>
-                    <option value="2">Type 2</option>
+                    <option th:each="type : ${typeList}" th:text="${type.name}" th:value="${type.id}"></option>
+
                 </select>
             </div>
         </div>

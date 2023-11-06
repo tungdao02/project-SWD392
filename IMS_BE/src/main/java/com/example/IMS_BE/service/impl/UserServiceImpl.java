@@ -105,6 +105,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
+
 //    public User registerUser(String username, String email, String phone, String password) {
 //        if (userRepository.findByUsername(username) != null || userRepository.findByEmail(email) != null || userRepository.findByEmail(phone) != null) {
 //            throw new RuntimeException("Người dùng đã tồn tại");

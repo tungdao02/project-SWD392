@@ -3,10 +3,11 @@ package com.example.IMS_BE.controller;
 import com.example.IMS_BE.entity.*;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
-import com.example.IMS_BE.service.impl.ProjectService;
+
+import com.example.IMS_BE.service.impl.*;
+import com.example.IMS_BE.service.impl.ProjectServiceImpl;
+import com.example.IMS_BE.service.SubjectService;
 import com.example.IMS_BE.service.impl.StudentClassServiceImpl;
-import com.example.IMS_BE.service.impl.StudentProjectService;
-import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -26,25 +27,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/classes")
 public class ClassesController {
     @Autowired
-    private StudentProjectService studentProjectService;
+    private ClassesServiceImpl _classesService;
     @Autowired
-    private ProjectService projectService;
-    @Autowired
-    private StudentClassServiceImpl studentClassService;
-
-    @Autowired
-    private IClassesService _classesService;
+    private ProjectServiceImpl projectService;
     @Autowired
     private SettingService _settingService;
     @Autowired
     private UserServiceImpl _userService;
     @Autowired
-    private com.example.IMS_BE.service.impl.SubjectService subjectService;
+    private SubjectService subjectService;
+    @Autowired
+    private StudentClassServiceImpl studentsClassService;
+    @Autowired
+    private StudentProjectService studentProjectService;
 
     @GetMapping("/classList")
-    public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String searchString) {
         int pageSize = 14;
-        Page<Classes> classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
+        Page<Classes> classPage = null;
+        if(searchString == null || searchString ==""){
+            classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
+        }else{  
+            classPage = _classesService.findClassesByName(searchString,PageRequest.of(page - 1, pageSize));
+        }
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", classPage.getTotalPages());
         model.addAttribute("list", classPage.getContent());
@@ -66,6 +71,18 @@ public class ClassesController {
     public String createClass(@ModelAttribute Classes classes) {
         _classesService.AddClass(classes);
         return "redirect:classList";
+    }
+
+    @GetMapping("/addStudent/{id}")
+    public String addStudent(@PathVariable int id,@RequestParam(defaultValue = "0") int classId){
+        studentsClassService.addStudentIntoClass(_classesService.GetClassById(classId), _userService.findById(id).orElse(null));
+        return "redirect:/classes/edit/"+classId;
+    }
+
+    @GetMapping("/removeStudent/{id}")
+    public String removeStudent(@PathVariable long id,@RequestParam(defaultValue = "0") long classId){
+        studentsClassService.kickStudent(classId, id);
+        return "redirect:/classes/edit/"+classId;
     }
 
     @GetMapping("/edit/{id}")

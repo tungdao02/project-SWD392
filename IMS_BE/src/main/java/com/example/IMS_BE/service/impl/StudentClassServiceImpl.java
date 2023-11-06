@@ -1,5 +1,6 @@
 package com.example.IMS_BE.service.impl;
 
+import com.example.IMS_BE.entity.Classes;
 import com.example.IMS_BE.entity.StudentClass;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.IStudentClassRepository;
@@ -12,6 +13,7 @@ import java.util.List;
 public class StudentClassServiceImpl implements IStudentClassService {
     @Autowired
     IStudentClassRepository studentClassRepository;
+
     @Override
     public List<StudentClass> getClassesByUser(User user) {
         return studentClassRepository.findAllByStudent(user);
@@ -19,5 +21,11 @@ public class StudentClassServiceImpl implements IStudentClassService {
 
     public StudentClass getStudentClassById(Long id) {
         return studentClassRepository.findById(id).orElse(null);
+    }
+
+    public void addStudentIntoClass(Classes classes, User user) {
+    }
+
+    public void kickStudent(long classId, long id) {
     }
 }

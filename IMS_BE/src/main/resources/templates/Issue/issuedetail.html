@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Issue Detail</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/issue/update}" th:object="${issue}" method="POST">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" th:field="*{description}" rows="3" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="project">Project</label>
+                            <select class="form-control" id="project" th:field="*{project}">
+                                <option value="1">Project 1</option>
+                                <option value="2">Project 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <select disabled class="form-control" id="class" th:field="*{class}">
+                                <option value="1">Class 1</option>
+                                <option value="2">Class 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assignee">Assignee</label>
+                            <select class="form-control" id="assignee" th:field="*{assignee}">
+                                <option value="1">User 1</option>
+                                <option value="2">User 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="milestone">Milestone</label>
+                            <select class="form-control" id="milestone" th:field="*{milestone}">
+                                <option value="1">Milestone 1</option>
+                                <option value="2">Milestone 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="process">Process</label>
+                            <select class="form-control" id="process" th:field="*{process}">
+                                <option value="1">Process 1</option>
+                                <option value="2">Process 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" th:field="*{status}">
+                                <option value="1">Status 1</option>
+                                <option value="2">Status 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select class="form-control" id="type" th:field="*{type}">
+                                <option value="1">Type 1</option>
+                                <option value="2">Type 2</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-danger">Delete issue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a href="/issues" class="btn btn-primary">Back to Issues</a>
+    </div>
+</div>
+</body>
+</html>
