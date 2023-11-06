@@ -8,6 +8,7 @@ import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.SubjectService;
+import com.example.IMS_BE.service.impl.StudentClassServiceImpl;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
@@ -35,12 +36,19 @@ public class ClassesController {
     private UserServiceImpl _userService;
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private StudentClassServiceImpl studentsClassService;
 
 
     @GetMapping("/classList")
-    public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String searchString) {
         int pageSize = 14;
-        Page<Classes> classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
+        Page<Classes> classPage = null;
+        if(searchString == null || searchString ==""){
+            classPage = _classesService.findAllClasses(PageRequest.of(page - 1, pageSize));
+        }else{  
+            classPage = _classesService.findClassesByName(searchString,PageRequest.of(page - 1, pageSize));
+        }
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", classPage.getTotalPages());
         model.addAttribute("list", classPage.getContent());
@@ -64,6 +72,11 @@ public class ClassesController {
         return "redirect:classList";
     }
 
+    @GetMapping("/addStudent/{id}")
+    public String addStudent(@PathVariable int id,@RequestParam(defaultValue = "0") int classId){
+        studentsClassService.addStudentIntoClass(_classesService.GetClassById(classId), _userService.findById(id).orElse(null));
+        return "redirect:/classes/edit/"+classId;
+    }
     @GetMapping("/edit/{id}")
     public String editClass(@PathVariable Long id, Model model) {
         List<Setting> setting = _settingService.findAllByType("semester");
