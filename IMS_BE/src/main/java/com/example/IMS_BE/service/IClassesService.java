@@ -26,4 +26,6 @@ public interface IClassesService {
     public Page<Classes> findAllClasses(Pageable pageable);
 //    public List<Project> findProjectByClassId(long id);
     List<User> findUsersByClassId(long id);
+
+    List<Project> findProjectByClassId(long id);
 }

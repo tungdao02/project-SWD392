@@ -275,7 +275,6 @@
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
       <a th:href="@{'/projectmember/removeMember/' + ${studentProject.project.id}}">Remove member</a>
-      <a th:href="@{/projectmember/export}">Export to excel</a>
       <a th:href="@{'/projectmember/editProject/' + ${studentProject.project.id}}" >Edit</a>
       <a th:href="@{/studentproject/delete/{id}(id=${studentProject.project.getId()})}">Delete</a>
     </td>

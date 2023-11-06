@@ -9,9 +9,7 @@ import com.example.IMS_BE.service.impl.ClassesService;
 import com.example.IMS_BE.service.impl.ProjectService;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +65,7 @@ public class StudentProjectController {
         model.addAttribute("projectForm", formModel);
         model.addAttribute("studentProjectForm", formModel2);
 
-        return "projectmember";
+        return "Project/projectmember";
     }
 
     @PostMapping("/saveProject")
@@ -102,7 +100,7 @@ public class StudentProjectController {
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
 
-        return "editproject";
+        return "Project/editproject";
     }
 
 
@@ -122,7 +120,7 @@ public class StudentProjectController {
         model.addAttribute("project", studentProjects);
 
 
-        return "updatemember";
+        return "Project/updatemember";
     }
 
 
@@ -154,7 +152,7 @@ public class StudentProjectController {
 
         model.addAttribute("member", studentsInProject);
 
-        return "movemember";
+        return "Project/movemember";
     }
 
     @PostMapping("/moveStudentFromProject")

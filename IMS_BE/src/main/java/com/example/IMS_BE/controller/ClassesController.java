@@ -1,13 +1,10 @@
 package com.example.IMS_BE.controller;
 
-import com.example.IMS_BE.entity.Classes;
-import com.example.IMS_BE.entity.Project;
-import com.example.IMS_BE.entity.Setting;
-import com.example.IMS_BE.entity.Subject;
-import com.example.IMS_BE.entity.User;
+import com.example.IMS_BE.entity.*;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.impl.ProjectService;
+import com.example.IMS_BE.service.impl.StudentProjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 
 import java.util.List;
@@ -28,6 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/classes")
 public class ClassesController {
     @Autowired
+    private StudentProjectService studentProjectService;
+    @Autowired
+    private ProjectService projectService;
+
+
+    @Autowired
     private IClassesService _classesService;
     @Autowired
     private SettingService _settingService;
@@ -35,6 +38,7 @@ public class ClassesController {
     private UserServiceImpl _userService;
     @Autowired
     private com.example.IMS_BE.service.impl.SubjectService subjectService;
+
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 14;
@@ -68,13 +72,16 @@ public class ClassesController {
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
         Classes classToEdit = _classesService.getClassById(id);
-  //      List<Project> classProject = _classesService.findProjectByClassId(id);
+
+      //  List<Project> classProject = _classesService.findProjectByClassId(id);
+        List<Project> classProject = _classesService.findProjectByClassId(id);
+
         List<User> students = _classesService.findUsersByClassId(id);
         model.addAttribute("classToEdit", classToEdit);
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
         model.addAttribute("newSetting", setting);
-      //  model.addAttribute("classProject", classProject);
+        model.addAttribute("classProject", classProject);
         model.addAttribute("classStudent", students);
         return "Class/EditClass";
     }
@@ -93,7 +100,6 @@ public class ClassesController {
         model.addAttribute("classModel", classToEdit);
         return "Class/DeleteOrCancelClass";
     }
-
 
     @PostMapping("/delete-cancel")
     public String deleteClass(@ModelAttribute Classes classModel) {

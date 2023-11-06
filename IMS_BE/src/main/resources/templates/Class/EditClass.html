@@ -123,14 +123,7 @@
                         <th>Team Lead</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr th:each="project, stat : ${classProject}">
-                        <td th:text="${stat.index + 1}"></td>
-                        <td th:text="${project.name}"></td>
-                        <td th:text="${project.description}"></td>
-                        <td th:text="${project.user.username}"></td>
-                    </tr>
-                </tbody>
+
             </table>
         </div>
 
