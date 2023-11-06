@@ -2,6 +2,7 @@ package com.example.IMS_BE.service;
 
 
 import com.example.IMS_BE.entity.StudentProject;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface IStudentProjectService {
     StudentProject saveStudentProject(StudentProject studentProject);
 
     void deleteStudentProject(Long id);
+
+    Page<StudentProject> getAl(Integer pageNo);
 }
 

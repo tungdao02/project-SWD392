@@ -15,5 +15,5 @@ public interface IStudentProjectRepository extends JpaRepository<StudentProject,
 
     StudentProject findByProjectIdAndUserId(Long projectId, Long studentId);
 
-    StudentProject getStudentProjectById(Long currentProjectId);
+
 }

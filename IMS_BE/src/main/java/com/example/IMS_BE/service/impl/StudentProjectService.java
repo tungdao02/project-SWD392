@@ -7,6 +7,9 @@ import com.example.IMS_BE.repository.IStudentProjectRepository;
 import com.example.IMS_BE.repository.UserRepository;
 import com.example.IMS_BE.service.IStudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -49,6 +52,12 @@ public class StudentProjectService implements IStudentProjectService {
         studentProjectRepository.deleteById(id);
     }
 
+    @Override
+    public Page<StudentProject> getAl(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo-1,2);
+        return this.studentProjectRepository.findAll(pageable);
+    }
+
 
     public void deleteStudentByProjectAndUser(Long projectId, Long userId) {
         studentProjectRepository.deleteByProjectIdAndUserId(projectId, userId);
@@ -65,23 +74,20 @@ public class StudentProjectService implements IStudentProjectService {
         }
     }
 
-    public void moveStudentBetweenProjects(Long currentProjectId, Long newProjectId, Long studentId) {
-        // Tìm StudentProject dựa trên project_id hiện tại và student_id
-        StudentProject studentProject = studentProjectRepository.getStudentProjectById(currentProjectId);
-
-        if (studentProject != null) {
+    public void moveStudentBetweenProjects(StudentProject project) {
+        if (project != null) {
             // Xóa StudentProject khỏi dự án hiện tại
-            studentProjectRepository.deleteById(currentProjectId);
+            studentProjectRepository.delete(project);
 
             // Tạo một mới StudentProject với newProjectId và user
             StudentProject newStudentProject = new StudentProject();
 
-            // Lấy thông tin sinh viên từ repository (giả sử có UserRepository)
-            User user = userRepository.findById(studentId).orElse(null);
+            // Lấy thông tin sinh viên từ project
+            User user = project.getUser();
             newStudentProject.setUser(user);
 
-            // Lấy dự án từ repository
-            Project newProject = projectRepository.findById(newProjectId).orElse(null);
+            // Lấy dự án từ project
+            Project newProject = project.getProject();
             newStudentProject.setProject(newProject);
 
             // Lưu mới StudentProject vào dự án mới
@@ -91,7 +97,4 @@ public class StudentProjectService implements IStudentProjectService {
         }
     }
 
-
-
-
-    }
+}

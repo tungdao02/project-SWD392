@@ -10,7 +10,7 @@
 <div class="container">
     <h1 class="mt-4">Move Member</h1>
     <form th:action="@{/projectmember/moveStudentFromProject}" th:object="${member}" method="post">
-        <input  name="currentProjectId" th:field="${member.id}" />
+        <input  name="projectId" th:field="${member.id}" />
         <div class="form-group">
             <label>Name:</label>
             <input type="text" name="studentId" th:field="*{user.id}" class="form-control" />

@@ -9,6 +9,7 @@ import com.example.IMS_BE.service.impl.ClassesService;
 import com.example.IMS_BE.service.impl.ProjectService;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class StudentProjectController {
     private StudentProjectService studentProjectService;
 
     @GetMapping("/")
-    public String index(@RequestParam(value = "id", required = false, defaultValue = "") String id, Model model) {
+    public String index(@RequestParam(value = "id", required = false, defaultValue = "") String id, Model model,@RequestParam(name = "pageNo",defaultValue = "1")Integer pageNo) {
         Project formModel = Project.builder().build();
 
         if (!id.isEmpty()) {
@@ -55,8 +56,9 @@ public class StudentProjectController {
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
-        List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
 
+        List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
+       // Page<StudentProject> studentProjects = studentProjectService.getAl(pageNo);
         model.addAttribute("studentProjects", studentProjects);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
@@ -155,19 +157,11 @@ public class StudentProjectController {
         return "movemember";
     }
 
-
     @PostMapping("/moveStudentFromProject")
-    public String moveStudentFromProject(
-            @RequestParam("currentProjectId") Long currentProjectId,
-            @RequestParam("movetoProjectId") Long movetoProjectId,
-            @RequestParam("studentId") Long studentId) {
-
-        studentProjectService.moveStudentBetweenProjects(currentProjectId, movetoProjectId, studentId);
+    public String moveStudentFromProject(@ModelAttribute("moveStudentFromProject") StudentProject project) {
+        studentProjectService.moveStudentBetweenProjects(project);
         return "redirect:/projectmember/";
     }
-
-
-
 
 
 }
