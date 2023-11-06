@@ -247,6 +247,7 @@
   <thead>
   <tr>
     <th>No</th>
+    <th>Class Name</th>
     <th>Project Name</th>
     <th>Group Name</th>
     <th>Student Name</th>
@@ -260,8 +261,9 @@
 
   }">
     <td th:text="${studentProject.project.id}"></td>
-
+    <td th:text="${studentProject.project.classes.name}"></td>
     <td th:text="${studentProject.project.name}"></td>
+
     <td th:text="${studentProject.project.description}"></td>
     <td>
         <span th:each="project, stat : ${studentProjects}">
@@ -273,6 +275,7 @@
     </td>
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
+
       <a th:href="@{/projectmember/delete/{id}(id=${studentProject.project.getId()})}">Delete</a>
     </td>
   </tr>
