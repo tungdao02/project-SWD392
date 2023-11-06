@@ -1,6 +1,7 @@
 package com.example.IMS_BE.service.impl;
 import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.StudentProject;
+import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.repository.IStudentProjectRepository;
 import com.example.IMS_BE.service.IStudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class StudentProjectService implements IStudentProjectService {
 
     public void deleteStudentProject(Long id) {
         studentProjectRepository.deleteById(id);
+    }
+
+    @Override
+    public List<StudentProject> getAllByStudent(User user) {
+        return studentProjectRepository.findByUser(user);
     }
 }
