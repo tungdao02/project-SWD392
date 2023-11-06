@@ -96,6 +96,7 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,6 +105,7 @@
                         <td th:text="${user.username}"></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.status} == 0 ? Active : Deactivate"></td>
+                        <td><a  th:href="@{'http://localhost:8080/classes/removeStudent/'+${user.id}+'?classId='+${classToEdit.id}}" class="btn btn-danger">remove</a></td>
                     </tr>
                 </tbody>
             </table>

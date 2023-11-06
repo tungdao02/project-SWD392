@@ -77,6 +77,13 @@ public class ClassesController {
         studentsClassService.addStudentIntoClass(_classesService.GetClassById(classId), _userService.findById(id).orElse(null));
         return "redirect:/classes/edit/"+classId;
     }
+
+    @GetMapping("/removeStudent/{id}")
+    public String removeStudent(@PathVariable long id,@RequestParam(defaultValue = "0") long classId){
+        studentsClassService.kickStudent(classId, id);
+        return "redirect:/classes/edit/"+classId;
+    }
+
     @GetMapping("/edit/{id}")
     public String editClass(@PathVariable Long id, Model model) {
         List<Setting> setting = _settingService.findAllByType("semester");
