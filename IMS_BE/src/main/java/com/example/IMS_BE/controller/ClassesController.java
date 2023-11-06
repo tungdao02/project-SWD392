@@ -4,6 +4,7 @@ import com.example.IMS_BE.entity.*;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.impl.ProjectService;
+import com.example.IMS_BE.service.impl.StudentClassServiceImpl;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 
@@ -28,7 +29,8 @@ public class ClassesController {
     private StudentProjectService studentProjectService;
     @Autowired
     private ProjectService projectService;
-
+    @Autowired
+    private StudentClassServiceImpl studentClassService;
 
     @Autowired
     private IClassesService _classesService;
@@ -68,22 +70,50 @@ public class ClassesController {
 
     @GetMapping("/edit/{id}")
     public String editClass(@PathVariable Long id, Model model) {
+        Project formModel = new Project();
+
+
         List<Setting> setting = _settingService.findAllByType("semester");
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
         Classes classToEdit = _classesService.getClassById(id);
 
-      //  List<Project> classProject = _classesService.findProjectByClassId(id);
-        List<Project> classProject = _classesService.findProjectByClassId(id);
-
+        List<Project> classProject =  projectService.getProjectsByClassesId(id);
+        StudentProject studentProjectForm = studentProjectService.getStudentProjectById(id);
+        List<Project> projects = projectService.getAllProjects();
         List<User> students = _classesService.findUsersByClassId(id);
+
+       // Project formModel = projectService.getProjectById(id);
+
         model.addAttribute("classToEdit", classToEdit);
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
         model.addAttribute("newSetting", setting);
         model.addAttribute("classProject", classProject);
         model.addAttribute("classStudent", students);
+        model.addAttribute("lstProject", projects);
+
+
+
+        List<Classes> classes = _classesService.GetAllClasses();
+        model.addAttribute("lstClass", classes);
+
+        model.addAttribute("projectForm", formModel); // Truyền đối tượng Project mới
+        model.addAttribute("studentProjectForm", studentProjectForm);
         return "Class/EditClass";
+    }
+
+
+    @PostMapping("/saveProject")
+    public String save(@ModelAttribute("projectForm") Project project) {
+        projectService.saveProject(project);
+        return "redirect:/projectmember/";
+    }
+
+    @PostMapping("/saveStudentProject")
+    public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
+        studentProjectService.saveStudentProject(project2);
+        return "redirect:/projectmember/";
     }
 
     @PostMapping("/update")

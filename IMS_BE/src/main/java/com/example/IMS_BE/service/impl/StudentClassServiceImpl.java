@@ -16,4 +16,8 @@ public class StudentClassServiceImpl implements IStudentClassService {
     public List<StudentClass> getClassesByUser(User user) {
         return studentClassRepository.findAllByStudent(user);
     }
+
+    public StudentClass getStudentClassById(Long id) {
+        return studentClassRepository.findById(id).orElse(null);
+    }
 }

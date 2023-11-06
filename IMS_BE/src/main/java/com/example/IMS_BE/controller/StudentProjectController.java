@@ -65,6 +65,8 @@ public class StudentProjectController {
         model.addAttribute("projectForm", formModel);
         model.addAttribute("studentProjectForm", formModel2);
 
+
+
         return "Project/projectmember";
     }
 
@@ -86,19 +88,19 @@ public class StudentProjectController {
         return new ResponseEntity<StudentProject> (studentProjectService.getStudentProjectById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/editProject/{id}")
-    public String editProject(@PathVariable Long id, Model model) {
+    @GetMapping("/editProject/{id}/{classid}")
+    public String editProject(@PathVariable Long id,@PathVariable Long classid, Model model) {
         Project project = projectService.getProjectById(id);
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
-
+        List<User> students = classService.findUsersByClassId(classid);
 
         model.addAttribute("member", studentProjects);
 
         model.addAttribute("project", project);
         model.addAttribute("lstClass", classes);
-        model.addAttribute("lstUser", users);
+        model.addAttribute("lstUser", students);
 
         return "Project/editproject";
     }
@@ -109,7 +111,6 @@ public class StudentProjectController {
          List<StudentProject> studentsInProject = studentProjectService.getStudentsByProjectId(projectId);
        // StudentProject studentsInProject = studentProjectService.getStudentProjectById(projectId);
 
-
         List<Project> projects = projectService.getAllProjects();
         model.addAttribute("lstProject", projects);
 
@@ -119,10 +120,8 @@ public class StudentProjectController {
 
         model.addAttribute("project", studentProjects);
 
-
         return "Project/updatemember";
     }
-
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {

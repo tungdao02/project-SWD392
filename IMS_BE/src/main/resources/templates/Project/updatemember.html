@@ -58,7 +58,18 @@
 <div class="container">
     <h1>Project Management System</h1>
     <div class="project-list">
-        <h2>Project List</h2>
+        <!-- Nút "Add" để hiển thị biểu mẫu -->
+        <button id="addButton">Add Student</button>
+        <!-- ADD STUDENT -->
+        <div class="popup-form" id="addProjectForm">
+            <div class="popup-content">
+                <h2>Add new student to project</h2>
+
+            </div>
+        </div>
+
+
+
         <table class="table table-striped">
             <thead>
             <tr>
@@ -91,47 +102,17 @@
     </div>
 </div>
 
-<!-- move STUDENT -->
-<div class="popup-form" id="addProjectForm2">
-    <div class="popup-content">
-        <h2>Add new student to project</h2>
-        <form th:action="@{/projectmember/moveStudentFromProject}" method="post">
-            <table>
-                <tr th:each="studentProject : ${studentsInProject}">
-                    <td>
-                        <input type="hidden" name="currentProjectId" th:value="${studentProject.project.id}" />
-                        <input name="studentId" th:value="${studentProject.user.id}" />
-
-                        <div class="form-group">
-                            <label>Project:</label>
-                            <select name="movetoProjectId"    class="form-control">
-                                <option th:each="class : ${lstProject}" th:value="${class.id}" th:text="${class.name}"></option>
-                            </select>
-                        </div>
-
-                        <button class="btn btn-danger" type="submit">Remove student</button>
-                        <button type="button" id="closeButton">Close</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
-
-    </div>
-</div>
-
-
-
-
 
 <!-- JavaScript để hiển thị và ẩn biểu mẫu popup -->
 <script>
     document.getElementById('addButton').addEventListener('click', function() {
-        document.getElementById('addProjectForm2').style.display = 'block';
+        document.getElementById('addProjectForm').style.display = 'block';
     });
 
     document.getElementById('closeButton').addEventListener('click', function() {
-        document.getElementById('addProjectForm2').style.display = 'none';
+        document.getElementById('addProjectForm').style.display = 'none';
     });
 </script>
+
 </body>
 </html>

@@ -170,6 +170,7 @@
 <!-- Nút "Add" để hiển thị biểu mẫu -->
 <button id="addButton">Add New Project</button>
 <button id="addButton2">Add Student</button>
+<a th:href="@{'/classes/classList'}">Back to CLass</a>
 
 <!-- Biểu mẫu popup -->
 <div class="popup-form" id="addProjectForm">
@@ -217,9 +218,7 @@
   <div class="popup-content">
     <h2>Add new student to project</h2>
     <form th:action="@{/projectmember/saveStudentProject}" th:object="${studentProjectForm}" method="post">
-    <div>
-        <input type="hidden" th:field="*{id}" />
-      </div>
+
       <div>
         <label>Project:</label>
         <select th:field="*{project.id}">
@@ -274,35 +273,12 @@
     </td>
     <td th:text="${studentProject.project.user.username}"></td>
     <td>
-      <a th:href="@{'/projectmember/removeMember/' + ${studentProject.project.id}}">Remove member</a>
-      <a th:href="@{'/projectmember/editProject/' + ${studentProject.project.id}}" >Edit</a>
       <a th:href="@{/studentproject/delete/{id}(id=${studentProject.project.getId()})}">Delete</a>
     </td>
   </tr>
 
   </tbody>
 </table>
-
-<!-- Biểu mẫu popup -->
-<div id="projectPopup" class="popup-form">
-  <div class="popup-content">
-    <h2>Edit Project</h2>
-    <form th:action="@{/studentproject/save}" th:object="${projectForm}" method="post">
-
-      <!-- Các trường chỉnh sửa -->
-      <div>
-        <label>Project Name</label><br/>
-        <input type="text" th:field="*{name}">
-      </div>
-
-      <!-- ... -->
-      <div>
-        <button type="submit">Save Student Project</button>
-        <button type="button" class="close-button" data-id="${studentProject.id}">Close</button>
-      </div>
-    </form>
-  </div>
-</div>
 
 
 
