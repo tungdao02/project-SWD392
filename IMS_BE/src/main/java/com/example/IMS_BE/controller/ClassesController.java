@@ -7,6 +7,7 @@ import com.example.IMS_BE.entity.Subject;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
+import com.example.IMS_BE.service.SubjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
 import org.springframework.ui.Model;
 import java.util.List;
@@ -95,6 +96,7 @@ public class ClassesController {
         model.addAttribute("classModel", classToEdit);
         return "Class/DeleteOrCancelClass";
     }
+
 
     @PostMapping("/delete-cancel")
     public String deleteClass(@ModelAttribute Classes classModel) {

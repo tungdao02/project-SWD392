@@ -5,10 +5,12 @@ import com.example.IMS_BE.entity.Project;
 import com.example.IMS_BE.entity.StudentProject;
 import com.example.IMS_BE.entity.User;
 import com.example.IMS_BE.service.UserService;
-import com.example.IMS_BE.service.impl.ClassesService;
-import com.example.IMS_BE.service.impl.ProjectService;
+import com.example.IMS_BE.service.impl.ClassesServiceImpl;
+import com.example.IMS_BE.service.impl.ProjectServiceImpl;
 import com.example.IMS_BE.service.impl.StudentProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +22,13 @@ import java.util.List;
 public class StudentProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    private ProjectServiceImpl projectServiceImpl;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private ClassesService classService;
+    private ClassesServiceImpl classService;
 
 
     @Autowired
@@ -38,7 +40,7 @@ public class StudentProjectController {
 
         if (!id.isEmpty()) {
             Long projectId = Long.valueOf(id);
-            formModel = projectService.getProjectById(projectId);
+            formModel = projectServiceImpl.getProjectById(projectId);
         }
 
          StudentProject formModel2 = StudentProject.builder().build();
@@ -51,11 +53,12 @@ public class StudentProjectController {
 
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
-        List<Project> projects = projectService.getAllProjects();
+        List<Project> projects = projectServiceImpl.getAllProjects();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
-
+// List<StudentProject> studentProjects2 = studentProjectService.searchAll();
 
         model.addAttribute("studentProjects", studentProjects);
+     //   model.addAttribute("studentProjects2", studentProjects2);
         model.addAttribute("lstClass", classes);
         model.addAttribute("lstUser", users);
         model.addAttribute("lstProject", projects);
@@ -68,12 +71,9 @@ public class StudentProjectController {
 
     @PostMapping("/saveProject")
     public String save(@ModelAttribute("projectForm") Project project) {
-        projectService.saveProject(project);
+        projectServiceImpl.saveProject(project);
         return "redirect:/projectmember/";
     }
-
-
-
 
     @PostMapping("/saveStudentProject")
     public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
@@ -81,10 +81,15 @@ public class StudentProjectController {
         return "redirect:/projectmember/";
     }
 
+    @ResponseBody
+    @GetMapping("/api/getproject/{id}")
+    public ResponseEntity<StudentProject> get(@PathVariable Long id){
+        return new ResponseEntity<StudentProject> (studentProjectService.getStudentProjectById(id), HttpStatus.OK);
+    }
 
     @GetMapping("/editProject/{id}")
     public String editProject(@PathVariable Long id, Model model) {
-        Project project = projectService.getProjectById(id);
+        Project project = projectServiceImpl.getProjectById(id);
         List<Classes> classes = classService.GetAllClasses();
         List<User> users = userService.getAllUsers();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
@@ -100,18 +105,34 @@ public class StudentProjectController {
     }
 
 
-    @PostMapping("/removeStudentFromProject")
-    public String removeStudentFromProject(@ModelAttribute("studentProjectForm") StudentProject studentProject) {
-        Long projectId = studentProject.getProject().getId();
-        Long studentId = studentProject.getUser().getId();
-
-       // studentProjectService.removeStudentProject(studentId);
-        return "redirect:/projectmember/";
+    @RequestMapping("/removeMember/{projectId}")
+    public String viewStudentsInProject(@PathVariable Long projectId, Model model) {
+         List<StudentProject> studentsInProject = studentProjectService.getStudentsByProjectId(projectId);
+       // StudentProject studentsInProject = studentProjectService.getStudentProjectById(projectId);
+        model.addAttribute("studentsInProject", studentsInProject);
+        return "updatemember";
     }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         studentProjectService.deleteStudentProject(id);
         return "redirect:/projectmember/";
     }
+
+    @GetMapping("/deleteStudent/{projectId}")
+    public String deleteStudent(@PathVariable Long projectId, @RequestParam Long userId) {
+        studentProjectService.deleteStudentByProjectAndUser(projectId, userId);
+        return "redirect:/projectmember/";
+    }
+
+    @PostMapping("/removeStudentFromProject")
+    public String removeStudentFromProject(@RequestParam("projectId") Long projectId, @RequestParam("studentId") Long studentId) {
+        studentProjectService.removeStudentFromProject(projectId, studentId);
+        return "redirect:/projectmember/";
+    }
+
+
+
+
 }

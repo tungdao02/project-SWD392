@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProjectService implements IProjectService {
+public class ProjectServiceImpl implements IProjectService {
 
     private final IProjectRepository projectRepository;
 
     @Autowired
-    public ProjectService(IProjectRepository projectRepository) {
+    public ProjectServiceImpl(IProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 
