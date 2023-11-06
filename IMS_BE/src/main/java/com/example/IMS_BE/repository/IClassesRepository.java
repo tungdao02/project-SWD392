@@ -15,7 +15,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IClassesRepository extends JpaRepository<Classes,Long> {
-    @Query("SELECT c FROM Project c WHERE c.classes.id = :classId")
+    @Query("SELECT c FROM Project c WHERE c.id = :classId")
+
     List<Project> findProjectsByClassId(@Param("classId") Long classId);
 
     @Query("SELECT sc.student FROM StudentClass sc WHERE sc.classes.id = :classId")
@@ -23,6 +24,5 @@ public interface IClassesRepository extends JpaRepository<Classes,Long> {
 
     @Query("SELECT c FROM Classes c WHERE c.name LIKE %:searchString%")
     Page<Classes> findClassesByName(@Param("searchString") String searchString, Pageable pageable);
-
 
 }
