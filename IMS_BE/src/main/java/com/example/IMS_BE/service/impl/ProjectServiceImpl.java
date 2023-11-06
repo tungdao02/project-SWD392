@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     public Project getProjectById(Long projectId) {
-        return projectRepository.findById(projectId).orElse(null);
+        return projectRepository.findById(projectId).get();
     }
 
     public Project saveProject(Project project) {
