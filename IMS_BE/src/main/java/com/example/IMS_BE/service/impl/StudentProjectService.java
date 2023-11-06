@@ -53,6 +53,9 @@ public class StudentProjectService implements IStudentProjectService {
     }
 
     @Override
+    public List<StudentProject> getAllByStudent(User user) {
+        return studentProjectRepository.findByUser(user);
+    }
     public Page<StudentProject> getAl(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo-1,2);
         return this.studentProjectRepository.findAll(pageable);
@@ -96,5 +99,4 @@ public class StudentProjectService implements IStudentProjectService {
             // Xử lý trường hợp không tìm thấy studentProject
         }
     }
-
 }

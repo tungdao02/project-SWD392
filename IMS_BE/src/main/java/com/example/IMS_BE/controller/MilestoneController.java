@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class MilestoneController {
     MilestoneService milestoneService;
     @Autowired
     IProjectService projectService;
-        @GetMapping("/api/milestoneByProject/{id}")
+    @ResponseBody
+    @GetMapping("/api/milestoneByProject/{id}")
     public ResponseEntity<List<Milestone>> getMilestoneByProject(@PathVariable Long id){
         return new ResponseEntity<List<Milestone>> ( milestoneService.getMilestoneByProject(projectService.getProjectById(id)), HttpStatus.OK);
     }
