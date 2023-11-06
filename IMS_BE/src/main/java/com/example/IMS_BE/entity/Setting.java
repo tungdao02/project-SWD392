@@ -11,16 +11,12 @@ public class Setting extends BaseEntity{
     @Id
     @Column(name = "setting_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long settingId;
 
     @Column(name="name",nullable = false,length = 45)
     private String name;
-    @Column(name="type",length = 45)
+    @Column(name="type",nullable = false,length = 45)
     private String type;
-    @Column(name = "start")
-    private Date startdate;
-    @Column(name = "end")
-    private Date startend;
 
     public String getName() {
         return name;
@@ -38,27 +34,11 @@ public class Setting extends BaseEntity{
         this.type = description;
     }
 
-    public Date getStartdate() {
-        return startdate;
-    }
-
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
-
-    public Date getStartend() {
-        return startend;
-    }
-
-    public void setStartend(Date startend) {
-        this.startend = startend;
-    }
-
     public Long getId() {
-        return id;
+        return settingId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.settingId = id;
     }
 }

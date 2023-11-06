@@ -5,15 +5,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public interface UserService {
+    public interface UserService {
+        public User getUserByEmail(String username);
 
+        boolean isAdmin(String username);
 
+        boolean checkLogin(String username, String password);
 
-    boolean isAdmin(String username);
+        public User getUserByUsername(String username);
 
-    boolean checkLogin(String username, String password);
+        public User registerUser(String username, String email, String phone, String password);
 
-    public User getUserByUsername(String username);
+        public String getRolesByUserName(String userName);
 
 }
 
