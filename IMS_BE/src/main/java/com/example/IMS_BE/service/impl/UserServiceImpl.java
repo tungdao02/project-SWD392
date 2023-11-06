@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    SettingRepository settingRepository;
-
     public Optional<User> findByPhone(String phone) {
         return Optional.ofNullable(userRepository.findByPhone(phone));
     }
