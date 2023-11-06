@@ -41,8 +41,8 @@
 <body>
     <h1>Classes Management</h1>
     <div>
-        <input type="text" id="searchInput" placeholder="Search..."> <!-- Ô tìm kiếm -->
-        <button onclick="searchClasses()">Search</button>
+        <input type="text" id="searchInput" placeholder="Search..."> 
+        <button id="searchClass">Search</button>
         <a href="/classes/create"><button>Add New Class</button></a>
     </div>
     <table border="1" class="table" style="margin:10px 0 10px 0;">
@@ -86,6 +86,10 @@
     
     </script>
 </body>
-
+<script>
+    document.getElementById("searchClass").addEventListener("click", function() {
+        window.location.href = "http://localhost:8080/classes/classList?page=1&searchString="+document.getElementById("searchInput").value;
+    });
+</script>
 
 </html>
