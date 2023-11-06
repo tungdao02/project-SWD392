@@ -30,7 +30,6 @@ public class ProjectController {
     @Autowired
     private ClassesServiceImpl classService;
 
-
     @Autowired
     private StudentProjectService studentProjectService;
 
@@ -88,12 +87,12 @@ public class ProjectController {
     }
 
     @GetMapping("/editProject/{id}/{classid}")
-    public String editProject(@PathVariable Long id,@PathVariable Long classId, Model model) {
+    public String editProject(@PathVariable Long id,@PathVariable Long classid, Model model) {
         Project project = projectServiceImpl.getProjectById(id);
 
         List<Classes> classes = classService.GetAllClasses();
         List<StudentProject> studentProjects = studentProjectService.getAllStudentProjects();
-        List<User> students = classService.findUsersByClassId(classId);
+        List<User> students = classService.findUsersByClassId(classid);
 
         model.addAttribute("member", studentProjects);
 
