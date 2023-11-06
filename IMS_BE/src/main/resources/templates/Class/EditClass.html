@@ -38,7 +38,7 @@
 </head>
 <h1>Edit Class</h1>
 <form th:object="${classToEdit}" th:action="@{/classes/update}" method="post" class="mx-auto" id="updateForm">
-    <input type="hidden" th:field="*{id}" id="classID"/>
+    <input type="hidden" th:field="*{id}" />
     <input type="hidden" th:field="*{status}" id="status" />
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -96,7 +96,6 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Status</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,13 +104,12 @@
                         <td th:text="${user.username}"></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.status} == 0 ? Active : Deactivate"></td>
-                        <td><a  th:href="@{'http://localhost:8080/classes/removeStudent/'+${user.id}+'?classId='+${classToEdit.id}}" class="btn btn-danger">remove</a></td>
                     </tr>
                 </tbody>
             </table>
 
-
-
+            
+            
         </div>
 
         <div class="tab-pane fade container" id="project" role="tabpanel" aria-labelledby="project-tab"
@@ -174,14 +172,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="studentID">Student Id:</label>
-                    <input type="text" class="form-control" id="studentId" name="studentID" />
-                </div>
+                <form id="addStudentForm">
+                    <div class="form-group">
+                        <label for="studentName">Student Name:</label>
+                        <input type="text" class="form-control" id="studentName" name="studentName">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentEmail">Student Email:</label>
+                        <input type="text" class="form-control" id="studentEmail" name="studentEmail">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="addStudentButton">Add Student</button>
+                <button type="button" class="btn btn-primary" id="addStudentButton">Add Student</button>
             </div>
         </div>
     </div>
@@ -189,9 +193,7 @@
 <script>
     $(document).ready(function () {
         var currentTab = "general";
-        $('#addStudentButton').click(function(){
-            window.location.href = 'http://localhost:8080/classes/addStudent/'+document.getElementById("studentId").value+'?classId='+document.getElementById("classID").value;
-        });
+
         $(".nav-link").click(function () {
             var tabId = $(this).attr("data-tab");
 
@@ -226,8 +228,12 @@
             form.submit();
         });
 
-        $("#openAddStudentModal").click(function () {
+        $("#openAddStudentModal").click(function() {
             $("#studentModal").modal("show");
+        });
+
+        $("#addStudentButton").click(function() {
+            $("#studentModal").modal("hide"); 
         });
     });
 

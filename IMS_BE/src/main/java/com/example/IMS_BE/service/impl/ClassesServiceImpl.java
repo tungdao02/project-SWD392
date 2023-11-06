@@ -83,23 +83,15 @@ public class ClassesServiceImpl implements IClassesService {
         _classesRepository.save(classToEdit);
     }
 
-    @Override
     public Page<Classes> findAllClasses(Pageable pageable) {
         return _classesRepository.findAll(pageable);
     }
 
-    @Override
     public List<Project> findProjectByClassId(long id){
         return _classesRepository.findProjectsByClassId(id);
     }
 
-    @Override
     public List<User> findUsersByClassId(long id){
         return _classesRepository.findUsersByClassId(id);
-    }
-
-    @Override
-    public Page<Classes> findClassesByName(String searchString,Pageable pageable){
-        return _classesRepository.findClassesByName(searchString,pageable);
     }
 }
