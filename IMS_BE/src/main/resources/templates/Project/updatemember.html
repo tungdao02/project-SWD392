@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project Management System</title>
+    <title>Update members</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -56,20 +56,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>Project Management System</h1>
+    <h1>Update members</h1>
     <div class="project-list">
-        <!-- Nút "Add" để hiển thị biểu mẫu -->
-        <button id="addButton">Add Student</button>
-        <!-- ADD STUDENT -->
-        <div class="popup-form" id="addProjectForm">
-            <div class="popup-content">
-                <h2>Add new student to project</h2>
-
-            </div>
-        </div>
-
-
-
         <table class="table table-striped">
             <thead>
             <tr>
@@ -91,13 +79,16 @@
                     <form th:action="@{/projectmember/removeStudentFromProject}" method="post">
                         <input type="hidden" name="projectId" th:value="${studentProject.project.id}" />
                         <input type="hidden" name="studentId" th:value="${studentProject.user.id}" />
-                        <button class="btn btn-danger" type="submit">Remove student</button>
+                        <div class="btn-group" role="group">
+                        <a th:href="@{'/projectmember/moveMember/' + ${studentProject.id}}" class="btn btn-warning">Move</a>
+                        <button class="btn btn-danger" type="submit">Remove</button>
+                       </div>
                     </form>
-                    <a th:href="@{'/projectmember/moveMember/' + ${studentProject.id}}" class="btn btn-warning">Remove member</a>
                 </td>
-
             </tr>
             </tbody>
+            <button type="button" id="closeButton4" class="btn" onclick="goBack()">Back</button>
+
         </table>
     </div>
 </div>
@@ -112,6 +103,11 @@
     document.getElementById('closeButton').addEventListener('click', function() {
         document.getElementById('addProjectForm').style.display = 'none';
     });
+</script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
 </script>
 
 </body>

@@ -103,18 +103,6 @@ public class ClassesController {
     }
 
 
-    @PostMapping("/saveProject")
-    public String save(@ModelAttribute("projectForm") Project project) {
-        projectService.saveProject(project);
-        return "redirect:/projectmember/";
-    }
-
-    @PostMapping("/saveStudentProject")
-    public String saveStudentProject(@ModelAttribute("studentProjectForm") StudentProject project2) {
-        studentProjectService.saveStudentProject(project2);
-        return "redirect:/projectmember/";
-    }
-
     @PostMapping("/update")
     public String updateClass(@ModelAttribute Classes classToEdit) {
         _classesService.UpdateClass(classToEdit);
