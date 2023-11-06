@@ -4,10 +4,13 @@ import com.example.IMS_BE.entity.*;
 import com.example.IMS_BE.repository.IIssueSettingRepository;
 import com.example.IMS_BE.service.*;
 
+import com.example.IMS_BE.utils.PieChartData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +36,8 @@ public class IssueController {
     MilestoneService milestoneService;
     @Autowired
     IssueSettingService issueSettingService;
-
+@Autowired
+IStudentProjectService studentProjectService;
     @GetMapping("/student")
     public String getListIssue(Model model, HttpSession session, HttpServletRequest request){
         session=request.getSession();
@@ -71,6 +75,40 @@ public class IssueController {
         issueService.addIssue(issue);
 
         return "redirect:/issue/student";
+    }
+    @PostMapping("/student/update")
+    public String update(@ModelAttribute Issue issue){
+        issueService.addIssue(issue);
+
+        return "redirect:/issue/student";
+    }
+    @GetMapping("/dashboard")
+    public String dashboard(Model model,HttpSession session, HttpServletRequest request){
+        session=request.getSession();
+        String email=session.getAttribute("USERNAME").toString();
+        User user = userService.getUserByEmail(email);
+        model.addAttribute("assignerissue",user);
+        List<StudentProject> studentProjectList = studentProjectService.getAllByStudent(user);
+        model.addAttribute("studentProjectList",studentProjectList);
+        return "Issue/issuedashboard";
+    }
+    @ResponseBody
+    @GetMapping("/pieChart/{assigneeId}")
+    public ResponseEntity<PieChartData> getClassIssueStatistics(@PathVariable Long assigneeId) {
+        PieChartData pieChartData = issueService.generateClassIssueStatistics(assigneeId);
+        return new ResponseEntity<>(pieChartData, HttpStatus.OK);
+    }
+    @ResponseBody
+    @GetMapping("/pieChart/{assigneeId}/project/{projectId}")
+    public ResponseEntity<PieChartData> getClassIssueStatistics(@PathVariable Long assigneeId,@PathVariable Long projectId) {
+        PieChartData pieChartData = issueService.countIssueMilestoneByStudentAndProject(assigneeId,projectId);
+        return new ResponseEntity<>(pieChartData, HttpStatus.OK);
+    }
+    @ResponseBody
+    @GetMapping("/pieChart/{assigneeId}/project/{projectId}/milestone")
+    public ResponseEntity<PieChartData> getClassIssueStatisticsMilestone(@PathVariable Long assigneeId,@PathVariable Long projectId) {
+        PieChartData pieChartData = issueService.countIssueWorkProcessByStudentAndProject(assigneeId,projectId);
+        return new ResponseEntity<>(pieChartData, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public String getIssue(Model model, @PathVariable int id){
