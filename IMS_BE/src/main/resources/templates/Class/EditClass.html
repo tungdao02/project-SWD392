@@ -117,91 +117,8 @@
 
             <!-- Nút "Add" để hiển thị biểu mẫu -->
             <a th:href="@{'/projectmember/'}">List All Project</a>
-            <button type="button" class="btn btn-primary" id="openAddStudentModal3">New PRoject</button>
-            <div class="modal" tabindex="-1" role="dialog" id="studentModal3">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">New PRoject</h5>
-
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form th:action="@{/projectmember/saveProject}" th:object="${projectForm}" method="post" id="addStudentForm3">
-                                <div>
-                                    <label>id:</label>
-                                    <input type="text" th:field="*{id}" />
-                                </div>
-                                <div>
-                                    <label for="name">Name:</label>
-                                    <input type="text" th:field="*{name}" />
-                                </div>
-                                <div>
-                                    <label for="description">Description:</label>
-                                    <input type="text" th:field="*{description}" />
-                                </div>
-                                <div>
-                                    <label>Team Leader:</label>
-                                    <select th:field="*{user.id}">
-                                        <option th:each="users : ${classStudent}" th:value="${users.id}" th:text="${users.username}"></option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Class:</label>
-                                    <select th:field="*{classes.id}">
-                                        <option th:each="classes : ${lstClass}" th:value="${classes.id}" th:text="${classes.name}"></option>
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="addStudentButton3">Add Student</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
             <button type="button" class="btn btn-primary" id="openAddStudentModal2">Add Student</button>
-            <!-- ADD STUDENT -->
-            <div class="modal" tabindex="-1" role="dialog" id="studentModal2">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Add Student to Project</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form th:action="@{/classes/saveStudentProject}" th:object="${studentProjectForm}" method="post" id="addStudentForm2">
-                            <div class="form-group">
-                                <div>
-
-                                </div>
-                                    <label>Project Name:</label>
-                                <select>
-                                    <option th:each="project : ${classProject}" th:value="${project.getId()}" th:text="${project.getName()}"></option>
-                                </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Student Name:</label>
-                                    <select>
-                                        <option th:each="users : ${classStudent}" th:value="${users.getId()}" th:text="${users.username}" ></option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="addStudentButton2">Add Student</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <table class="table table-bordered">
                 <thead>
@@ -222,7 +139,6 @@
                     <td>
                     <a th:href="@{'/projectmember/removeMember/' + ${project.id}}">Remove member</a>
                     <a th:href="@{'/projectmember/editProject/' + ${project.id} + '/' + ${project.classes.id}}">Edit</a>
-
                     </td>
                 </tr>
                 </tbody>
@@ -333,38 +249,9 @@
             $("#addStudentForm").modal("hide");
         });
 
-        $("#openAddStudentModal2").click(function() {
-            $("#studentModal2").modal("show");
-        });
-
-        $("#addStudentButton2").click(function() {
-            $("#addStudentForm2").modal("hide");
-        });
-        $("#openAddStudentModal3").click(function() {
-            $("#studentModal3").modal("show");
-        });
-
-        $("#addStudentButton3").click(function() {
-            $("#studentModal3").modal("hide");
-        });
-
-
 
     });
 
-
-</script>
-<script>
-    document.getElementById("addStudentButton3").addEventListener("click", function() {
-        // Bắt sự kiện khi nút được nhấn
-        // Lấy form 1 theo ID
-        var form1 = document.getElementById("addStudentForm3");
-
-        // Sử dụng JavaScript để submit form 1
-        if (form1) {
-            form1.submit();
-        }
-    });
 </script>
 
 </html>

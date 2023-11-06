@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/projectmember")
-public class StudentProjectController {
+public class ProjectController {
 
     @Autowired
     private ProjectService projectService;

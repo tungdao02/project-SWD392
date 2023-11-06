@@ -72,7 +72,6 @@ public class ClassesController {
     public String editClass(@PathVariable Long id, Model model) {
         Project formModel = new Project();
 
-
         List<Setting> setting = _settingService.findAllByType("semester");
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
