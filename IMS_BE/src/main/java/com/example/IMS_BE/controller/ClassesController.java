@@ -9,14 +9,12 @@ import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
 import com.example.IMS_BE.service.SubjectService;
 import com.example.IMS_BE.service.impl.UserServiceImpl;
-
+import org.springframework.ui.Model;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +32,11 @@ public class ClassesController {
     @Autowired
     private UserServiceImpl _userService;
     @Autowired
-    private SubjectService subjectService;
+    private com.example.IMS_BE.service.impl.SubjectService subjectService;
+    
+    public ClassesController(){
 
+    }
 
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page) {

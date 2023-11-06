@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.*;
 import java.util.Optional;
-
+@Service
 public interface UserService {
     public User getUserByEmail(String username);
 
