@@ -1,7 +1,6 @@
 package com.example.IMS_BE.controller;
 
 import com.example.IMS_BE.entity.*;
-import com.example.IMS_BE.service.IClassesService;
 import com.example.IMS_BE.service.SettingService;
 
 import com.example.IMS_BE.service.impl.*;
@@ -53,18 +52,18 @@ public class ClassesController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", classPage.getTotalPages());
         model.addAttribute("list", classPage.getContent());
-        return "Class/ClassesList";
+        return "Class/classeslist";
     }
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        List<Setting> setting = _settingService.findAllByType("semester");
+        List<Setting> setting = _settingService.findAllByType1("semester");
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
         model.addAttribute("newClass", new Classes());
         model.addAttribute("newSetting", setting);
         model.addAttribute("classSubject", subject);
         model.addAttribute("teachers", users);
-        return "Class/CreateClass";
+        return "Class/createclass";
     }
 
     @PostMapping("/create")
@@ -89,7 +88,7 @@ public class ClassesController {
     public String editClass(@PathVariable Long id, Model model) {
         Project formModel = new Project();
 
-        List<Setting> setting = _settingService.findAllByType("semester");
+        List<Setting> setting = _settingService.findAllByType1("semester");
         List<User> users = _userService.findAllByRole(4);
         List<Subject> subject = subjectService.getAllSubject();
         Classes classToEdit = _classesService.getClassById(id);
@@ -116,7 +115,7 @@ public class ClassesController {
 
         model.addAttribute("projectForm", formModel); // Truyền đối tượng Project mới
         model.addAttribute("studentProjectForm", studentProjectForm);
-        return "Class/EditClass";
+        return "Class/editclass";
     }
 
 
@@ -132,7 +131,7 @@ public class ClassesController {
         Classes classToEdit = _classesService.getClassById(id);
         model.addAttribute("classDetails", classes);
         model.addAttribute("classModel", classToEdit);
-        return "Class/DeleteOrCancelClass";
+        return "Class/deleteorcancelclass";
     }
 
     @PostMapping("/delete-cancel")

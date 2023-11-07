@@ -19,4 +19,8 @@ public interface IssueService {
     public Long countIssueByStudent(Long id);
     public PieChartData countIssueMilestoneByStudentAndProject(Long id,Long projectId);
     public PieChartData countIssueWorkProcessByStudentAndProject(Long id,Long projectId);
+    public PieChartData countIssueStatusByStudentAndProject(Long id,Long projectId);
+    public PieChartData countIssueTypeByStudentAndProject(Long id,Long projectId);
+    public List<Issue> countByAssinger(Long assignerId);
+    public List<Issue> countByAssingee(Long assignerId);
 }

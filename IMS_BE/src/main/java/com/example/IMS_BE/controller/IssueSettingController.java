@@ -36,7 +36,7 @@ public class IssueSettingController {
         List<IssueSetting> issueSettings = issueSettingService.getAllIssueSetting();
         model.addAttribute("issueSettings", issueSettings);
 
-        return "IssueSetting/issue_setting";
+        return "IssueSetting/issuesetting";
     }
 
     @GetMapping("/add")
@@ -50,7 +50,7 @@ public class IssueSettingController {
         IssueSetting issueSetting = new IssueSetting();
         model.addAttribute("issueSetting", issueSetting);
 
-        return "IssueSetting/issue_setting_add";
+        return "IssueSetting/issuesettingadd";
     }
 
     @PostMapping("/add")
@@ -76,7 +76,7 @@ public class IssueSettingController {
         model.addAttribute("classesList",classesList );
         Optional<IssueSetting> issueSettingEdit = issueSettingService.findIssueSettingById(issueSettingId);
         issueSettingEdit.ifPresent(issueSetting -> model.addAttribute("issueSetting", issueSetting));
-        return "IssueSetting/issue_setting_details";
+        return "IssueSetting/issuesettingdetails";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)

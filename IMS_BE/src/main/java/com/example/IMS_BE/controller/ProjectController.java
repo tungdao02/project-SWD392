@@ -82,8 +82,8 @@ public class ProjectController {
 
     @ResponseBody
     @GetMapping("/api/getproject/{id}")
-    public ResponseEntity<StudentProject> get(@PathVariable Long id){
-        return new ResponseEntity<StudentProject> (studentProjectService.getStudentProjectById(id), HttpStatus.OK);
+    public ResponseEntity<List<Project>> get(@PathVariable Long id){
+        return new ResponseEntity<List<Project>> (classService.findProjectByClassId(id), HttpStatus.OK);
     }
 
     @GetMapping("/editProject/{id}/{classid}")

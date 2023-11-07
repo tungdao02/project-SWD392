@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IClassesRepository extends JpaRepository<Classes,Long> {
-    @Query("SELECT c FROM Project c WHERE c.id = :classId")
+    @Query("SELECT c FROM Project c WHERE c.classes.id = :classId")
 
     List<Project> findProjectsByClassId(@Param("classId") Long classId);
 

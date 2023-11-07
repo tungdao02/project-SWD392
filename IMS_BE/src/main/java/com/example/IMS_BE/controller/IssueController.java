@@ -23,21 +23,21 @@ import java.util.List;
 @RequestMapping("/issue")
 public class IssueController {
     @Autowired
-     IssueService issueService;
+    IssueService issueService;
     @Autowired
-     UserService userService;
+    UserService userService;
     @Autowired
     IStudentClassService studentClassService;
     @Autowired
-     IClassesService classesService;
+    IClassesService classesService;
     @Autowired
     IProjectService projectService;
     @Autowired
     MilestoneService milestoneService;
     @Autowired
     IssueSettingService issueSettingService;
-@Autowired
-IStudentProjectService studentProjectService;
+    @Autowired
+    IStudentProjectService studentProjectService;
     @GetMapping("/student")
     public String getListIssue(Model model, HttpSession session, HttpServletRequest request){
         session=request.getSession();
@@ -58,7 +58,6 @@ IStudentProjectService studentProjectService;
         List<Project> projectList= projectService.getAllProjects();
         List<Milestone> milestoneList=milestoneService.getAllMilestone();
         List<IssueSetting> statusList=issueSettingService.getIsssueSettingByTypeAndProject((long) 1,"Status");
-
         List<IssueSetting> processList=issueSettingService.getIsssueSettingByTypeAndProject((long) 1,"Process");
         List<IssueSetting>typeList=issueSettingService.getIsssueSettingByTypeAndProject((long) 1,"type");
         model.addAttribute("listclass",listClass);
@@ -90,6 +89,14 @@ IStudentProjectService studentProjectService;
         model.addAttribute("assignerissue",user);
         List<StudentProject> studentProjectList = studentProjectService.getAllByStudent(user);
         model.addAttribute("studentProjectList",studentProjectList);
+        long count= issueService.countIssueByStudent(user.getId());
+        int count_assigner=issueService.countByAssinger(user.getId()).size();
+        int count_assignee=issueService.countByAssingee(user.getId()).size();
+        int count_project=studentProjectList.size();
+        model.addAttribute("count",count);
+        model.addAttribute("count_assigner",count_assigner);
+        model.addAttribute("count_assignee",count_assignee);
+        model.addAttribute("count_project",count_project);
         return "Issue/issuedashboard";
     }
     @ResponseBody
@@ -110,10 +117,27 @@ IStudentProjectService studentProjectService;
         PieChartData pieChartData = issueService.countIssueWorkProcessByStudentAndProject(assigneeId,projectId);
         return new ResponseEntity<>(pieChartData, HttpStatus.OK);
     }
+    @ResponseBody
+    @GetMapping("/pieChart/{assigneeId}/project/{projectId}/status")
+    public ResponseEntity<PieChartData> getClassIssueStatisticsStatus(@PathVariable Long assigneeId,@PathVariable Long projectId) {
+        PieChartData pieChartData = issueService.countIssueStatusByStudentAndProject(assigneeId,projectId);
+        return new ResponseEntity<>(pieChartData, HttpStatus.OK);
+    }
+    @ResponseBody
+    @GetMapping("/pieChart/{assigneeId}/project/{projectId}/type")
+    public ResponseEntity<PieChartData> getClassIssueStatisticsType(@PathVariable Long assigneeId,@PathVariable Long projectId) {
+        PieChartData pieChartData = issueService.countIssueTypeByStudentAndProject(assigneeId,projectId);
+        return new ResponseEntity<>(pieChartData, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
-    public String getIssue(Model model, @PathVariable int id){
+    public String getIssue(Model model, @PathVariable int id, HttpSession session, HttpServletRequest request){
+        session=request.getSession();
+        String email=session.getAttribute("USERNAME").toString();
+        User user = userService.getUserByEmail(email);
         Issue issue= issueService.getIssueById((int)id);
         model.addAttribute("issue",issue);
+        List<StudentClass> listClass = studentClassService.getClassesByUser(user);
+        model.addAttribute("listclass",listClass);
         return "Issue/issuedetail";
     }
 

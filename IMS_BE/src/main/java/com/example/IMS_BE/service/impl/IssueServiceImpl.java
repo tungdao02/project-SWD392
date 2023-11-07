@@ -45,7 +45,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public void updateIssue(Issue issue) {
-            issueRepository.save(issue);
+        issueRepository.save(issue);
     }
 
     @Override
@@ -54,26 +54,26 @@ public class IssueServiceImpl implements IssueService {
         if(issue!=null){
             return  issue.get();
         }
-      return null;
+        return null;
     }
 
     @Override
     public PieChartData generateClassIssueStatistics(Long assigneeId) {
 
-            List<Object[]> statistics = issueRepository.getClassStatisticsByAssignee(assigneeId);
+        List<Object[]> statistics = issueRepository.getClassStatisticsByAssignee(assigneeId);
 
-            List<String> labels = new ArrayList<>();
-            List<Float> data = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+        List<Float> data = new ArrayList<>();
 
-            for (Object[] stat : statistics) {
-                long id=Long.valueOf(stat[0].toString());
-                String name=classesRepository.findById(id).get().getName();
-                labels.add(name);
-                data.add(Float.parseFloat(stat[1].toString()));
-            }
-
-            return new PieChartData(labels, data);
+        for (Object[] stat : statistics) {
+            long id=Long.valueOf(stat[0].toString());
+            String name=classesRepository.findById(id).get().getName();
+            labels.add(name);
+            data.add(Float.parseFloat(stat[1].toString()));
         }
+
+        return new PieChartData(labels, data);
+    }
 
     @Override
     public Long countIssueByStudent(Long id) {
@@ -113,6 +113,50 @@ public class IssueServiceImpl implements IssueService {
         }
 
         return new PieChartData(labels, data);
+    }
+
+    @Override
+    public PieChartData countIssueStatusByStudentAndProject(Long id, Long projectId) {
+        List<Object[]> statistics = issueRepository.countByStatusId(id,projectId);
+
+        List<String> labels = new ArrayList<>();
+        List<Float> data = new ArrayList<>();
+
+        for (Object[] stat : statistics) {
+            long uid=Long.valueOf(stat[0].toString());
+            String name=issueSettingRepository.findById(uid).get().getName();
+            labels.add(name);
+            data.add(Float.parseFloat(stat[1].toString()));
+        }
+
+        return new PieChartData(labels, data);
+    }
+
+    @Override
+    public PieChartData countIssueTypeByStudentAndProject(Long id, Long projectId) {
+        List<Object[]> statistics = issueRepository.countByTypeId(id,projectId);
+
+        List<String> labels = new ArrayList<>();
+        List<Float> data = new ArrayList<>();
+
+        for (Object[] stat : statistics) {
+            long uid=Long.valueOf(stat[0].toString());
+            String name=issueSettingRepository.findById(uid).get().getName();
+            labels.add(name);
+            data.add(Float.parseFloat(stat[1].toString()));
+        }
+
+        return new PieChartData(labels, data);
+    }
+
+    @Override
+    public List<Issue> countByAssinger(Long assignerId) {
+        return issueRepository.findByAssignerId(assignerId);
+    }
+
+    @Override
+    public List<Issue> countByAssingee(Long assignerId) {
+        return issueRepository.findByAssigneeId(assignerId);
     }
 }
 

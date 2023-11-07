@@ -21,6 +21,7 @@
         <div class="form-group">
             <label for="classId">Class</label>
             <select class="form-control" id="classId" th:field="*{classes}" name="classId">
+                <option value="0">-none-</option>
                 <option th:each="class : ${listclass}" th:text="${class.classes.name}" th:value="${class.classes.id}"></option>
 
             </select>
@@ -28,8 +29,7 @@
         <div class="form-group">
             <label for="projectId">Project</label>
             <select class="form-control" id="projectId" th:field="*{project}" name="projectId" required>
-                <option value="1">Project 1</option>
-                <option value="2">Project 2</option>
+                <option value="0">-none-</option>
             </select>
         </div>
         <div class="row">
@@ -80,11 +80,26 @@
     </form>
 </div>
 <script>
+    var classId=document.getElementById('classId');
     var projectSelect = document.getElementById('projectId');
     var milestoneList = document.getElementById('milestoneId');
     var processList = document.getElementById('processId');
     var statusList = document.getElementById('statusId');
     var typeList = document.getElementById('typeId');
+    classId.addEventListener('change',function (){
+        var selected = classId.value;
+        fetch('http://localhost:8080/projectmember/api/getproject/' + selected)
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu và hiển thị danh sách các mốc
+                var milestoneHtml = '<option value="0">-none-</option>';
+                data.forEach(milestone => {
+                    milestoneHtml += '<option value="'+milestone.id+'">' + milestone.name + '</option>';
+                });
+                milestoneHtml += '';
+                projectSelect.innerHTML = milestoneHtml;
+            });
+    });
     projectSelect.addEventListener('change', function () {
         var selectedProjectId = projectSelect.value; // Lấy giá trị của dự án đã chọn
 

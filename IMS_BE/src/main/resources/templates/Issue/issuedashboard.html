@@ -12,7 +12,7 @@
             color: #fff; /* Màu chữ trắng */
             padding-top: 20px;
             padding-bottom: 20px;
-            height: 100%; /* Đặt chiều cao bằng chiều cao của màn hình (100% viewport height) */
+            height: 220vh; /* Đặt chiều cao bằng chiều cao của màn hình (100% viewport height) */
             overflow-y: auto; /* Thêm thanh cuộn nếu nội dung vượt quá chiều cao của thanh menu */
         }
 
@@ -84,121 +84,95 @@
                 </li>
             </ul>
         </nav>
-<div class="col-md-7">
-    <div class="container">
-        <h1 class="mt-5">Issue Dashboard</h1>
-        <input id="myId" th:value="${assignerissue.id}" hidden>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Issues</h5>
-                        <p class="card-text">100</p>
+        <div class="col-md-7">
+            <div class="container">
+                <h1 class="mt-5">Issue Dashboard</h1>
+                <input id="myId" th:value="${assignerissue.id}" hidden>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Issues</h5>
+                                <p class="card-text" th:text="${count}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Project Issues</h5>
+                                <p class="card-text" th:text="${count_project}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Assignee issues</h5>
+                                <p class="card-text" th:text="${count_assignee}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Assigner Issues</h5>
+                                <p class="card-text" th:text="${count_assigner}">30</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Project Issues</h5>
-                        <p class="card-text">50</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Assigned issues</h5>
-                        <p class="card-text">50</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Assigned Issues</h5>
-                        <p class="card-text">30</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="projectSelect">Select Project</label>
-            <select class="form-control" id="projectSelect">
-                <option value="0">-non</option>
-                <option  th:each="list : ${studentProjectList}" th:value="${list.project.id}" th:text="${list.project.name}"></option>
+                <div class="form-group">
+                    <label for="projectSelect">Select Project</label>
+                    <select class="form-control" id="projectSelect">
+                        <option value="0">-non</option>
+                        <option  th:each="list : ${studentProjectList}" th:value="${list.project.id}" th:text="${list.project.name}"></option>
 
-            </select>
-        </div>
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <h2>Issues by Type</h2>
-                <canvas id="issuesByTypeChart"></canvas>
-            </div>
-        </div>
-        <div id="projectSelectChart" style="display: none" >
-            <h1> Static by Project </h1>
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Issues by Milestone</h2>
-                    <canvas id="issuesByMilestoneChart"></canvas>
+                    </select>
                 </div>
-                <div class="col-md-6">
-                    <h2>Issues by Work Process</h2>
-                    <canvas id="issuesByProcessChart"></canvas>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <h2>Issues by Type</h2>
+                        <canvas id="issuesByTypeChart"></canvas>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Issues by Status</h2>
-                    <canvas id="issuesByStatusChart"></canvas>
-                </div>
-                <div class="col-md-6">
-                    <h2>Issues by Type</h2>
-                    <canvas id="issuesByTypeOfChart"></canvas>
+                <div id="projectSelectChart" style="display: none" >
+                    <h1> Static by Project </h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Issues by Milestone</h2>
+                            <canvas id="issuesByMilestoneChart"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Issues by Work Process</h2>
+                            <canvas id="issuesByProcessChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Issues by Status</h2>
+                            <canvas id="issuesByStatusChart"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Issues by Type</h2>
+                            <canvas id="issuesByTypeOfChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var inputElement = document.getElementById("myId");
-    var myvalue=inputElement.value;
-    var ctx1 = document.getElementById('issuesByTypeChart').getContext('2d');
-    // Lấy tham chiếu đến canvas
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var inputElement = document.getElementById("myId");
+        var myvalue=inputElement.value;
+        var ctx1 = document.getElementById('issuesByTypeChart').getContext('2d');
+        // Lấy tham chiếu đến canvas
 
-    // Tạo hàm để tải dữ liệu từ API
-    function fetchDataAndDrawChart() {
-        fetch('http://localhost:8080/issue/pieChart/'+myvalue)
-            .then(response => response.json())
-            .then(data => {
-                var chartData = {
-                    labels: data.labels,
-                    datasets: [{
-                        data: data.data
-
-                    }]
-                };
-                var myPieChart = new Chart(ctx1, {
-                    type: 'pie',
-                    data: chartData
-                });
-            });
-    }
-    fetchDataAndDrawChart();
-
-    var projectSelect = document.getElementById('projectSelect');
-    projectSelect.addEventListener('change', function () {
-        var selectedProjectId = projectSelect.value;
-        var projectSelectChart= document.getElementById('projectSelectChart')
-            projectSelectChart.style.display="block";
-        var ctx2=document.getElementById('issuesByMilestoneChart').getContext('2d');
-        var ctx3=document.getElementById('issuesByProcessChart').getContext('2d');
+        // Tạo hàm để tải dữ liệu từ API
         function fetchDataAndDrawChart() {
-            fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId)
+            fetch('http://localhost:8080/issue/pieChart/'+myvalue)
                 .then(response => response.json())
                 .then(data => {
                     var chartData = {
@@ -208,22 +182,7 @@
 
                         }]
                     };
-                    var myPieChart = new Chart(ctx2, {
-                        type: 'pie',
-                        data: chartData
-                    });
-                });
-            fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId+'/milestone')
-                .then(response => response.json())
-                .then(data => {
-                    var chartData = {
-                        labels: data.labels,
-                        datasets: [{
-                            data: data.data
-
-                        }]
-                    };
-                    var myPieChart = new Chart(ctx3, {
+                    var myPieChart = new Chart(ctx1, {
                         type: 'pie',
                         data: chartData
                     });
@@ -231,7 +190,82 @@
         }
         fetchDataAndDrawChart();
 
-    });
-</script>
+        var projectSelect = document.getElementById('projectSelect');
+        projectSelect.addEventListener('change', function () {
+            var selectedProjectId = projectSelect.value;
+            var projectSelectChart= document.getElementById('projectSelectChart')
+            projectSelectChart.style.display="block";
+            var ctx2=document.getElementById('issuesByMilestoneChart').getContext('2d');
+            var ctx3=document.getElementById('issuesByProcessChart').getContext('2d');
+            var ctx4=document.getElementById('issuesByStatusChart').getContext('2d');
+            var ctx5=document.getElementById('issuesByTypeOfChart').getContext('2d');
+            function fetchDataAndDrawChart() {
+                fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var chartData = {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data
+
+                            }]
+                        };
+                        var myPieChart = new Chart(ctx2, {
+                            type: 'pie',
+                            data: chartData
+                        });
+                    });
+                fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId+'/milestone')
+                    .then(response => response.json())
+                    .then(data => {
+                        var chartData = {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data
+
+                            }]
+                        };
+                        var myPieChart = new Chart(ctx3, {
+                            type: 'pie',
+                            data: chartData
+                        });
+                    });
+                fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId+'/status')
+                    .then(response => response.json())
+                    .then(data => {
+                        var chartData = {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data
+
+                            }]
+                        };
+                        var myPieChart = new Chart(ctx4, {
+                            type: 'pie',
+                            data: chartData
+                        });
+                    });
+                fetch('http://localhost:8080/issue/pieChart/'+myvalue+'/project/'+selectedProjectId+'/type')
+                    .then(response => response.json())
+                    .then(data => {
+                        var chartData = {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data
+
+                            }]
+                        };
+                        var myPieChart = new Chart(ctx5, {
+                            type: 'pie',
+                            data: chartData
+                        });
+                    });
+
+
+            }
+            fetchDataAndDrawChart();
+
+        });
+    </script>
 </body>
 </html>
