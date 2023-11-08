@@ -1,9 +1,6 @@
 package com.example.IMS_BE.controller;
 
-import com.example.IMS_BE.entity.Classes;
-import com.example.IMS_BE.entity.Project;
-import com.example.IMS_BE.entity.StudentProject;
-import com.example.IMS_BE.entity.User;
+import com.example.IMS_BE.entity.*;
 import com.example.IMS_BE.service.UserService;
 import com.example.IMS_BE.service.impl.ClassesServiceImpl;
 import com.example.IMS_BE.service.impl.ProjectServiceImpl;
@@ -64,7 +61,6 @@ public class ProjectController {
         model.addAttribute("studentProjectForm", formModel2);
 
 
-
         return "Project/projectmember";
     }
 
@@ -121,11 +117,42 @@ public class ProjectController {
         return "Project/updatemember";
     }
 
+
+    @RequestMapping("/addnewproject/{classId}")
+    public String addnewproject(@PathVariable Long classId, Model model) {
+        Project project = projectServiceImpl.getProjectById(classId);
+        List<User> students = classService.findUsersByClassId(classId);
+        List<Project> projects = projectServiceImpl.getAllProjects();
+
+
+        model.addAttribute("addprojectForm", project);
+
+        model.addAttribute("Studentproject", students);
+
+        model.addAttribute("lstProject", projects);
+
+        return "Project/addnewproject";
+    }
+
+    @PostMapping("/addNewProject")
+    public String addNewProject(@ModelAttribute("addprojectForm") Project project) {
+        projectServiceImpl.saveProject(project);
+        return "redirect:/classes/edit/"+project.getClasses().getId();
+    }
+
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         studentProjectService.deleteStudentProject(id);
         return "redirect:/projectmember/";
     }
+
+    @GetMapping("/deleteproject/{id}")
+    public String deleteproject(@PathVariable Long id) {
+        projectServiceImpl.deleteProject(id);
+        return "redirect:/projectmember/";
+    }
+
 
     @GetMapping("/deleteStudent/{projectId}")
     public String deleteStudent(@PathVariable Long projectId, @RequestParam Long userId) {

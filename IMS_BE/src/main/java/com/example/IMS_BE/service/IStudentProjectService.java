@@ -16,7 +16,5 @@ public interface IStudentProjectService {
 
     List<StudentProject> getAllByStudent(User user);
 
-    Page<StudentProject> getAl(Integer pageNo);
-
 }
 

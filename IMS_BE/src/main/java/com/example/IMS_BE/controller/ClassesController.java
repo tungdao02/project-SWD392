@@ -1,6 +1,7 @@
 package com.example.IMS_BE.controller;
 
 import com.example.IMS_BE.entity.*;
+import com.example.IMS_BE.service.MilestoneService;
 import com.example.IMS_BE.service.SettingService;
 
 import com.example.IMS_BE.service.impl.*;
@@ -39,6 +40,9 @@ public class ClassesController {
     private StudentClassServiceImpl studentsClassService;
     @Autowired
     private StudentProjectService studentProjectService;
+    @Autowired
+    MilestoneService milestoneService;
+
 
     @GetMapping("/classList")
     public String GetClassesList(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String searchString) {
@@ -98,7 +102,9 @@ public class ClassesController {
         List<Project> projects = projectService.getAllProjects();
         List<User> students = _classesService.findUsersByClassId(id);
 
-       // Project formModel = projectService.getProjectById(id);
+       //Milestone
+        //List<Milestone> milestoneList = milestoneService.getAllMilestone();
+        List<Milestone> milestoneList = milestoneService.findMilestonesByClassId(id);
 
         model.addAttribute("classToEdit", classToEdit);
         model.addAttribute("classSubject", subject);
@@ -108,11 +114,11 @@ public class ClassesController {
         model.addAttribute("classStudent", students);
         model.addAttribute("lstProject", projects);
 
+        model.addAttribute("lstMilestone", milestoneList);
 
 
         List<Classes> classes = _classesService.GetAllClasses();
         model.addAttribute("lstClass", classes);
-
         model.addAttribute("projectForm", formModel); // Truyền đối tượng Project mới
         model.addAttribute("studentProjectForm", studentProjectForm);
         return "Class/editclass";
@@ -124,6 +130,7 @@ public class ClassesController {
         _classesService.UpdateClass(classToEdit);
         return "redirect:edit/" + classToEdit.getId();
     }
+
 
     @GetMapping("/deleteCancel/{id}")
     public String deleteOrCancel(@PathVariable Long id, Model model) {
