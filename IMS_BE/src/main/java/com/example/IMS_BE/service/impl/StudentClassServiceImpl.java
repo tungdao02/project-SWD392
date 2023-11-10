@@ -23,9 +23,11 @@ public class StudentClassServiceImpl implements IStudentClassService {
         return studentClassRepository.findById(id).orElse(null);
     }
 
-    public void addStudentIntoClass(Classes classes, User user) {
+    public void addStudentIntoClass(Classes classes,User student){
+        studentClassRepository.save(new StudentClass((long)0,student,classes));
     }
 
-    public void kickStudent(long classId, long id) {
+    public void kickStudent(long classId,long studentId){
+        studentClassRepository.deleteById(studentClassRepository.findByClassesIdAndStudentId(classId, studentId).orElseGet(null).getId());
     }
 }
