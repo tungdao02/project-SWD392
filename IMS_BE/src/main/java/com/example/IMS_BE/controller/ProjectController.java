@@ -67,7 +67,7 @@ public class ProjectController {
     @PostMapping("/saveProject")
     public String save(@ModelAttribute("projectForm") Project project) {
         projectServiceImpl.saveProject(project);
-        return "redirect:/projectmember/";
+        return "redirect:/classes/edit/" + project.getClasses().getId();
     }
 
     @PostMapping("/saveStudentProject")
@@ -133,12 +133,19 @@ public class ProjectController {
 
         return "Project/addnewproject";
     }
-
     @PostMapping("/addNewProject")
     public String addNewProject(@ModelAttribute("addprojectForm") Project project) {
         projectServiceImpl.saveProject(project);
-        return "redirect:/classes/edit/"+project.getClasses().getId();
+        return "redirect:/classes/edit/" + project.getClasses().getId();
     }
+
+
+    @PostMapping("/addStudentProject")
+    public String addStudentProject(@ModelAttribute("addprojectForm") StudentProject project2) {
+        studentProjectService.saveStudentProject(project2);
+        return "redirect:/projectmember/";
+    }
+
 
 
     @GetMapping("/delete/{id}")
@@ -163,7 +170,7 @@ public class ProjectController {
     @PostMapping("/removeStudentFromProject")
     public String removeStudentFromProject(@RequestParam("projectId") Long projectId, @RequestParam("studentId") Long studentId) {
         studentProjectService.removeStudentFromProject(projectId, studentId);
-        return "redirect:/projectmember/";
+        return "redirect:/projectmember/removeMember/" + projectId;
     }
 
     @RequestMapping("/moveMember/{memberId}")
@@ -182,7 +189,7 @@ public class ProjectController {
     @PostMapping("/moveStudentFromProject")
     public String moveStudentFromProject(@ModelAttribute("moveStudentFromProject") StudentProject project) {
         studentProjectService.moveStudentBetweenProjects(project);
-        return "redirect:/projectmember/";
+        return "redirect:/projectmember/removeMember/" + project.getProject().getId();
     }
 
 
